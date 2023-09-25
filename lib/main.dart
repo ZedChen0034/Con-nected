@@ -1,3 +1,12 @@
+// https://www.kindacode.com/article/how-to-create-a-filter-search-listview-in-flutter/#google_vignette
+// https://api.flutter.dev/flutter/material/Icons-class.html
+// https://stackoverflow.com/questions/53254963/flutter-show-different-icons-based-on-value
+// https://www.fluttericon.com/
+// https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
+// https://stackoverflow.com/questions/57941227/how-to-add-icon-to-appbar-in-flutter
+// https://stackoverflow.com/questions/56890400/set-color-on-active-item-in-a-bottomnavigationbartype-fixed
+// https://api.flutter.dev/flutter/material/Colors-class.html
+
 import 'package:flutter/material.dart';
 import 'package:con_nected/calendar.dart';
 
@@ -6,122 +15,242 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // TRY THIS: Try running your application with "flutter run". You'll see
-        // the application has a blue toolbar. Then, without quitting the app,
-        // try changing the seedColor in the colorScheme below to Colors.green
-        // and then invoke "hot reload" (save your changes or press the "hot
-        // reload" button in a Flutter-supported IDE, or press "r" if you used
-        // the command line to start the app).
-        //
-        // Notice that the counter didn't reset back to zero; the application
-        // state is not lost during the reload. To reset the state, use hot
-        // restart instead.
-        //
-        // This works for code too, not just values: Most code changes can be
-        // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return const MaterialApp(
+      // Remove the debug banner
+      debugShowCheckedModeBanner: false,
+      title: 'Event-0',
+      home: HomePage(),
+    );
+
+  }
+}
+
+/// Flutter code sample for [NavigationBar].
+
+class NavigationBarApp extends StatelessWidget {
+  const NavigationBarApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(home: NavigationExample());
+  }
+}
+
+class NavigationExample extends StatefulWidget {
+  const NavigationExample({super.key});
+
+  @override
+  State<NavigationExample> createState() => _NavigationExampleState();
+}
+
+class _NavigationExampleState extends State<NavigationExample> {
+  int currentPageIndex = 0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: NavigationBar(
+        onDestinationSelected: (int index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        indicatorColor: Colors.amber[800],
+        selectedIndex: currentPageIndex,
+        destinations: const <Widget>[
+          NavigationDestination(
+            selectedIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Event',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.school),
+            icon: Icon(Icons.school_outlined),
+            label: 'Story',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.question_mark),
+            icon: Icon(Icons.question_mark_outlined),
+            label: 'Help',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.directions_car),
+            icon: Icon(Icons.directions_car_outlined),
+            label: 'Journal',
+          ),
+          NavigationDestination(
+            selectedIcon: Icon(Icons.face),
+            icon: Icon(Icons.face_outlined),
+            label: 'Profile',
+          ),
+        ],
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
-      //home: const Calendar(),
+      body: <Widget>[
+        Container(
+          color: Colors.red,
+          alignment: Alignment.center,
+          child: const Text('Page 1'),
+        ),
+        Container(
+          color: Colors.green,
+          alignment: Alignment.center,
+          child: const Text('Page 2'),
+        ),
+        Container(
+          color: Colors.blue,
+          alignment: Alignment.center,
+          child: const Text('Page 3'),
+        ),
+        Container(
+          color: Colors.yellow,
+          alignment: Alignment.center,
+          child: const Text('Page 4'),
+        ),
+        Container(
+          color: Colors.pink,
+          alignment: Alignment.center,
+          child: const Text('Page 5'),
+        ),
+      ][currentPageIndex],
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
 
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+class _HomePageState extends State<HomePage> {
+  final List<Map<String, dynamic>> _allUsers = [
+    {"id": "2023-09-24-A", "picture": Icons.directions_run, "name": "09:00 - Community Serving", "address": "480 Northbourne Avenue, Dickson ACT 2602"},
+    {"id": "2023-09-24-B", "picture": Icons.settings_phone, "name": "11:00 - Court meeting", "address": "4 Knowles Pl, Canberra ACT 2601"},
+    {"id": "2023-10-16-A", "picture": Icons.public, "name": "13:00 - Farm Serving", "address": "2 Dairy Rd, Fyshwick ACT 2609"},
+    {"id": "2023-12-11-A", "picture": Icons.emoji_transportation, "name": "14:30 - Traffic Conducting", "address": "111 Alinga St, Canberra ACT 2601"},
+  ];
 
-  void _incrementCounter() {
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
+  List<Map<String, dynamic>> _foundUsers = [];
+  @override
+  initState() {
+    _foundUsers = _allUsers;
+    super.initState();
   }
+
+  void _runFilter(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {results = _allUsers;}
+    else {results = _allUsers.where((user) => user["id"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+_allUsers.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+_allUsers.where((user) => user["address"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
+
+    setState(() {_foundUsers = results;});
+
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
     return Scaffold(
       appBar: AppBar(
-        // TRY THIS: Try changing the color here to a specific color (to
-        // Colors.amber, perhaps?) and trigger a hot reload to see the AppBar
-        // change color while the other colors stay the same.
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        centerTitle: true,
+        title: const Text('Event'),
+        backgroundColor: Colors.lightGreen[900],
+        leading:
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.notifications_outlined),
+          ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.calendar_month),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.done_outlined),
+          ),
+        ],
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
+      body: Padding(
+        padding: const EdgeInsets.all(10),
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
+            TextField(
+              onChanged: (value) => _runFilter(value),
+              decoration: const InputDecoration(
+                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Expanded(
+              child: _foundUsers.isNotEmpty
+                  ? ListView.builder(
+                itemCount: _foundUsers.length,
+                itemBuilder: (context, index) => Card(
+                  key: ValueKey(_foundUsers[index]["id"]),
+                  color: Colors.lightGreen[200],
+                  elevation: 4,
+                  margin: const EdgeInsets.symmetric(vertical: 10),
+                  child: ListTile(
+                    leading: Icon(
+                      _foundUsers[index]['picture'],
+                      color: Colors.red,
+                      size: 35,
+                    ),
+                    title: Text(_foundUsers[index]["id"]+'\n'+_foundUsers[index]['name'],),
+                    subtitle: Text(_foundUsers[index]['address']),
+                  ),
+                ),
+              )
+                  : const Text(
+                'No results found',
+                style: TextStyle(fontSize: 24),
+              ),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        fixedColor: Colors.blue,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Event',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.school),
+            label: 'Story',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.question_mark),
+            label: 'Help',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_car),
+            label: 'Journal',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.face),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
