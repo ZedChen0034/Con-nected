@@ -169,7 +169,12 @@ class _HomePageState extends State<HomePage> {
           ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Calendar()));
+            },
             icon: Icon(Icons.calendar_month),
           ),
           IconButton(
