@@ -58,6 +58,7 @@ Flutter is a software development kit used to develop cross platform application
 The "lib" directory is the main development path. It is recommended not to modify the
 native code under the "android" and "ios" directories in the early stages of the
 project.
+
 Dart is used as the language during project development. Please refer to this
 [guide](https://dart.dev/guides) for further information.
 
