@@ -6,9 +6,12 @@
 // https://stackoverflow.com/questions/57941227/how-to-add-icon-to-appbar-in-flutter
 // https://stackoverflow.com/questions/56890400/set-color-on-active-item-in-a-bottomnavigationbartype-fixed
 // https://api.flutter.dev/flutter/material/Colors-class.html
+// https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
 import 'package:flutter/material.dart';
-import 'package:con_nected/calendar.dart';
+import 'calendar.dart';
+import 'detail.dart';
+import 'note.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,11 +28,8 @@ class MyApp extends StatelessWidget {
       title: 'Event-0',
       home: HomePage(),
     );
-
   }
 }
-
-/// Flutter code sample for [NavigationBar].
 
 class NavigationBarApp extends StatelessWidget {
   const NavigationBarApp({super.key});
@@ -120,8 +120,6 @@ class _NavigationExampleState extends State<NavigationExample> {
   }
 }
 
-
-
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -130,29 +128,22 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final List<Map<String, dynamic>> _allUsers = [
-    {"id": "2023-09-24-A", "picture": Icons.directions_run, "name": "09:00 - Community Serving", "address": "480 Northbourne Avenue, Dickson ACT 2602"},
-    {"id": "2023-09-24-B", "picture": Icons.settings_phone, "name": "11:00 - Court meeting", "address": "4 Knowles Pl, Canberra ACT 2601"},
-    {"id": "2023-10-16-A", "picture": Icons.public, "name": "13:00 - Farm Serving", "address": "2 Dairy Rd, Fyshwick ACT 2609"},
-    {"id": "2023-12-11-A", "picture": Icons.emoji_transportation, "name": "14:30 - Traffic Conducting", "address": "111 Alinga St, Canberra ACT 2601"},
-  ];
 
-  List<Map<String, dynamic>> _foundUsers = [];
+  List<Note> ALL = Note.SCRIPT;
+  List<dynamic> FOUND = [];
+
   @override
   initState() {
-    _foundUsers = _allUsers;
+    FOUND = ALL;
     super.initState();
   }
 
   void _runFilter(String enteredKeyword) {
-    List<Map<String, dynamic>> results = [];
-    if (enteredKeyword.isEmpty) {results = _allUsers;}
-    else {results = _allUsers.where((user) => user["id"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+_allUsers.where((user) => user["name"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+_allUsers.where((user) => user["address"].toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
-
-    setState(() {_foundUsers = results;});
-
+    List<dynamic> results = [];
+    if (enteredKeyword.isEmpty) {results = ALL;}
+    else {results = ALL.where((user) => user.id.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.address.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
+    setState(() {FOUND = results;});
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -160,7 +151,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Event'),
+        title: Text('Event'),
         backgroundColor: Colors.lightGreen[900],
         leading:
           IconButton(
@@ -203,22 +194,31 @@ class _HomePageState extends State<HomePage> {
               height: 20,
             ),
             Expanded(
-              child: _foundUsers.isNotEmpty
+              child: FOUND.isNotEmpty
                   ? ListView.builder(
-                itemCount: _foundUsers.length,
+                itemCount: FOUND.length,
                 itemBuilder: (context, index) => Card(
-                  key: ValueKey(_foundUsers[index]["id"]),
+                  key: ValueKey(FOUND[index].id),
                   color: Colors.lightGreen[200],
                   elevation: 4,
                   margin: const EdgeInsets.symmetric(vertical: 10),
                   child: ListTile(
                     leading: Icon(
-                      _foundUsers[index]['picture'],
+                      FOUND[index].picture,
                       color: Colors.red,
                       size: 35,
                     ),
-                    title: Text(_foundUsers[index]["id"]+'\n'+_foundUsers[index]['name'],),
-                    subtitle: Text(_foundUsers[index]['address']),
+                    title: Text(FOUND[index].id+'\n'+FOUND[index].time+" - "+FOUND[index].name,),
+                    subtitle: Text(FOUND[index].address),
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Detail(),
+                          settings: RouteSettings(arguments: FOUND[index]),
+                        ),
+                      );
+                    },
                   ),
                 ),
               )
