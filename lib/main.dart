@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'calendar.dart';
 import 'detail.dart';
 import 'note.dart';
+import 'profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -58,6 +59,7 @@ class _NavigationExampleState extends State<NavigationExample> {
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
+            print(currentPageIndex);
           });
         },
         indicatorColor: Colors.amber[800],
@@ -112,10 +114,11 @@ class _NavigationExampleState extends State<NavigationExample> {
           child: const Text('Page 4'),
         ),
         Container(
-          color: Colors.pink,
+          color: Colors.yellow,
           alignment: Alignment.center,
-          child: const Text('Page 5'),
+          child: const Text('Page 4'),
         ),
+        // Profile(),
       ][currentPageIndex],
     );
   }
@@ -132,6 +135,9 @@ class _HomePageState extends State<HomePage> {
 
   List<Note> ALL = Note.SCRIPT;
   List<dynamic> FOUND = [];
+  int _currentIndex = 0;
+  String _appBarTitle = 'Event'; // 默认标题为'Event'
+
 
   @override
   initState() {
@@ -150,24 +156,24 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: AppBar(
+      appBar: _currentIndex != 4 ? AppBar(
         centerTitle: true,
-        title: Text('Event'),
+        title:  Text(_appBarTitle),
         backgroundColor: Colors.lightGreen[900],
         leading:
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
-          ),
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.notifications_outlined),
+        ),
         actions: [
           IconButton(
             onPressed: () {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => Calendar()));
+                      builder: (context) => const Calendar()));
             },
-            icon: Icon(Icons.calendar_month),
+            icon: const Icon(Icons.calendar_month),
           ),
           IconButton(
             onPressed: () {
@@ -176,69 +182,118 @@ class _HomePageState extends State<HomePage> {
                   MaterialPageRoute(
                       builder: (context) => Createevent()));
             },
-            icon: Icon(Icons.add),
+            icon: const Icon(Icons.add),
           ),
           IconButton(
             onPressed: () {},
-            icon: Icon(Icons.done_outlined),
+            icon: const Icon(Icons.done_outlined),
           ),
         ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              onChanged: (value) => _runFilter(value),
-              decoration: const InputDecoration(
-                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: FOUND.isNotEmpty
-                  ? ListView.builder(
-                itemCount: FOUND.length,
-                itemBuilder: (context, index) => Card(
-                  key: ValueKey(FOUND[index].id),
-                  color: Colors.lightGreen[200],
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
-                    leading: Icon(
-                      FOUND[index].picture,
-                      color: Colors.red,
-                      size: 35,
-                    ),
-                    title: Text(FOUND[index].id+'\n'+FOUND[index].time+" - "+FOUND[index].name,),
-                    subtitle: Text(FOUND[index].address),
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => Detail(),
-                          settings: RouteSettings(arguments: FOUND[index]),
+      ): null,// profile页面不显示appbar
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  onChanged: (value) => _runFilter(value),
+                  decoration: const InputDecoration(
+                      labelText: 'Search', suffixIcon: Icon(Icons.search)),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: FOUND.isNotEmpty
+                      ? ListView.builder(
+                    itemCount: FOUND.length,
+                    itemBuilder: (context, index) => Card(
+                      key: ValueKey(FOUND[index].id),
+                      color: Colors.lightGreen[200],
+                      elevation: 4,
+                      margin: const EdgeInsets.symmetric(vertical: 10),
+                      child: ListTile(
+                        leading: Icon(
+                          FOUND[index].picture,
+                          color: Colors.red,
+                          size: 35,
                         ),
-                      );
-                    },
+                        title: Text(FOUND[index].id+'\n'+FOUND[index].time+" - "+FOUND[index].name,),
+                        subtitle: Text(FOUND[index].address),
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Detail(),
+                              settings: RouteSettings(arguments: FOUND[index]),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  )
+                      : const Text(
+                    'No results found',
+                    style: TextStyle(fontSize: 24),
                   ),
                 ),
-              )
-                  : const Text(
-                'No results found',
-                style: TextStyle(fontSize: 24),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          const Center(
+            child: Text(
+              'Story Page Content', // 替换为实际的Profile页面内容
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+          const Center(
+            child: Text(
+              'Help Page Content', // 替换为实际的Profile页面内容
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+          const Center(
+            child: Text(
+              'Journal Page Content', // 替换为实际的Profile页面内容
+              style: TextStyle(fontSize: 24),
+            ),
+          ),
+          Center(
+            child: Profile(),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.blue,
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+            switch (index) {
+              case 0:
+                _appBarTitle = 'Event';
+                break;
+              case 1:
+                _appBarTitle = 'Story';
+                break;
+              case 2:
+                _appBarTitle = 'Help';
+                break;
+              case 3:
+                _appBarTitle = 'Journal';
+                break;
+              case 4:
+                _appBarTitle = 'Profile';
+                break;
+            }
+          });
+        },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
