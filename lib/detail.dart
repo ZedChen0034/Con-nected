@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'note.dart';
+import 'createevent.dart';
 
 class Detail extends StatelessWidget {
   @override
@@ -21,6 +22,7 @@ class Detail extends StatelessWidget {
         title: Text('Detail Information'),
         backgroundColor: Colors.green,
       ),
+
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(8.0),

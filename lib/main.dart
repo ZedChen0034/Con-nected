@@ -8,6 +8,7 @@
 // https://api.flutter.dev/flutter/material/Colors-class.html
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
+import 'package:con_nected/createevent.dart';
 import 'package:flutter/material.dart';
 import 'calendar.dart';
 import 'detail.dart';
@@ -169,7 +170,12 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.calendar_month),
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Createevent()));
+            },
             icon: Icon(Icons.add),
           ),
           IconButton(
