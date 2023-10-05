@@ -23,23 +23,45 @@ class CustomMasonryGridView extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Image.asset(items[index].imagePath, fit: BoxFit.cover),
-              Container(
-                width: double.infinity,
-                child: Text(
+              const SizedBox(height: 6),
+              Text(
                   items[index].title,
                   textAlign: TextAlign.start,
-                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                  style: const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                child: Text(
-                  items[index].description,
+              const SizedBox(height: 8),
+              if (items[index].tag != null && items[index].tag!.isNotEmpty&&items[index].like != null&& items[index].like!.isNotEmpty )
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.grey),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(items[index].tag!),
+                    ),
+                    Row(
+                      children: [
+                        const Icon(Icons.favorite, color: Colors.red),
+                        const SizedBox(width: 4),
+                        Text(items[index].like!), // 100表示点赞数量，你可以根据实际数据调整
+                      ],
+                    ),
+                  ],
+                ),
+              if (items[index].description != null && items[index].description!.isNotEmpty)
+                Text(
+                  items[index].description!,
                   textAlign: TextAlign.start,
                 ),
-              ),
+
             ],
           ),
         );
