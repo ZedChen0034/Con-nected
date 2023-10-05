@@ -14,6 +14,8 @@ import 'calendar.dart';
 import 'detail.dart';
 import 'note.dart';
 import 'profile.dart';
+import 'story.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -139,6 +141,7 @@ class _HomePageState extends State<HomePage> {
   String _appBarTitle = 'Event'; // 默认标题为'Event'
 
 
+
   @override
   initState() {
     FOUND = ALL;
@@ -156,40 +159,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: _currentIndex == 0 ? AppBar(
-        centerTitle: true,
-        title:  Text(_appBarTitle),
-        backgroundColor: Colors.lightGreen[900],
-        leading:
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_outlined),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Calendar()));
-            },
-            icon: const Icon(Icons.calendar_month),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Createevent()));
-            },
-            icon: const Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.done_outlined),
-          ),
-        ],
-      ): null,// profile页面不显示appbar
+      appBar: getAppBarByIndex(_currentIndex, context),// profile页面不显示appbar
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -245,11 +215,8 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          const Center(
-            child: Text(
-              'Story Page Content', // 替换为实际的Profile页面内容
-              style: TextStyle(fontSize: 24),
-            ),
+          Center(
+            child: Story(),
           ),
           const Center(
             child: Text(
@@ -319,4 +286,68 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  getAppBarByIndex(int index, BuildContext context) {
+    switch(index) {
+      case 0:
+        return AppBar(
+          centerTitle: true,
+          title:  Text(_appBarTitle),
+          backgroundColor: Colors.lightGreen[900],
+          leading:
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.notifications_outlined),
+          ),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Calendar()));
+              },
+              icon: const Icon(Icons.calendar_month),
+            ),
+            IconButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Createevent()));
+              },
+              icon: const Icon(Icons.add),
+            ),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.done_outlined),
+            ),
+          ],
+        );
+      case 1:
+
+        return AppBar(
+          centerTitle: true,
+          title:  Text(_appBarTitle),
+          // backgroundColor: Colors.lightGreen[900],
+          leading:
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(Icons.search_outlined),
+          ),
+        );
+      case 2:
+      // 返回第三个AppBar配置
+        break;
+      case 3:
+      // 返回第四个AppBar配置
+        break;
+      case 4:
+      // 返回第五个AppBar配置
+        break;
+      default:
+        return null;
+    }
+  }
+
 }
