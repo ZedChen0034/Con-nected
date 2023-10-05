@@ -1,3 +1,6 @@
+
+import 'package:con_nected/CustomMasonryGridView.dart';
+import 'package:con_nected/GridItem.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -8,7 +11,22 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   TabController? _tabController;
+  List<GridItem> myItems = [
+    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
+    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
+    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
+    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
+    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
 
+    // ... 其他项目
+  ];
   @override
   void initState() {
     super.initState();
@@ -19,6 +37,7 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF293936),
+
       body: Stack(
         children: <Widget>[
           Container(
@@ -53,18 +72,22 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                   ],
                 ),
                 Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                    child: TabBarView(
-                    controller: _tabController,
-                    children: [
-                      _buildGridView(),
-                      _buildGridView(),
-                      _buildGridView(),
-                      _buildGridView(),
-                      _buildGridView(),
-                    ],
-                  ),),
+                 child: Container(
+                      color: const Color(0xFFf8f5f7),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            CustomMasonryGridView(items: myItems),
+                            CustomMasonryGridView(items: myItems),
+                            CustomMasonryGridView(items: myItems),
+                            CustomMasonryGridView(items: myItems),
+                            CustomMasonryGridView(items: myItems),
+                          ],
+                        ),
+                      ),
+                    ),
                 ),
               ],
             ),
@@ -74,34 +97,11 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
     );
   }
 
-  Widget _buildGridView() {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.8,
-        crossAxisSpacing: 8.0,  // Spacing between columns
-        mainAxisSpacing: 2.0,  // Spacing between rows
-      ),
-      itemBuilder: (context, index) {
-        return _buildGridItem();
-      },
-    );
-  }
-
-  Widget _buildGridItem() {
-    return Column(
-      children: [
-        // You can replace the below image with any asset or network image.
-        Image.asset('images/pig.png', fit: BoxFit.cover),
-        const SizedBox(height: 8.0),
-        const Text('Some description here'),
-      ],
-    );
-  }
-
   @override
   void dispose() {
     _tabController?.dispose();
     super.dispose();
   }
 }
+
+

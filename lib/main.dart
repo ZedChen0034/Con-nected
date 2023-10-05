@@ -156,7 +156,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: _currentIndex != 4 ? AppBar(
+      appBar: _currentIndex == 0 ? AppBar(
         centerTitle: true,
         title:  Text(_appBarTitle),
         backgroundColor: Colors.lightGreen[900],
