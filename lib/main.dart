@@ -141,7 +141,6 @@ class _HomePageState extends State<HomePage> {
   // eventDEMO
   List<EventDemo> FOUND = [];
   int _currentIndex = 0;
-  String _appBarTitle = 'Event'; // 默认标题为'Event'
 
   @override
   initState() {
@@ -178,7 +177,52 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
 
     return Scaffold(
-      appBar: getAppBarByIndex(_currentIndex, context),// profile页面不显示appbar
+      appBar: _currentIndex==0?AppBar(
+        centerTitle: true,
+        title:  const Text("Event"),
+        backgroundColor: Colors.lightGreen[900],
+        leading:
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.notifications_outlined),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Calendar()));
+            },
+            icon: const Icon(Icons.calendar_month),
+          ),
+          IconButton(
+            onPressed: ()  {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Createevent(
+                        addTaskCallback: (newEvent) {
+                          setState(() {
+                            FOUND.add(newEvent);
+                          });
+                        },
+                      )));
+
+            },
+            icon: const Icon(Icons.add),
+          ),
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => Doneevent()));
+            },
+            icon: const Icon(Icons.done_outlined),
+          ),
+        ],
+      ):null,
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -207,7 +251,7 @@ class _HomePageState extends State<HomePage> {
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(
-                        leading: Icon(
+                        leading: const Icon(
                           Icons.settings_phone,
                           // FOUND[index].picture,
                           color: Colors.red,
@@ -263,23 +307,6 @@ class _HomePageState extends State<HomePage> {
         onTap: (int index) {
           setState(() {
             _currentIndex = index;
-            switch (index) {
-              case 0:
-                _appBarTitle = 'Event';
-                break;
-              case 1:
-                _appBarTitle = 'Story';
-                break;
-              case 2:
-                _appBarTitle = 'Help';
-                break;
-              case 3:
-                _appBarTitle = 'Journal';
-                break;
-              case 4:
-                _appBarTitle = 'Profile';
-                break;
-            }
           });
         },
         items: const <BottomNavigationBarItem>[
@@ -306,80 +333,5 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
     );
-  }
-
-  getAppBarByIndex(int index, BuildContext context) {
-    switch(index) {
-      case 0:
-        return AppBar(
-          centerTitle: true,
-          title:  Text(_appBarTitle),
-          backgroundColor: Colors.lightGreen[900],
-          leading:
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_outlined),
-          ),
-          actions: [
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const Calendar()));
-              },
-              icon: const Icon(Icons.calendar_month),
-            ),
-            IconButton(
-              onPressed: ()  {
-                 Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Createevent(
-                          addTaskCallback: (newEvent) {
-                            setState(() {
-                              FOUND.add(newEvent);
-                            });
-                          },
-                        )));
-
-              },
-              icon: const Icon(Icons.add),
-            ),
-            IconButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Doneevent()));
-              },
-              icon: const Icon(Icons.done_outlined),
-            ),
-          ],
-        );
-      case 1:
-
-        return AppBar(
-          centerTitle: true,
-          title:  Text(_appBarTitle),
-          // backgroundColor: Colors.lightGreen[900],
-          leading:
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.search_outlined),
-          ),
-        );
-      case 2:
-      // 返回第三个AppBar配置
-        break;
-      case 3:
-      // 返回第四个AppBar配置
-        break;
-      case 4:
-      // 返回第五个AppBar配置
-        break;
-      default:
-        return null;
-    }
   }
 }

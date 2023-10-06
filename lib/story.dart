@@ -16,6 +16,16 @@ class _StoryState extends State<Story> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title:  Text("Story"),
+        // backgroundColor: Colors.lightGreen[900],
+        leading:
+        IconButton(
+          onPressed: () {},
+          icon: const Icon(Icons.search_outlined),
+        ),
+      ),
       body: CustomMasonryGridView(items: myItems,
         onLikeToggle: (String id) {
           setState(() {
