@@ -11,22 +11,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  List<GridItem> myItems = [
-    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
-    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
-    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pig.png', description: 'Description 1',title:"a"),
-    GridItem(imagePath: 'images/bean.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi1.jpg', description: 'Description 2',title:"a"),
-    GridItem(imagePath: 'images/pi2.jpg', description: 'Description 2',title:"a"),
-
-    // ... 其他项目
-  ];
+  List<GridItem> myItems = GridItem.profileList;
   @override
   void initState() {
     super.initState();

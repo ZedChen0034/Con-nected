@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'eventDemo.dart';
+import 'package:intl/intl.dart';
 
 class Createevent extends StatefulWidget {
 
@@ -106,7 +106,7 @@ class _CreateeventState extends State<Createevent> {
                 child: InputDecorator(
                   decoration: InputDecoration(labelText: "Date and Time"),
                   child: Text(
-                    "${selectedDateTime.toLocal()}".split('.')[0],
+                    DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime),
                     style: TextStyle(fontSize: 16),
                   ),
                 ),

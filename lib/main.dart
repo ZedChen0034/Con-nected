@@ -16,6 +16,7 @@ import 'profile.dart';
 import 'story.dart';
 import 'package:con_nected/eventDemo.dart';
 import 'package:con_nected/doneevent.dart';
+import 'package:intl/intl.dart';
 
 
 void main() {
@@ -200,7 +201,8 @@ class _HomePageState extends State<HomePage> {
                           color: Colors.red,
                           size: 35,
                         ),
-                        title: Text(FOUND[index].datetime.toString()+'\n'+FOUND[index].name+" - "+FOUND[index].tag,),
+
+                        title: Text(DateFormat('yyyy-MM-dd HH:mm').format(FOUND[index].datetime) +'\n'+FOUND[index].name+" - "+FOUND[index].tag,),
                         subtitle: Text(FOUND[index].location),
                         onTap: () {
                           Navigator.push(

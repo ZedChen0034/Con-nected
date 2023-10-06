@@ -10,6 +10,7 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'eventDemo.dart';
+import 'package:intl/intl.dart';
 
 class Detail extends StatelessWidget {
   @override
@@ -28,10 +29,6 @@ class Detail extends StatelessWidget {
               child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Text("Year-Month-Date (Event ID)", style: TextStyle(color: Colors.green, fontSize: 20, height: 3),),
-              // Text(note.datetime, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 1),),
-              // Text("Start Time", style: TextStyle(color: Colors.green, fontSize: 20, height: 3),),
-              // Text(note.time, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 1),),
               const Text(
                 "Event Name",
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
@@ -41,7 +38,6 @@ class Detail extends StatelessWidget {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
-              // const Text("Compulsory or Optional", style: TextStyle(color: Colors.green, fontSize: 20, height: 3),),
               const Text(
                 "Tag",
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
@@ -51,14 +47,12 @@ class Detail extends StatelessWidget {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
-              // const Text("Host (Judge)", style: TextStyle(color: Colors.green, fontSize: 20, height: 3),),
-              // Text(note.host, style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, height: 1),),
-              const Text(
+               const Text(
                 "DateTime",
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
               ),
               Text(
-                event.datetime.toString(),
+                  DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
