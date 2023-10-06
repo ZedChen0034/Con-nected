@@ -17,25 +17,12 @@ import 'story.dart';
 import 'package:con_nected/eventDemo.dart';
 import 'package:con_nected/doneevent.dart';
 import 'package:intl/intl.dart';
-
+import 'from_event_to_main.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
-// class MyApp extends StatelessWidget {
-//   const MyApp({Key? key}) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return const MaterialApp(
-//       // Remove the debug banner
-//       debugShowCheckedModeBanner: false,
-//       title: 'Event-0',
-//       home: HomePage(),
-//     );
-//   }
-// }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -155,7 +142,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   List<EventDemo> ALL = EventDemo.SCRIPT;
 
   // eventDEMO
@@ -173,18 +159,15 @@ class _HomePageState extends State<HomePage> {
     if (enteredKeyword.isEmpty) {
       results = Set.from(ALL);
     } else {
-      results.addAll(
-          ALL.where((user) => user.tag.toLowerCase().contains(enteredKeyword.toLowerCase()))
-      );
-      results.addAll(
-          ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
-      );
-      results.addAll(
-          ALL.where((user) => user.description.toLowerCase().contains(enteredKeyword.toLowerCase()))
-      );
-      results.addAll(
-          ALL.where((user) => user.location.toLowerCase().contains(enteredKeyword.toLowerCase()))
-      );
+      results.addAll(ALL.where((user) =>
+          user.tag.toLowerCase().contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) =>
+          user.name.toLowerCase().contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) => user.description
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) =>
+          user.location.toLowerCase().contains(enteredKeyword.toLowerCase())));
     }
 
     setState(() {
@@ -192,54 +175,63 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
+    FromEventToMain? fromEventToMain;
 
-    // print(args);
+    if (ModalRoute.of(context)?.settings.arguments != null) {
+      fromEventToMain =
+          ModalRoute.of(context)!.settings.arguments as FromEventToMain;
+    }
+
+    if (fromEventToMain != null) {
+      if (fromEventToMain.anotherParam == "create") {
+        setState(() {
+          FOUND.add(fromEventToMain!.eventDemo);
+        });
+      } else if (fromEventToMain.anotherParam == "edit") {
+        int indexToUpdate = FOUND
+            .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
+        if (indexToUpdate != -1) {
+          // 如果找到了相同ID的事件
+          setState(() {
+            FOUND[indexToUpdate] = fromEventToMain!.eventDemo;
+          });
+        }
+      }
+    }
     return Scaffold(
-      appBar: _currentIndex==0?AppBar(
-        centerTitle: true,
-        title:  const Text("Event"),
-        backgroundColor: Colors.lightGreen[900],
-        leading:
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.notifications_outlined),
-        ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/calendar');
-            },
-            icon: const Icon(Icons.calendar_month),
-          ),
-          IconButton(
-            onPressed: ()  {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Createevent(
-                        addTaskCallback: (newEvent) {
-                          setState(() {
-                              FOUND.add(newEvent);
-                            }
-                          );
-                        },
-                      )));
-
-            },
-            icon: const Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: () {
-              Navigator.pushNamed(context, '/doneEvent');
-
-            },
-            icon: const Icon(Icons.done_outlined),
-          ),
-        ],
-      ):null,
+      appBar: _currentIndex == 0
+          ? AppBar(
+              centerTitle: true,
+              title: const Text("Event"),
+              backgroundColor: Colors.lightGreen[900],
+              leading: IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.notifications_outlined),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/calendar');
+                  },
+                  icon: const Icon(Icons.calendar_month),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/createEvent');
+                  },
+                  icon: const Icon(Icons.add),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/doneEvent');
+                  },
+                  icon: const Icon(Icons.done_outlined),
+                ),
+              ],
+            )
+          : null,
       body: IndexedStack(
         index: _currentIndex,
         children: [
@@ -261,36 +253,40 @@ class _HomePageState extends State<HomePage> {
                 Expanded(
                   child: FOUND.isNotEmpty
                       ? ListView.builder(
-                    itemCount: FOUND.length,
-                    itemBuilder: (context, index) => Card(
-                      key: ValueKey(FOUND[index].id),
-                      color: Colors.lightGreen[200],
-                      elevation: 4,
-                      margin: const EdgeInsets.symmetric(vertical: 10),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.settings_phone,
-                          // FOUND[index].picture,
-                          color: Colors.red,
-                          size: 35,
-                        ),
-
-                        title: Text(DateFormat('yyyy-MM-dd HH:mm').format(FOUND[index].datetime) +'\n'+FOUND[index].name+" - "+FOUND[index].tag),
-                        subtitle: Text(FOUND[index].location),
-                        onTap: () {
-                          Navigator.pushNamed(
-                            context,
-                            '/detail',
-                            arguments: FOUND[index],
-                          );
-                        },
-                      ),
-                    ),
-                  )
+                          itemCount: FOUND.length,
+                          itemBuilder: (context, index) => Card(
+                            key: ValueKey(FOUND[index].id),
+                            color: Colors.lightGreen[200],
+                            elevation: 4,
+                            margin: const EdgeInsets.symmetric(vertical: 10),
+                            child: ListTile(
+                              leading: const Icon(
+                                Icons.settings_phone,
+                                // FOUND[index].picture,
+                                color: Colors.red,
+                                size: 35,
+                              ),
+                              title: Text(DateFormat('yyyy-MM-dd HH:mm')
+                                      .format(FOUND[index].datetime) +
+                                  '\n' +
+                                  FOUND[index].name +
+                                  " - " +
+                                  FOUND[index].tag),
+                              subtitle: Text(FOUND[index].location),
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  '/detail',
+                                  arguments: FOUND[index],
+                                );
+                              },
+                            ),
+                          ),
+                        )
                       : const Text(
-                    'No results found',
-                    style: TextStyle(fontSize: 24),
-                  ),
+                          'No results found',
+                          style: TextStyle(fontSize: 24),
+                        ),
                 ),
               ],
             ),

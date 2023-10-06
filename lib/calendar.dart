@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'eventDemo.dart';
 
 /// Reference to https://pub.dev/packages/table_calendar
 
