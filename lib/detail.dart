@@ -52,7 +52,7 @@ class _DetailState extends State<Detail> {
 
   @override
   Widget build(BuildContext context) {
-    final event = ModalRoute.of(context)!.settings.arguments as EventDemo;
+    final EventDemo event = ModalRoute.of(context)!.settings.arguments as EventDemo;
 
     return Scaffold(
       appBar: AppBar(

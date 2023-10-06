@@ -6,8 +6,8 @@ class Createevent extends StatefulWidget {
 
   final EventDemo? event;
 
-  final Function(EventDemo) addTaskCallback;
-  Createevent({required this.addTaskCallback, this.event});
+  final Function(EventDemo)? addTaskCallback;
+  Createevent({this.addTaskCallback, this.event});
   @override
   _CreateeventState createState() => _CreateeventState();
 }
@@ -48,7 +48,7 @@ class _CreateeventState extends State<Createevent> {
       builder: (BuildContext context) {
         Future.delayed(Duration(seconds: 1), () {
           // Navigator.of(context).pop();
-          widget.addTaskCallback(newEvent);
+          widget.addTaskCallback!(newEvent);
           print(newEvent.tag);
           Navigator.pop(context);
           Navigator.popUntil(context, ModalRoute.withName("/"));

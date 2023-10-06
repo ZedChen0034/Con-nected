@@ -23,16 +23,36 @@ void main() {
   runApp(const MyApp());
 }
 
+// class MyApp extends StatelessWidget {
+//   const MyApp({Key? key}) : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return const MaterialApp(
+//       // Remove the debug banner
+//       debugShowCheckedModeBanner: false,
+//       title: 'Event-0',
+//       home: HomePage(),
+//     );
+//   }
+// }
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       // Remove the debug banner
       debugShowCheckedModeBanner: false,
       title: 'Event-0',
-      home: HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/calendar': (context) => const Calendar(),
+        '/createEvent': (context) => Createevent(),
+        '/doneEvent': (context) => Doneevent(),
+        '/detail': (context) => Detail(),
+      },
     );
   }
 }
@@ -190,10 +210,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const Calendar()));
+              Navigator.pushNamed(context, '/calendar');
             },
             icon: const Icon(Icons.calendar_month),
           ),
@@ -216,10 +233,8 @@ class _HomePageState extends State<HomePage> {
           ),
           IconButton(
             onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Doneevent()));
+              Navigator.pushNamed(context, '/doneEvent');
+
             },
             icon: const Icon(Icons.done_outlined),
           ),
@@ -263,12 +278,10 @@ class _HomePageState extends State<HomePage> {
                         title: Text(DateFormat('yyyy-MM-dd HH:mm').format(FOUND[index].datetime) +'\n'+FOUND[index].name+" - "+FOUND[index].tag),
                         subtitle: Text(FOUND[index].location),
                         onTap: () {
-                          Navigator.push(
+                          Navigator.pushNamed(
                             context,
-                            MaterialPageRoute(
-                              builder: (context) => Detail(),
-                              settings: RouteSettings(arguments: FOUND[index]),
-                            ),
+                            '/detail',
+                            arguments: FOUND[index],
                           );
                         },
                       ),
