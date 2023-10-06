@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'main.dart';
-
+import 'eventDemo.dart';
 
 class Createevent extends StatefulWidget {
+
+  final Function(EventDemo) addTaskCallback;
+  Createevent({required this.addTaskCallback});
   @override
   _CreateeventState createState() => _CreateeventState();
 }
@@ -15,12 +18,14 @@ class _CreateeventState extends State<Createevent> {
   String contact = "";
   String notificationType = "None";
   String description = "";
-  void _showSuccessDialog(BuildContext context) {
+  void _showSuccessDialog(BuildContext context,EventDemo newEvent) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         Future.delayed(Duration(seconds: 1), () {
-          Navigator.of(context).pop();
+          // Navigator.of(context).pop();
+          widget.addTaskCallback(newEvent);
+          Navigator.pop(context);
           Navigator.popUntil(context, ModalRoute.withName("/"));
         });
 
@@ -157,8 +162,20 @@ class _CreateeventState extends State<Createevent> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      _showSuccessDialog(context); // 显示成功对话框
 
+                      EventDemo newEvent = EventDemo(
+                        id: (EventDemo.SCRIPT.length+1).toString(),
+                        name: name,
+                        tag: selectedTag,
+                        datetime: selectedDateTime,
+                        location: location,
+                        contact: contact,
+                        notificationType: notificationType,
+                        description: description, editable: true,
+                      );
+                      // EventDemo.SCRIPT.add(newEvent);
+                      // print(newEvent.toString());
+                      _showSuccessDialog(context,newEvent);
                     },
                     child: Text("Finish"),
                   ),

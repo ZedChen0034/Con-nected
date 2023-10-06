@@ -12,9 +12,10 @@ import 'package:con_nected/createevent.dart';
 import 'package:flutter/material.dart';
 import 'calendar.dart';
 import 'detail.dart';
-import 'note.dart';
 import 'profile.dart';
 import 'story.dart';
+import 'package:con_nected/eventDemo.dart';
+import 'package:con_nected/doneevent.dart';
 
 
 void main() {
@@ -135,12 +136,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
-  List<Note> ALL = Note.SCRIPT;
-  List<dynamic> FOUND = [];
+  List<EventDemo> ALL = EventDemo.SCRIPT;
+
+  // eventDEMO
+  List<EventDemo> FOUND = [];
   int _currentIndex = 0;
   String _appBarTitle = 'Event'; // 默认标题为'Event'
-
-
 
   @override
   initState() {
@@ -149,11 +150,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _runFilter(String enteredKeyword) {
-    List<dynamic> results = [];
+    List<EventDemo> results = [];
     if (enteredKeyword.isEmpty) {results = ALL;}
-    else {results = ALL.where((user) => user.id.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.address.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
+    else {results =
+        ALL.where((user) => user.tag.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
+        ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
+            ALL.where((user) => user.description.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
+            ALL.where((user) => user.location.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
     setState(() {FOUND = results;});
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -189,12 +195,13 @@ class _HomePageState extends State<HomePage> {
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       child: ListTile(
                         leading: Icon(
-                          FOUND[index].picture,
+                          Icons.settings_phone,
+                          // FOUND[index].picture,
                           color: Colors.red,
                           size: 35,
                         ),
-                        title: Text(FOUND[index].id+'\n'+FOUND[index].time+" - "+FOUND[index].name,),
-                        subtitle: Text(FOUND[index].address),
+                        title: Text(FOUND[index].datetime.toString()+'\n'+FOUND[index].name+" - "+FOUND[index].tag,),
+                        subtitle: Text(FOUND[index].location),
                         onTap: () {
                           Navigator.push(
                             context,
@@ -310,16 +317,28 @@ class _HomePageState extends State<HomePage> {
               icon: const Icon(Icons.calendar_month),
             ),
             IconButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: ()  {
+                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => Createevent()));
+                        builder: (context) => Createevent(
+                          addTaskCallback: (newEvent) {
+                            setState(() {
+                              FOUND.add(newEvent);
+                            });
+                          },
+                        )));
+
               },
               icon: const Icon(Icons.add),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => Doneevent()));
+              },
               icon: const Icon(Icons.done_outlined),
             ),
           ],
@@ -349,5 +368,4 @@ class _HomePageState extends State<HomePage> {
         return null;
     }
   }
-
 }
