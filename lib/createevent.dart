@@ -4,45 +4,22 @@ import 'package:intl/intl.dart';
 import 'from_event_to_main.dart';
 
 class Createevent extends StatefulWidget {
-  final EventDemo? event;
-
-  final Function(EventDemo)? addTaskCallback;
-
-  Createevent({this.addTaskCallback, this.event});
-
   @override
   _CreateeventState createState() => _CreateeventState();
 }
 
 class _CreateeventState extends State<Createevent> {
-  late String name;
-  late String selectedTag;
-  late DateTime selectedDateTime;
-  late String location;
-  late String contact;
-  late String notificationType;
-  late String description;
+  late EventDemo event;
+  bool create = true;
 
   @override
-  void initState() {
-    super.initState();
-    if (widget.event != null) {
-      name = widget.event!.name;
-      selectedTag = widget.event!.tag;
-      selectedDateTime = widget.event!.datetime;
-      location = widget.event!.location;
-      contact = widget.event!.contact;
-      notificationType = widget.event!.notificationType;
-      description = widget.event!.description;
-    } else {
-      name = "";
-      selectedTag = "Community Service";
-      selectedDateTime = DateTime.now();
-      location = "";
-      contact = "";
-      notificationType = "None";
-      description = "";
-    }
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final EventDemo? passedEvent =
+        ModalRoute.of(context)?.settings.arguments as EventDemo?;
+
+    event = passedEvent ?? EventDemo.empty();
+    create = event.isEmpty;
   }
 
   void _showSuccessDialog(BuildContext context, EventDemo newEvent) {
@@ -55,14 +32,14 @@ class _CreateeventState extends State<Createevent> {
             '/',
             arguments: FromEventToMain(
               eventDemo: newEvent,
-              anotherParam: widget.event != null ? "edit" : "create", // 举例
+              createOrEdit: create ? "create" : "edit",
             ),
           );
         });
 
-        return const AlertDialog(
-          title: Text("Success"),
-          content: Text("Event Created！"),
+        return  AlertDialog(
+          title: const Text("Success"),
+          content: create?const Text("Event Created！"):const Text("Event Updated！"),
         );
       },
     );
@@ -71,18 +48,18 @@ class _CreateeventState extends State<Createevent> {
   Future<void> _selectDateTime(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: selectedDateTime,
+      initialDate: event.datetime,
       firstDate: DateTime.now(),
       lastDate: DateTime(2101),
     );
-    if (picked != null && picked != selectedDateTime) {
+    if (picked != null && picked != event.datetime) {
       final TimeOfDay? selectedTime = await showTimePicker(
         context: context,
-        initialTime: TimeOfDay.fromDateTime(selectedDateTime),
+        initialTime: TimeOfDay.fromDateTime(event.datetime),
       );
       if (selectedTime != null) {
         setState(() {
-          selectedDateTime = DateTime(
+          event.datetime = DateTime(
             picked.year,
             picked.month,
             picked.day,
@@ -98,7 +75,7 @@ class _CreateeventState extends State<Createevent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.event == null ? "Create event" : "Edit event"),
+        title: Text(event.isEmpty ? "Create event" : "Edit event"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -113,17 +90,17 @@ class _CreateeventState extends State<Createevent> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
-                initialValue: name,
+                initialValue: event.name,
                 decoration: const InputDecoration(labelText: "Event Name"),
                 onChanged: (value) {
                   setState(() {
-                    name = value;
+                    event.name = value;
                   });
                 },
               ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
-                value: selectedTag,
+                value: event.tag,
                 items: [
                   "Community Service",
                   "Law Consult",
@@ -138,7 +115,7 @@ class _CreateeventState extends State<Createevent> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    selectedTag = value!;
+                    event.tag = value!;
                   });
                 },
                 decoration: const InputDecoration(labelText: "Tag"),
@@ -151,34 +128,34 @@ class _CreateeventState extends State<Createevent> {
                 child: InputDecorator(
                   decoration: const InputDecoration(labelText: "Date and Time"),
                   child: Text(
-                    DateFormat('yyyy-MM-dd HH:mm').format(selectedDateTime),
+                    DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
                     style: const TextStyle(fontSize: 16),
                   ),
                 ),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                initialValue: location,
+                initialValue: event.location,
                 decoration: const InputDecoration(labelText: "Location"),
                 onChanged: (value) {
                   setState(() {
-                    location = value;
+                    event.location = value;
                   });
                 },
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                initialValue: contact,
+                initialValue: event.contact,
                 decoration: const InputDecoration(labelText: "Contact"),
                 onChanged: (value) {
                   setState(() {
-                    contact = value;
+                    event.contact = value;
                   });
                 },
               ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
-                value: notificationType,
+                value: event.notificationType,
                 items: [
                   "None",
                   "5min before event",
@@ -193,18 +170,19 @@ class _CreateeventState extends State<Createevent> {
                 }).toList(),
                 onChanged: (value) {
                   setState(() {
-                    notificationType = value!;
+                    event.notificationType = value!;
                   });
                 },
-                decoration: const InputDecoration(labelText: "Notification Type"),
+                decoration:
+                    const InputDecoration(labelText: "Notification Type"),
               ),
               const SizedBox(height: 16.0),
               TextFormField(
-                initialValue: description,
+                initialValue: event.description,
                 decoration: const InputDecoration(labelText: "Description"),
                 onChanged: (value) {
                   setState(() {
-                    description = value;
+                    event.description = value;
                   });
                 },
                 maxLines: 4,
@@ -215,44 +193,33 @@ class _CreateeventState extends State<Createevent> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      EventDemo eventToSave;
-                      if (widget.event == null) {
-                        eventToSave = EventDemo(
+                      // EventDemo eventToSave;
+                      if (create) {
+                        event = EventDemo(
                           id: (EventDemo.SCRIPT.length + 1).toString(),
-                          name: name,
-                          tag: selectedTag,
-                          datetime: selectedDateTime,
-                          location: location,
-                          contact: contact,
-                          notificationType: notificationType,
-                          description: description,
+                          name: event.name,
+                          tag: event.tag,
+                          datetime: event.datetime,
+                          location: event.location,
+                          contact: event.contact,
+                          notificationType: event.notificationType,
+                          description: event.description,
                           editable: true,
                         );
-                      } else {
-                        widget.event!.name = name;
-                        widget.event!.tag = selectedTag;
-                        widget.event!.datetime = selectedDateTime;
-                        widget.event!.location = location;
-                        widget.event!.contact = contact;
-                        widget.event!.notificationType = notificationType;
-                        widget.event!.description = description;
-                        eventToSave = widget.event!;
                       }
-                      // EventDemo.SCRIPT.add(newEvent);
-                      // print(newEvent.toString());
-                      _showSuccessDialog(context, eventToSave);
+                      _showSuccessDialog(context, event);
                     },
-                    child: const Text("Finish"),
+                    child: create?const Text("Create"):const Text("Update"),
                   ),
                   ElevatedButton(
                     onPressed: () {
                       Navigator.pushNamed(context, '/');
                     },
-                    child: const Text("Cancel"),
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.grey),
                     ),
+                    child: const Text("Cancel"),
                   ),
                 ],
               ),

@@ -7,7 +7,7 @@
 // https://stackoverflow.com/questions/66547273/how-can-i-change-the-background-color-of-a-textbutton-in-flutter
 // https://stackoverflow.com/questions/74176046/how-to-put-an-icon-in-the-bottom-right-edge-of-container-in-flutter
 
-import 'package:con_nected/createevent.dart';
+import 'package:con_nected/from_event_to_main.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'eventDemo.dart';
@@ -19,7 +19,6 @@ class Detail extends StatefulWidget {
 }
 
 class _DetailState extends State<Detail> {
-  bool _isEditing = false;
   void _showDeleteConfirmation(BuildContext context, EventDemo event) {
     showDialog(
       context: context,
@@ -37,10 +36,16 @@ class _DetailState extends State<Detail> {
             TextButton(
               child: const Text('Delete'),
               onPressed: () {
-                Navigator.of(context).pop(true);
-                // Assuming you have a way to delete the event, you'd call that here.
-                // Then you'd pop this screen off the navigation stack.
-                Navigator.of(context).pop('deleted');
+                Navigator.pushNamed(
+                  context,
+                  '/',
+                  arguments: FromEventToMain(
+                    eventDemo: event,
+                    createOrEdit: "delete",
+                  ),
+                );
+                // Navigator.of(context).pop(true);
+                // Navigator.of(context).pop('deleted');
               },
             ),
           ],
@@ -49,51 +54,43 @@ class _DetailState extends State<Detail> {
     );
   }
 
-
   @override
   Widget build(BuildContext context) {
-    final EventDemo event = ModalRoute.of(context)!.settings.arguments as EventDemo;
+    final EventDemo event =
+        ModalRoute.of(context)!.settings.arguments as EventDemo;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Information'),
         backgroundColor: Colors.green,
-        actions: event.editable ? [
-          PopupMenuButton<String>(
-            onSelected: (value) {
-              if (value == 'edit') {
-                setState(() {
-                  _isEditing = true;
-                });
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => Createevent(
-                      addTaskCallback: (editedEvent) {
-
-                        // Handle saving the edited event here.
-                        // You may want to pop this screen and update the previous screen.
-                      },
-                      event: event,
+        actions: event.editable
+            ? [
+                PopupMenuButton<String>(
+                  onSelected: (value) {
+                    if (value == 'edit') {
+                      Navigator.pushNamed(
+                        context,
+                        '/createEvent',
+                        arguments: event,
+                      );
+                    } else if (value == 'delete') {
+                      _showDeleteConfirmation(context, event);
+                    }
+                  },
+                  itemBuilder: (BuildContext context) =>
+                      <PopupMenuEntry<String>>[
+                    const PopupMenuItem<String>(
+                      value: 'edit',
+                      child: Text('Edit'),
                     ),
-                  ),
-                );
-              } else if (value == 'delete') {
-                _showDeleteConfirmation(context, event);
-              }
-            },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-              const PopupMenuItem<String>(
-                value: 'edit',
-                child: Text('Edit'),
-              ),
-              const PopupMenuItem<String>(
-                value: 'delete',
-                child: Text('Delete'),
-              ),
-            ],
-          ),
-        ] : null,
+                    const PopupMenuItem<String>(
+                      value: 'delete',
+                      child: Text('Delete'),
+                    ),
+                  ],
+                ),
+              ]
+            : null,
       ),
       body: Center(
         child: Padding(
@@ -120,12 +117,12 @@ class _DetailState extends State<Detail> {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
-               const Text(
+              const Text(
                 "DateTime",
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
               ),
               Text(
-                  DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
+                DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
@@ -161,7 +158,6 @@ class _DetailState extends State<Detail> {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
-
               const Text(
                 "NotificationType",
                 style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
@@ -180,7 +176,6 @@ class _DetailState extends State<Detail> {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20, height: 1),
               ),
-
               const Align(
                 alignment: Alignment.bottomRight,
                 child: Icon(

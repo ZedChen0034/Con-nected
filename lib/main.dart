@@ -23,6 +23,7 @@ void main() {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -185,19 +186,20 @@ class _HomePageState extends State<HomePage> {
     }
 
     if (fromEventToMain != null) {
-      if (fromEventToMain.anotherParam == "create") {
+      if (fromEventToMain.createOrEdit == "create") {
         setState(() {
           FOUND.add(fromEventToMain!.eventDemo);
         });
-      } else if (fromEventToMain.anotherParam == "edit") {
+      } else if (fromEventToMain.createOrEdit == "edit") {
         int indexToUpdate = FOUND
             .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
         if (indexToUpdate != -1) {
-          // 如果找到了相同ID的事件
           setState(() {
             FOUND[indexToUpdate] = fromEventToMain!.eventDemo;
           });
         }
+      }else if (fromEventToMain.createOrEdit == "delete"){
+        FOUND.remove(fromEventToMain.eventDemo);
       }
     }
     return Scaffold(
