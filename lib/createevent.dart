@@ -4,20 +4,44 @@ import 'package:intl/intl.dart';
 
 class Createevent extends StatefulWidget {
 
+  final EventDemo? event;
+
   final Function(EventDemo) addTaskCallback;
-  Createevent({required this.addTaskCallback});
+  Createevent({required this.addTaskCallback, this.event});
   @override
   _CreateeventState createState() => _CreateeventState();
 }
 
 class _CreateeventState extends State<Createevent> {
-  String name = "";
-  String selectedTag = "Community Service";
-  DateTime selectedDateTime = DateTime.now();
-  String location = "";
-  String contact = "";
-  String notificationType = "None";
-  String description = "";
+  late String name;
+  late String selectedTag;
+  late DateTime selectedDateTime;
+  late String location;
+  late String contact;
+  late String notificationType;
+  late String description;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.event != null) {
+      name = widget.event!.name;
+      selectedTag = widget.event!.tag;
+      selectedDateTime = widget.event!.datetime;
+      location = widget.event!.location;
+      contact = widget.event!.contact;
+      notificationType = widget.event!.notificationType;
+      description = widget.event!.description;
+    } else {
+      name = "";
+      selectedTag = "Community Service";
+      selectedDateTime = DateTime.now();
+      location = "";
+      contact = "";
+      notificationType = "None";
+      description = "";
+    }
+  }
   void _showSuccessDialog(BuildContext context,EventDemo newEvent) {
     showDialog(
       context: context,
@@ -25,6 +49,7 @@ class _CreateeventState extends State<Createevent> {
         Future.delayed(Duration(seconds: 1), () {
           // Navigator.of(context).pop();
           widget.addTaskCallback(newEvent);
+          print(newEvent.tag);
           Navigator.pop(context);
           Navigator.popUntil(context, ModalRoute.withName("/"));
         });
@@ -63,9 +88,20 @@ class _CreateeventState extends State<Createevent> {
   }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+          Navigator.popUntil(context, ModalRoute.withName("/"));
+          return false; // Prevent the default behavior
+        },
+    child: Scaffold(
       appBar: AppBar(
-        title: Text("Create event"),
+        title: Text(widget.event == null ? "Create event" : "Edit event"),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.popUntil(context, ModalRoute.withName("/"));
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -74,6 +110,7 @@ class _CreateeventState extends State<Createevent> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               TextFormField(
+                initialValue: name,
                 decoration: InputDecoration(labelText: "Event Name"),
                 onChanged: (value) {
                   setState(() {
@@ -113,6 +150,7 @@ class _CreateeventState extends State<Createevent> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                initialValue: location,
                 decoration: InputDecoration(labelText: "Location"),
                 onChanged: (value) {
                   setState(() {
@@ -122,6 +160,7 @@ class _CreateeventState extends State<Createevent> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                initialValue: contact,
                 decoration: InputDecoration(labelText: "Contact"),
                 onChanged: (value) {
                   setState(() {
@@ -148,6 +187,7 @@ class _CreateeventState extends State<Createevent> {
               ),
               SizedBox(height: 16.0),
               TextFormField(
+                initialValue: description,
                 decoration: InputDecoration(labelText: "Description"),
                 onChanged: (value) {
                   setState(() {
@@ -162,20 +202,32 @@ class _CreateeventState extends State<Createevent> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-
-                      EventDemo newEvent = EventDemo(
-                        id: (EventDemo.SCRIPT.length+1).toString(),
-                        name: name,
-                        tag: selectedTag,
-                        datetime: selectedDateTime,
-                        location: location,
-                        contact: contact,
-                        notificationType: notificationType,
-                        description: description, editable: true,
-                      );
+                      EventDemo eventToSave;
+                      if (widget.event == null) {
+                        eventToSave = EventDemo(
+                          id: (EventDemo.SCRIPT.length + 1).toString(),
+                          name: name,
+                          tag: selectedTag,
+                          datetime: selectedDateTime,
+                          location: location,
+                          contact: contact,
+                          notificationType: notificationType,
+                          description: description,
+                          editable: true,
+                        );
+                      } else {
+                        widget.event!.name = name;
+                        widget.event!.tag = selectedTag;
+                        widget.event!.datetime = selectedDateTime;
+                        widget.event!.location = location;
+                        widget.event!.contact = contact;
+                        widget.event!.notificationType = notificationType;
+                        widget.event!.description = description;
+                        eventToSave = widget.event!;
+                      }
                       // EventDemo.SCRIPT.add(newEvent);
                       // print(newEvent.toString());
-                      _showSuccessDialog(context,newEvent);
+                      _showSuccessDialog(context,eventToSave);
                     },
                     child: Text("Finish"),
                   ),
@@ -194,6 +246,7 @@ class _CreateeventState extends State<Createevent> {
           ),
         ),
       ),
+    ),
     );
   }
 }

@@ -7,12 +7,49 @@
 // https://stackoverflow.com/questions/66547273/how-can-i-change-the-background-color-of-a-textbutton-in-flutter
 // https://stackoverflow.com/questions/74176046/how-to-put-an-icon-in-the-bottom-right-edge-of-container-in-flutter
 
+import 'package:con_nected/createevent.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'eventDemo.dart';
 import 'package:intl/intl.dart';
 
-class Detail extends StatelessWidget {
+class Detail extends StatefulWidget {
+  @override
+  _DetailState createState() => _DetailState();
+}
+
+class _DetailState extends State<Detail> {
+  bool _isEditing = false;
+  void _showDeleteConfirmation(BuildContext context, EventDemo event) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Delete Event'),
+          content: const Text('Are you sure you want to delete this event?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: const Text('Delete'),
+              onPressed: () {
+                Navigator.of(context).pop(true);
+                // Assuming you have a way to delete the event, you'd call that here.
+                // Then you'd pop this screen off the navigation stack.
+                Navigator.of(context).pop('deleted');
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
     final event = ModalRoute.of(context)!.settings.arguments as EventDemo;
@@ -21,6 +58,42 @@ class Detail extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Detail Information'),
         backgroundColor: Colors.green,
+        actions: event.editable ? [
+          PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'edit') {
+                setState(() {
+                  _isEditing = true;
+                });
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => Createevent(
+                      addTaskCallback: (editedEvent) {
+
+                        // Handle saving the edited event here.
+                        // You may want to pop this screen and update the previous screen.
+                      },
+                      event: event,
+                    ),
+                  ),
+                );
+              } else if (value == 'delete') {
+                _showDeleteConfirmation(context, event);
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'edit',
+                child: Text('Edit'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'delete',
+                child: Text('Delete'),
+              ),
+            ],
+          ),
+        ] : null,
       ),
       body: Center(
         child: Padding(

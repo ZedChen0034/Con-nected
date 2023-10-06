@@ -1,13 +1,13 @@
 class EventDemo {
-  final String id;
-  final String name;
-  final String tag;
-  final DateTime datetime;
-  final String location;
-  final String contact;
-  final String notificationType;
-  final String description;
-  final bool editable;
+   String id;
+   String name;
+   String tag;
+   DateTime datetime;
+   String location;
+   String contact;
+   String notificationType;
+   String description;
+   bool editable;
 
   EventDemo({
     required this.id,

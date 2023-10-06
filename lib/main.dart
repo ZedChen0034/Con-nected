@@ -176,6 +176,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
 
+    // print(args);
     return Scaffold(
       appBar: _currentIndex==0?AppBar(
         centerTitle: true,
@@ -204,8 +205,9 @@ class _HomePageState extends State<HomePage> {
                       builder: (context) => Createevent(
                         addTaskCallback: (newEvent) {
                           setState(() {
-                            FOUND.add(newEvent);
-                          });
+                              FOUND.add(newEvent);
+                            }
+                          );
                         },
                       )));
 
@@ -246,7 +248,7 @@ class _HomePageState extends State<HomePage> {
                       ? ListView.builder(
                     itemCount: FOUND.length,
                     itemBuilder: (context, index) => Card(
-                      key: ValueKey(FOUND[index].name),
+                      key: ValueKey(FOUND[index].id),
                       color: Colors.lightGreen[200],
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 10),
@@ -258,7 +260,7 @@ class _HomePageState extends State<HomePage> {
                           size: 35,
                         ),
 
-                        title: Text(DateFormat('yyyy-MM-dd HH:mm').format(FOUND[index].datetime) +'\n'+FOUND[index].name+" - "+FOUND[index].tag,),
+                        title: Text(DateFormat('yyyy-MM-dd HH:mm').format(FOUND[index].datetime) +'\n'+FOUND[index].name+" - "+FOUND[index].tag),
                         subtitle: Text(FOUND[index].location),
                         onTap: () {
                           Navigator.push(
