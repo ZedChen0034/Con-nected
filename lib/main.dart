@@ -63,7 +63,6 @@ class _NavigationExampleState extends State<NavigationExample> {
         onDestinationSelected: (int index) {
           setState(() {
             currentPageIndex = index;
-            print(currentPageIndex);
           });
         },
         indicatorColor: Colors.amber[800],
@@ -151,14 +150,27 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _runFilter(String enteredKeyword) {
-    List<EventDemo> results = [];
-    if (enteredKeyword.isEmpty) {results = ALL;}
-    else {results =
-        ALL.where((user) => user.tag.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
-        ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
-            ALL.where((user) => user.description.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+
-            ALL.where((user) => user.location.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
-    setState(() {FOUND = results;});
+    Set<EventDemo> results = {};
+    if (enteredKeyword.isEmpty) {
+      results = Set.from(ALL);
+    } else {
+      results.addAll(
+          ALL.where((user) => user.tag.toLowerCase().contains(enteredKeyword.toLowerCase()))
+      );
+      results.addAll(
+          ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase()))
+      );
+      results.addAll(
+          ALL.where((user) => user.description.toLowerCase().contains(enteredKeyword.toLowerCase()))
+      );
+      results.addAll(
+          ALL.where((user) => user.location.toLowerCase().contains(enteredKeyword.toLowerCase()))
+      );
+    }
+
+    setState(() {
+      FOUND = results.toList();
+    });
   }
 
 
@@ -190,7 +202,7 @@ class _HomePageState extends State<HomePage> {
                       ? ListView.builder(
                     itemCount: FOUND.length,
                     itemBuilder: (context, index) => Card(
-                      key: ValueKey(FOUND[index].id),
+                      key: ValueKey(FOUND[index].name),
                       color: Colors.lightGreen[200],
                       elevation: 4,
                       margin: const EdgeInsets.symmetric(vertical: 10),
