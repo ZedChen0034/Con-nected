@@ -4,7 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
 class CustomMasonryGridView extends StatelessWidget {
   final List<GridItem> items;
-  final void Function(int index)? onLikeToggle;
+  final void Function(String index)? onLikeToggle;
 
   CustomMasonryGridView({super.key, required this.items, this.onLikeToggle});
 
@@ -58,7 +58,7 @@ class CustomMasonryGridView extends StatelessWidget {
                         GestureDetector(
                           onTap: () {
                             if (onLikeToggle != null) {
-                              onLikeToggle!(index);
+                              onLikeToggle!(items[index].id);
                             }
                           },
                           child: Icon(

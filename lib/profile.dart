@@ -12,6 +12,8 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   TabController? _tabController;
   List<GridItem> myItems = GridItem.profileList;
+  List<GridItem> likedStories = GridItem.likedStories;
+
   @override
   void initState() {
     super.initState();
@@ -50,7 +52,7 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                   isScrollable:true,
                   tabs: const [
                     Tab(text: 'My Journal',),
-                    Tab(text: 'Favorites'),
+                    Tab(text: 'Liked Stories'),
                     Tab(text: 'Watch Later'),
                     Tab(text: 'Watch Later'),
                     Tab(text: 'Watch Later'),
@@ -65,7 +67,20 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                           controller: _tabController,
                           children: [
                             CustomMasonryGridView(items: myItems),
-                            CustomMasonryGridView(items: myItems),
+                            CustomMasonryGridView(items: likedStories,
+                                onLikeToggle: (String id) {
+                                  setState(() {
+                                    // Find the item by id
+                                    final item = GridItem.storyList.firstWhere((item) => item.id == id);
+                                    // Toggle the liked property
+                                    item.liked = !(item.liked ?? false);
+                                    if (item.liked == false) {
+                                      likedStories.remove(item);
+                                    }else{
+                                      likedStories.add(item);
+                                    }
+                                  });
+                                }),
                             CustomMasonryGridView(items: myItems),
                             CustomMasonryGridView(items: myItems),
                             CustomMasonryGridView(items: myItems),

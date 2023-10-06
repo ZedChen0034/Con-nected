@@ -10,16 +10,27 @@ class Story extends StatefulWidget {
 class _StoryState extends State<Story> {
 
   List<GridItem> myItems = GridItem.storyList;
+  List<GridItem> likedStories = GridItem.likedStories;
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomMasonryGridView(items: myItems,
-        onLikeToggle: (index) {
+        onLikeToggle: (String id) {
           setState(() {
-            myItems[index].liked = !(myItems[index].liked ?? false);
+            // Find the item by id
+            final item = myItems.firstWhere((item) => item.id == id);
+            // Toggle the liked property
+            item.liked = !(item.liked ?? false);
+            if (item.liked == false) {
+              likedStories.remove(item);
+            }else{
+              likedStories.add(item);
+            }
           });
-        },),
+        },
+      ),
     );
   }
 }
