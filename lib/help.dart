@@ -34,7 +34,7 @@ class _HelpState extends State<Help> {
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
-                _buildListItem("Document", "Personal Document"),
+                _buildListItem("Document", "Personal Documents"),
                 _buildListItem("Jobs", "Job Offers"),
                 _buildListItem("Public Resources", "Restaurant / Shelter"),
                 _buildListItem("Emergency Contact"),
