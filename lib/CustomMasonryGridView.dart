@@ -67,7 +67,7 @@ class CustomMasonryGridView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Text(items[index].like!), // 100表示点赞数量，你可以根据实际数据调整
+                        Text(items[index].like!),
                       ],
                     ),
                   ],

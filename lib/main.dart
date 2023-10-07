@@ -9,6 +9,7 @@
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
 import 'package:con_nected/createevent.dart';
+import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
 import 'calendar.dart';
 import 'detail.dart';
@@ -45,7 +46,6 @@ class MyApp extends StatelessWidget {
         '/help': (context) => Help(),
         '/chat': (context) => Chat(),
         '/documentDetail': (context) => DocumentDetail(),
-
       },
     );
   }
@@ -337,11 +337,8 @@ class _HomePageState extends State<HomePage> {
           Center(
             child: Help(),
           ),
-          const Center(
-            child: Text(
-              'Journal Page Content', // 替换为实际的Profile页面内容
-              style: TextStyle(fontSize: 24),
-            ),
+          Center(
+            child: Journal(),
           ),
           Center(
             child: Profile(),
