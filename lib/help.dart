@@ -6,7 +6,6 @@ class Help extends StatefulWidget {
 }
 
 class _HelpState extends State<Help> {
-  List<String> messages = [];
 
   @override
   Widget build(BuildContext context) {
@@ -16,6 +15,18 @@ class _HelpState extends State<Help> {
         centerTitle: true,
         title: const Text("Helping Center"),
         automaticallyImplyLeading: false,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.blue,
+                Colors.purple,
+              ],
+            ),
+          ),
+        ),
       ),
       body: Stack(
         children: <Widget>[
@@ -46,12 +57,12 @@ class _HelpState extends State<Help> {
       elevation: 5,
       child: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(  // Add gradient background
+          gradient: LinearGradient(  // More vibrant gradient
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Colors.white,
-              Colors.blueGrey[50]!,
+              Colors.purple[100]!,
+              Colors.blue[100]!,
             ],
           ),
         ),
@@ -62,19 +73,17 @@ class _HelpState extends State<Help> {
             Text(
               title,
               style: TextStyle(
-                color: Colors.black,
+                color: Colors.black87,
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-
               ),
             ),
             if (description != null && description.isNotEmpty)
               Text(
                 description,
                 style: TextStyle(
-                  color: Colors.grey[600],
+                  color: Colors.grey[800],
                   fontSize: 16,
-
                 ),
               ),
           ],
