@@ -41,6 +41,16 @@ class EventDemo {
         notificationType: '30min before event',
         description: 'A conference discussing the latest in tech.',
         editable: true),
+    EventDemo(
+        id: "3",
+        name: 'Farm Working',
+        tag: 'DATO courses',
+        datetime: DateTime(2023, 11, 12, 12, 30),
+        location: 'Bunda St, Canberra ACT 2601',
+        contact: '0444444444',
+        notificationType: '5min before event',
+        description: 'A conference discussing the latest in tech.',
+        editable: false)
   ];
 
   EventDemo.empty()
