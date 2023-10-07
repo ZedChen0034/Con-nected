@@ -25,7 +25,6 @@ void main() {
   runApp(const MyApp());
 }
 
-
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -202,7 +201,7 @@ class _HomePageState extends State<HomePage> {
             FOUND[indexToUpdate] = fromEventToMain!.eventDemo;
           });
         }
-      }else if (fromEventToMain.createOrEdit == "delete"){
+      } else if (fromEventToMain.createOrEdit == "delete") {
         FOUND.remove(fromEventToMain.eventDemo);
       }
     }
@@ -211,29 +210,31 @@ class _HomePageState extends State<HomePage> {
           ? AppBar(
               centerTitle: true,
               title: const Text("Event"),
-              backgroundColor: Colors.lightGreen[900],
+              backgroundColor: Colors.deepPurple[700],
               leading: IconButton(
                 onPressed: () {},
-                icon: const Icon(Icons.notifications_outlined),
+                icon: const Icon(Icons.notifications_outlined,
+                    color: Colors.white),
               ),
               actions: [
                 IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/calendar');
                   },
-                  icon: const Icon(Icons.calendar_month),
+                  icon: const Icon(Icons.calendar_month, color: Colors.white),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/createEvent');
                   },
-                  icon: const Icon(Icons.add),
+                  icon:
+                      const Icon(Icons.add_circle_outline, color: Colors.white),
                 ),
                 IconButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/doneEvent');
                   },
-                  icon: const Icon(Icons.done_outlined),
+                  icon: const Icon(Icons.done_all, color: Colors.white),
                 ),
               ],
             )
@@ -242,7 +243,7 @@ class _HomePageState extends State<HomePage> {
         index: _currentIndex,
         children: [
           Padding(
-            padding: const EdgeInsets.all(10),
+            padding: const EdgeInsets.all(15.0),
             child: Column(
               children: [
                 const SizedBox(
@@ -250,8 +251,17 @@ class _HomePageState extends State<HomePage> {
                 ),
                 TextField(
                   onChanged: (value) => _runFilter(value),
-                  decoration: const InputDecoration(
-                      labelText: 'Search', suffixIcon: Icon(Icons.search)),
+                  decoration: InputDecoration(
+                    labelText: 'Search',
+                    suffixIcon:
+                        const Icon(Icons.search, color: Colors.deepPurple),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide.none,
+                    ),
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                  ),
                 ),
                 const SizedBox(
                   height: 20,
@@ -262,36 +272,55 @@ class _HomePageState extends State<HomePage> {
                           itemCount: FOUND.length,
                           itemBuilder: (context, index) => Card(
                             key: ValueKey(FOUND[index].id),
-                            color: Colors.lightGreen[200],
-                            elevation: 4,
-                            margin: const EdgeInsets.symmetric(vertical: 10),
-                            child: ListTile(
-                              leading: const Icon(
-                                Icons.settings_phone,
-                                // FOUND[index].picture,
-                                color: Colors.red,
-                                size: 35,
-                              ),
-                              title: Text(DateFormat('yyyy-MM-dd HH:mm')
-                                      .format(FOUND[index].datetime) +
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: Colors.transparent,
+                            elevation: 8,
+                            margin: const EdgeInsets.symmetric(vertical: 10,horizontal: 10),
+                            child:Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [Colors.purple, Colors.blue], // gradient colors
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(15.0),
+                                )
+                              ,child:  ListTile(
+                            leading: const Icon(
+                            Icons.event,
+                            color: Colors.white,
+                            size: 35,
+                            ),
+                            title: Text(
+                              DateFormat('yyyy-MM-dd HH:mm')
+                                  .format(FOUND[index].datetime) +
                                   '\n' +
                                   FOUND[index].name +
                                   " - " +
-                                  FOUND[index].tag),
-                              subtitle: Text(FOUND[index].location),
-                              onTap: () {
-                                Navigator.pushNamed(
-                                  context,
-                                  '/detail',
-                                  arguments: FOUND[index],
-                                );
-                              },
+                                  FOUND[index].tag,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            subtitle: Text(
+                              FOUND[index].location,
+                              style:  TextStyle(
+                                  color: Colors.white60),
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(
+                                context,
+                                '/detail',
+                                arguments: FOUND[index],
+                              );
+                            },
+                          )
                             ),
                           ),
                         )
-                      : const Text(
+                      :  Text(
                           'No results found',
-                          style: TextStyle(fontSize: 24),
+                          style: TextStyle(fontSize: 24, color: Colors.deepPurple[700]),
                         ),
                 ),
               ],
