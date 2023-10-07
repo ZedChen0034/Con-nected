@@ -18,6 +18,7 @@ import 'package:con_nected/eventDemo.dart';
 import 'package:con_nected/doneevent.dart';
 import 'package:intl/intl.dart';
 import 'from_event_to_main.dart';
+import 'help.dart';
 
 void main() {
   runApp(const MyApp());
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/createEvent': (context) => Createevent(),
         '/doneEvent': (context) => Doneevent(),
         '/detail': (context) => Detail(),
+        '/help': (context) => Help(),
       },
     );
   }
@@ -296,11 +298,8 @@ class _HomePageState extends State<HomePage> {
           Center(
             child: Story(),
           ),
-          const Center(
-            child: Text(
-              'Help Page Content', // 替换为实际的Profile页面内容
-              style: TextStyle(fontSize: 24),
-            ),
+          Center(
+            child: Help(),
           ),
           const Center(
             child: Text(
