@@ -82,23 +82,34 @@ class _CreateeventState extends State<Createevent> {
             Navigator.pushNamed(context, '/');
           },
         ),
+        backgroundColor: Colors.lightBlue,
+        elevation: 0,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
+              children: [
+              Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+              child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    children: [
+
               TextFormField(
                 initialValue: event.name,
-                decoration: const InputDecoration(labelText: "Event Name"),
+                decoration: const InputDecoration(labelText: "Event Name",              prefixIcon: Icon(Icons.event, color: Colors.deepPurple),  // Icon for Event Name
+                ),
                 onChanged: (value) {
                   setState(() {
                     event.name = value;
                   });
                 },
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               DropdownButtonFormField<String>(
                 value: event.tag,
                 items: [
@@ -120,7 +131,7 @@ class _CreateeventState extends State<Createevent> {
                 },
                 decoration: const InputDecoration(labelText: "Tag"),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               InkWell(
                 onTap: () {
                   _selectDateTime(context);
@@ -133,7 +144,7 @@ class _CreateeventState extends State<Createevent> {
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               TextFormField(
                 initialValue: event.location,
                 decoration: const InputDecoration(labelText: "Location"),
@@ -143,7 +154,7 @@ class _CreateeventState extends State<Createevent> {
                   });
                 },
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               TextFormField(
                 initialValue: event.contact,
                 decoration: const InputDecoration(labelText: "Contact"),
@@ -153,7 +164,7 @@ class _CreateeventState extends State<Createevent> {
                   });
                 },
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               DropdownButtonFormField<String>(
                 value: event.notificationType,
                 items: [
@@ -176,7 +187,7 @@ class _CreateeventState extends State<Createevent> {
                 decoration:
                     const InputDecoration(labelText: "Notification Type"),
               ),
-              const SizedBox(height: 16.0),
+              // const SizedBox(height: 10.0),
               TextFormField(
                 initialValue: event.description,
                 decoration: const InputDecoration(labelText: "Description"),
@@ -187,7 +198,7 @@ class _CreateeventState extends State<Createevent> {
                 },
                 maxLines: 4,
               ),
-              const SizedBox(height: 16.0),
+              const SizedBox(height: 10.0),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -209,6 +220,10 @@ class _CreateeventState extends State<Createevent> {
                       }
                       _showSuccessDialog(context, event);
                     },
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(Colors.deepPurple),  // Custom Color for Button
+                      elevation: MaterialStateProperty.all(5),  // Shadow under Button
+                    ),
                     child: create?const Text("Create"):const Text("Update"),
                   ),
                   ElevatedButton(
@@ -218,12 +233,13 @@ class _CreateeventState extends State<Createevent> {
                     style: ButtonStyle(
                       backgroundColor:
                           MaterialStateProperty.all<Color>(Colors.grey),
+                      elevation: MaterialStateProperty.all(5),  // Shadow under Button
                     ),
                     child: const Text("Cancel"),
                   ),
                 ],
               ),
-            ],
+            ])))],
           ),
         ),
       ),

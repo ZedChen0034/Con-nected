@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 class Help extends StatefulWidget {
   @override
   _HelpState createState() => _HelpState();
@@ -57,46 +56,54 @@ class _HelpState extends State<Help> {
   }
 
   Widget _buildListItem(String title, [String? description]) {
-    return Card(
-      margin: const EdgeInsets.only(bottom: 15),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      elevation: 5,
-      child: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(  // More vibrant gradient
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              Colors.purple[100]!,
-              Colors.blue[100]!,
+    return GestureDetector(
+      onTap: () {
+        if (title == "Document") {
+          Navigator.pushNamed(context, '/documentDetail');
+        }
+      },
+      child: Card(
+        margin: const EdgeInsets.only(bottom: 15),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        elevation: 5,
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(  // More vibrant gradient
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.purple[100]!,
+                Colors.blue[100]!,
+              ],
+            ),
+          ),
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                title,
+                style: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              if (description != null && description.isNotEmpty)
+                Text(
+                  description,
+                  style: TextStyle(
+                    color: Colors.grey[800],
+                    fontSize: 16,
+                  ),
+                ),
             ],
           ),
         ),
-        padding: const EdgeInsets.all(12.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            if (description != null && description.isNotEmpty)
-              Text(
-                description,
-                style: TextStyle(
-                  color: Colors.grey[800],
-                  fontSize: 16,
-                ),
-              ),
-          ],
-        ),
       ),
     );
+
   }
 }
