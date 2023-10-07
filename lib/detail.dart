@@ -62,7 +62,7 @@ class _DetailState extends State<Detail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Information'),
-        backgroundColor: Colors.green,
+        backgroundColor: Colors.green, // 深绿色背景
         actions: event.editable
             ? [
                 PopupMenuButton<String>(
@@ -92,101 +92,128 @@ class _DetailState extends State<Detail> {
               ]
             : null,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: SingleChildScrollView(
-              child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text(
-                "Event Name",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
-              ),
-              Text(
-                event.name,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Text(
-                "Tag",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
-              ),
-              Text(
-                event.tag,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Text(
-                "DateTime",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
-              ),
-              Text(
-                DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
-                style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Text(
-                "Location",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 2),
-              ),
-              Text(
-                event.location,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              ElevatedButton(
-                child: const Text(
-                  "Google Map - Click to Open",
-                  style: TextStyle(fontSize: 15),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: SingleChildScrollView(
+            child: Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0),
                 ),
-                style: const ButtonStyle(
-                    backgroundColor: MaterialStatePropertyAll(Colors.red)),
-                onPressed: () async {
-                  String A =
-                      "https://www.google.com/maps/place/" + event.location;
-                  var url = Uri.parse(A);
-                  await launchUrl(url);
-                },
-              ),
-              const Text(
-                "Contact",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
-              ),
-              Text(
-                event.contact,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Text(
-                "NotificationType",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
-              ),
-              Text(
-                event.notificationType,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Text(
-                "Description",
-                style: TextStyle(color: Colors.green, fontSize: 20, height: 3),
-              ),
-              Text(
-                event.description,
-                style: const TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 20, height: 1),
-              ),
-              const Align(
-                alignment: Alignment.bottomRight,
-                child: Icon(
-                  Icons.directions_run,
-                  color: Colors.green,
-                  size: 39,
-                ),
-              ),
-            ],
-          )),
-        ),
+                elevation: 8,
+                child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          "Event Name",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 2),
+                        ),
+                        Text(
+                          event.name,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Text(
+                          "Tag",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 2),
+                        ),
+                        Text(
+                          event.tag,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Text(
+                          "DateTime",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 2),
+                        ),
+                        Text(
+                          DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Text(
+                          "Location",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 2),
+                        ),
+                        Text(
+                          event.location,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        ElevatedButton(
+                          child: const Text(
+                            "Google Map - Click to Open",
+                            style: TextStyle(fontSize: 15),
+                          ),
+                          style: const ButtonStyle(
+                              backgroundColor:
+                                  MaterialStatePropertyAll(Colors.red)),
+                          onPressed: () async {
+                            String A = "https://www.google.com/maps/place/" +
+                                event.location;
+                            var url = Uri.parse(A);
+                            await launchUrl(url);
+                          },
+                        ),
+                        const Text(
+                          "Contact",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 3),
+                        ),
+                        Text(
+                          event.contact,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Text(
+                          "NotificationType",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 3),
+                        ),
+                        Text(
+                          event.notificationType,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Text(
+                          "Description",
+                          style: TextStyle(
+                              color: Colors.green, fontSize: 20, height: 3),
+                        ),
+                        Text(
+                          event.description,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              height: 1),
+                        ),
+                        const Align(
+                          alignment: Alignment.bottomRight,
+                          child: Icon(
+                            Icons.directions_run,
+                            color: Colors.green,
+                            size: 39,
+                          ),
+                        ),
+                      ],
+                    )))),
       ),
     );
   }
