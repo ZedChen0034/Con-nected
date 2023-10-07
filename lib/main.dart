@@ -20,6 +20,7 @@ import 'package:intl/intl.dart';
 import 'from_event_to_main.dart';
 import 'help.dart';
 import 'chat.dart';
+import 'DocumentDetail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -43,6 +44,8 @@ class MyApp extends StatelessWidget {
         '/detail': (context) => Detail(),
         '/help': (context) => Help(),
         '/chat': (context) => Chat(),
+        '/documentDetail': (context) => DocumentDetail(),
+
       },
     );
   }
