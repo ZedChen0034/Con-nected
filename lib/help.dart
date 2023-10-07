@@ -43,7 +43,15 @@ class _HelpState extends State<Help> {
               ],
             ),
           ),
+
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.pushNamed(context, '/chat');
+        },
+        child: Icon(Icons.chat_bubble),
+        backgroundColor: Colors.purple,
       ),
     );
   }

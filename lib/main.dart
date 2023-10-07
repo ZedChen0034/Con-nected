@@ -19,6 +19,7 @@ import 'package:con_nected/doneevent.dart';
 import 'package:intl/intl.dart';
 import 'from_event_to_main.dart';
 import 'help.dart';
+import 'chat.dart';
 
 void main() {
   runApp(const MyApp());
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
         '/doneEvent': (context) => Doneevent(),
         '/detail': (context) => Detail(),
         '/help': (context) => Help(),
+        '/chat': (context) => Chat(),
       },
     );
   }
