@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'eventDemo.dart';
+
 /// Reference to https://pub.dev/packages/table_calendar
 
 class Calendar extends StatefulWidget {
@@ -15,6 +17,7 @@ class _CalendarState extends State<Calendar>{
   DateTime _focusedDay = DateTime.now();
   DateTime? _selectedDay;
   late final ValueNotifier<List<Event>> _selectedEvents;
+  //List<EventDemo> events = EventDemo.SCRIPT;
 
   Map<DateTime, List<Event>> events = {
     DateTime.utc(2023,10,2): [const Event("Meeting")],
@@ -41,7 +44,7 @@ class _CalendarState extends State<Calendar>{
       body: Column(
         children: [
           TableCalendar(
-            focusedDay: DateTime.now(),
+            focusedDay: _focusedDay,
             firstDay: DateTime(1900),
             lastDay: DateTime(2900),
             calendarFormat: _calendarFormat,
