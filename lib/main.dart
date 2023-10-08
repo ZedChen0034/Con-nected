@@ -19,7 +19,6 @@ import 'profile.dart';
 import 'story.dart';
 import 'package:con_nected/Component/eventDemo.dart';
 import 'package:con_nected/doneevent.dart';
-import 'package:intl/intl.dart';
 import 'Component/from_event_to_main.dart';
 import 'help.dart';
 import 'chat.dart';
@@ -195,9 +194,14 @@ class _HomePageState extends State<HomePage> {
 
     if (fromEventToMain != null) {
       if (fromEventToMain.createOrEdit == "create") {
-        setState(() {
-          FOUND.add(fromEventToMain!.eventDemo);
-        });
+        int indexToUpdate = FOUND
+            .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
+        if (indexToUpdate == -1) {
+          setState(() {
+            FOUND.add(fromEventToMain!.eventDemo);
+          });
+        }
+
       } else if (fromEventToMain.createOrEdit == "edit") {
         int indexToUpdate = FOUND
             .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
