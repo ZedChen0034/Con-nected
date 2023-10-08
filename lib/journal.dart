@@ -1,6 +1,7 @@
 
 import 'package:con_nected/GridItems/JournalGridItem.dart';
 import 'package:con_nected/GridView/JournalGridView.dart';
+import 'package:con_nected/JournalDetail.dart';
 import 'package:flutter/material.dart';
 import 'CreateJournal.dart';
 
@@ -41,8 +42,7 @@ class _JournalState extends State<Journal> {
               item.title.toLowerCase().contains(searchText) ||
               (item.reflection.toLowerCase().contains(searchText))
           ).toList();
-          _filteredItems = searchResults.where((item) => item.isPublic).toList(); // Again, filter based on isPublic attribute
-
+          _filteredItems = searchResults.where((item) => item.isPublic).toList();
         }
       });
     });
@@ -93,6 +93,24 @@ class _JournalState extends State<Journal> {
               likedJournals.add(item);
             }
           });
+        },
+        onItemTap: (JournalGridItem item) {  // Assuming you've added an `onItemTap` callback to your JournalGridView widget.
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => JournalDetail(journal: item,
+                onLikedChanged: (updatedJournal) {
+                  setState(() {
+                    // Find the index of the journal you want to update
+                    int index = myItems.indexWhere((j) => j.id == updatedJournal.id); // Assuming you have an id for each journal.
+                    if (index != -1) {
+                      myItems[index] = updatedJournal;
+                    }
+                  });
+                },
+              ),
+            ),
+          );
         },
       ),
       floatingActionButton: FloatingActionButton(

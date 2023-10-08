@@ -3,6 +3,7 @@ import 'package:con_nected/GridItems/JournalGridItem.dart';
 import 'package:con_nected/GridItems/StoryGridItem.dart';
 import 'package:con_nected/GridView/JournalGridView.dart';
 import 'package:con_nected/GridView/StoryGridView.dart';
+import 'package:con_nected/JournalDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -72,7 +73,24 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            JournalGridView(items: myJournals),
+                            JournalGridView(items: myJournals,onItemTap: (JournalGridItem item) {  // Assuming you've added an `onItemTap` callback to your JournalGridView widget.
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => JournalDetail(journal: item,
+                                    onLikedChanged: (updatedJournal) {
+                                      setState(() {
+                                        // Find the index of the journal you want to update
+                                        int index = myItems.indexWhere((j) => j.id == updatedJournal.id); // Assuming you have an id for each journal.
+                                        if (index != -1) {
+                                          myItems[index] = updatedJournal;
+                                        }
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },),
                             StoryGridView(items: likedStories,
                                 onLikeToggle: (String id) {
                                   setState(() {

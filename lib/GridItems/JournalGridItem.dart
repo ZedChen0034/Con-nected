@@ -35,7 +35,7 @@ class JournalGridItem {
         liked: true,
         isPublic: true,
         author: "me",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "1",
         feeling: "Great",
@@ -46,7 +46,7 @@ class JournalGridItem {
         like: "23",
         liked: true,
         author: "me",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "2",
         feeling: "Average",
@@ -57,7 +57,7 @@ class JournalGridItem {
         like: "23",
         liked: false,
         author: "me",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "3",
         feeling: "Average",
@@ -68,7 +68,7 @@ class JournalGridItem {
         like: "23",
         liked: false,
         author: "me",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "4",
         feeling: "Average",
@@ -79,7 +79,7 @@ class JournalGridItem {
         like: "23",
         liked: true,
         author: "David",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "5",
         feeling: "Average",
@@ -90,7 +90,7 @@ class JournalGridItem {
         like: "23",
         liked: true,
         author: "Felix",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "6",
         feeling: "Average",
@@ -101,7 +101,7 @@ class JournalGridItem {
         like: "23",
         liked: false,
         author: "Harry",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "7",
         feeling: "Average",
@@ -112,7 +112,7 @@ class JournalGridItem {
         like: "23",
         liked: false,
         author: "Xavier",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
     JournalGridItem(
         id: "8",
         feeling: "Bad",
@@ -123,7 +123,7 @@ class JournalGridItem {
         like: "23",
         liked: false,
         author: "Zed",
-        reflection: "i really enjoy the progress"),
+        reflection: "In episode 2 of The Secret Life of Prisons, Phil and Paula hear what it's like to live in The Cell. Wrongly-imprisoned journalist Raphael Rowe and author and blogger David Breakspear share their stories of living in a cell. Carl Cattermole is an award-winning dramatist and author, he writes and delivers a powerful piece about living in prison. Dr Kimmett Edgar reflects on the true meaning behind prison related headlines and statistics. And poet, Mr Gee, delivers his poem at the end of the episode, written during the recording."),
   ];
   static List<JournalGridItem> likedJournals =
       journalList.where((item) => item.liked == true).toList();
