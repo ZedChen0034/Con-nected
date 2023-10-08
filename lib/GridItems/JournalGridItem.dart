@@ -78,7 +78,7 @@ class JournalGridItem {
         theme: "Pressure",
         like: "23",
         liked: true,
-        author: "me",
+        author: "David",
         reflection: "i really enjoy the progress"),
     JournalGridItem(
         id: "5",
@@ -89,7 +89,7 @@ class JournalGridItem {
         theme: "Pressure",
         like: "23",
         liked: true,
-        author: "me",
+        author: "Felix",
         reflection: "i really enjoy the progress"),
     JournalGridItem(
         id: "6",
@@ -99,8 +99,8 @@ class JournalGridItem {
         title: "adafafsdffsfafaafwadafafsdffsfafaafw",
         theme: "Pressure",
         like: "23",
-        liked: true,
-        author: "me",
+        liked: false,
+        author: "Harry",
         reflection: "i really enjoy the progress"),
     JournalGridItem(
         id: "7",
@@ -111,7 +111,7 @@ class JournalGridItem {
         theme: "Pressure",
         like: "23",
         liked: false,
-        author: "me",
+        author: "Xavier",
         reflection: "i really enjoy the progress"),
     JournalGridItem(
         id: "8",
@@ -122,7 +122,7 @@ class JournalGridItem {
         theme: "Pressure",
         like: "23",
         liked: false,
-        author: "me",
+        author: "Zed",
         reflection: "i really enjoy the progress"),
   ];
   static List<JournalGridItem> likedJournals =

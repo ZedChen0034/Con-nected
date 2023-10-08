@@ -20,7 +20,7 @@ class _JournalState extends State<Journal> {
   @override
   void initState() {
     super.initState();
-    _filteredItems = myItems;
+    _filteredItems = myItems.where((item) => item.isPublic).toList();  // Filter based on isPublic attribute
     _searchController.addListener(_onSearchChanged);
   }
 
@@ -36,13 +36,16 @@ class _JournalState extends State<Journal> {
         if (searchText.isEmpty) {
           _filteredItems = myItems;
         } else {
-          _filteredItems = myItems.where((item) =>
+          var searchResults = myItems.where((item) =>
           item.theme.toLowerCase().contains(searchText) ||
               item.title.toLowerCase().contains(searchText) ||
               (item.reflection.toLowerCase().contains(searchText))
           ).toList();
+          _filteredItems = searchResults.where((item) => item.isPublic).toList(); // Again, filter based on isPublic attribute
+
         }
-      });    });
+      });
+    });
   }
 
   @override
@@ -83,7 +86,7 @@ class _JournalState extends State<Journal> {
             // Find the item by id
             final item = myItems.firstWhere((item) => item.id == id);
             // Toggle the liked property
-            item.liked = !(item.liked ?? false);
+            item.liked = !item.liked;
             if (item.liked == false) {
               likedJournals.remove(item);
             }else{

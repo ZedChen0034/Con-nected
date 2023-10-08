@@ -17,6 +17,8 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
 
   List<JournalGridItem> myItems = JournalGridItem.journalList;
   List<StoryGridItem> likedStories = StoryGridItem.likedStories;
+  List<JournalGridItem> myJournals = JournalGridItem.myJournals;
+
 
   @override
   void initState() {
@@ -70,7 +72,7 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            JournalGridView(items: myItems),
+                            JournalGridView(items: myJournals),
                             StoryGridView(items: likedStories,
                                 onLikeToggle: (String id) {
                                   setState(() {
