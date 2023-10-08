@@ -1,4 +1,4 @@
-import 'package:con_nected/eventDemo.dart';
+import 'package:con_nected/Component/eventDemo.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 

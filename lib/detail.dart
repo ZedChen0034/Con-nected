@@ -7,10 +7,10 @@
 // https://stackoverflow.com/questions/66547273/how-can-i-change-the-background-color-of-a-textbutton-in-flutter
 // https://stackoverflow.com/questions/74176046/how-to-put-an-icon-in-the-bottom-right-edge-of-container-in-flutter
 
-import 'package:con_nected/from_event_to_main.dart';
+import 'package:con_nected/Component/from_event_to_main.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'eventDemo.dart';
+import 'Component/eventDemo.dart';
 import 'package:intl/intl.dart';
 
 class Detail extends StatefulWidget {

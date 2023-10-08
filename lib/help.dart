@@ -46,6 +46,7 @@ class _HelpState extends State<Help> {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "chatbot",
         onPressed: () {
           Navigator.pushNamed(context, '/chat');
         },

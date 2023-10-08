@@ -114,6 +114,7 @@ class _JournalState extends State<Journal> {
         },
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: "journal",
         onPressed: () async {
           final newJournal = await Navigator.push(
             context,

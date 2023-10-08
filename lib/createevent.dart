@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'eventDemo.dart';
+import 'Component/eventDemo.dart';
 import 'package:intl/intl.dart';
-import 'from_event_to_main.dart';
+import 'Component/from_event_to_main.dart';
 
 class Createevent extends StatefulWidget {
   @override
