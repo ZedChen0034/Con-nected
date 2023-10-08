@@ -1,6 +1,8 @@
-import 'package:con_nected/CustomMasonryGridView.dart';
-import 'package:con_nected/GridItem.dart';
+
+import 'package:con_nected/GridItems/JournalGridItem.dart';
+import 'package:con_nected/GridView/JournalGridView.dart';
 import 'package:flutter/material.dart';
+import 'CreateJournal.dart';
 
 class Journal extends StatefulWidget {
   @override
@@ -8,10 +10,10 @@ class Journal extends StatefulWidget {
 }
 
 class _JournalState extends State<Journal> {
-  List<GridItem> myItems = GridItem.journalList;
-  List<GridItem> likedJournals = GridItem.likedJournals;
+  List<JournalGridItem> myItems = JournalGridItem.journalList;
+  List<JournalGridItem> likedJournals = JournalGridItem.likedJournals;
   bool _isSearching = false;
-  List<GridItem> _filteredItems = [];
+  List<JournalGridItem> _filteredItems = [];
 
   final TextEditingController _searchController = TextEditingController();
 
@@ -35,9 +37,9 @@ class _JournalState extends State<Journal> {
           _filteredItems = myItems;
         } else {
           _filteredItems = myItems.where((item) =>
-          item.tag!.toLowerCase().contains(searchText) ||
+          item.theme.toLowerCase().contains(searchText) ||
               item.title.toLowerCase().contains(searchText) ||
-              (item.description?.toLowerCase().contains(searchText) ?? false)
+              (item.reflection.toLowerCase().contains(searchText))
           ).toList();
         }
       });    });
@@ -75,7 +77,7 @@ class _JournalState extends State<Journal> {
           icon: _isSearching ? const Icon(Icons.close) : const Icon(Icons.search_outlined),
         ),
       ),
-      body: CustomMasonryGridView(items: _filteredItems,
+      body: JournalGridView(items: _filteredItems,
         onLikeToggle: (String id) {
           setState(() {
             // Find the item by id
@@ -90,6 +92,22 @@ class _JournalState extends State<Journal> {
           });
         },
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          final newJournal = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => CreateJournal()),
+          );
+
+          if (newJournal != null) {
+            setState(() {
+              myItems.add(newJournal);
+            });
+          }
+        },
+        child: Icon(Icons.add),
+      ),
+
     );
   }
 }

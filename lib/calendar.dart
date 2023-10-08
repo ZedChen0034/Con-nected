@@ -1,8 +1,8 @@
 
+import 'package:con_nected/Component/EventList.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
 import 'eventDemo.dart';
 
 /// Reference to https://pub.dev/packages/table_calendar
@@ -78,59 +78,18 @@ class _CalendarState extends State<Calendar>{
             child: ValueListenableBuilder<List<EventDemo>>(
                 valueListenable: _selectedEvents,
                 builder: (context, value, _){
-                  return ListView.builder(itemCount: value.length, itemBuilder: (context, index){
-                    return Card(
-                      key: ValueKey(value[index].id),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
-                      color: Colors.transparent,
-                      elevation: 8,
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 10),
-                      child: Container(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [Colors.purple, Colors.blue],
-                              // gradient colors
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                            ),
-                            borderRadius: BorderRadius.circular(15.0),
-                          ),
-                          child: Padding(padding:const EdgeInsets.symmetric(vertical: 10.0) ,child: ListTile(
-                            leading: const Icon(
-                              Icons.event,
-                              color: Colors.white,
-                              size: 35,
-                            ),
-                            title: Text(
-                              DateFormat('yyyy-MM-dd HH:mm')
-                                  .format(value[index].datetime) +
-                                  '\n' +
-                                  value[index].name +
-                                  " - " +
-                                  value[index].tag,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                            subtitle: Text(
-                              value[index].location,
-                              style: TextStyle(color: Colors.white60),
-                            ),
-                            onTap: () {
-                              Navigator.pushNamed(
-                                context,
-                                '/detail',
-                                arguments: value[index],
-                              );
-                            },
-                          ),)
-                      ),
-                    );
-                  });
+                  return EventList(
+                    events: value,
+                    onEventTap: (event) {
+                      Navigator.pushNamed(
+                        context,
+                        '/detail',
+                        arguments: event,
+                      );
+                    },
+                  );
                 }),
           )
-
         ]
       ),
     );

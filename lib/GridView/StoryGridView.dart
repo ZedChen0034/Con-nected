@@ -1,12 +1,12 @@
-import 'package:con_nected/GridItem.dart';
+import 'package:con_nected/GridItems/StoryGridItem.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class CustomMasonryGridView extends StatelessWidget {
-  final List<GridItem> items;
+class StoryGridView extends StatelessWidget {
+  final List<StoryGridItem> items;
   final void Function(String index)? onLikeToggle;
 
-  CustomMasonryGridView({super.key, required this.items, this.onLikeToggle});
+  StoryGridView({super.key, required this.items, this.onLikeToggle});
 
   @override
   Widget build(BuildContext context) {
@@ -34,13 +34,9 @@ class CustomMasonryGridView extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 maxLines: 2,
                 style:
-                    const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+                const TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 8),
-              if (items[index].tag != null &&
-                  items[index].tag!.isNotEmpty &&
-                  items[index].like != null &&
-                  items[index].like!.isNotEmpty)
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -51,7 +47,7 @@ class CustomMasonryGridView extends StatelessWidget {
                         border: Border.all(color: Colors.grey),
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      child: Text(items[index].tag!),
+                      child: Text(items[index].tag),
                     ),
                     Row(
                       children: [
@@ -62,21 +58,15 @@ class CustomMasonryGridView extends StatelessWidget {
                             }
                           },
                           child: Icon(
-                            items[index].liked ?? false ? Icons.favorite : Icons.favorite_border,
+                            items[index].liked ? Icons.favorite : Icons.favorite_border,
                             color: Colors.red,
                           ),
                         ),
                         const SizedBox(width: 4),
-                        Text(items[index].like!),
+                        Text(items[index].like),
                       ],
                     ),
                   ],
-                ),
-              if (items[index].description != null &&
-                  items[index].description!.isNotEmpty)
-                Text(
-                  items[index].description!,
-                  textAlign: TextAlign.start,
                 ),
             ],
           ),

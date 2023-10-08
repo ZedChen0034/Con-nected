@@ -8,6 +8,7 @@
 // https://api.flutter.dev/flutter/material/Colors-class.html
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
+import 'package:con_nected/Component/EventList.dart';
 import 'package:con_nected/createevent.dart';
 import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
@@ -270,63 +271,16 @@ class _HomePageState extends State<HomePage> {
                   height: 20,
                 ),
                 Expanded(
-                  child: FOUND.isNotEmpty
-                      ? ListView.builder(
-                          itemCount: FOUND.length,
-                          itemBuilder: (context, index) => Card(
-                            key: ValueKey(FOUND[index].id),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                            ),
-                            color: Colors.transparent,
-                            elevation: 8,
-                            margin: const EdgeInsets.symmetric(
-                                vertical: 10, horizontal: 10),
-                            child: Container(
-                                decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                    colors: [Colors.purple, Colors.blue],
-                                    // gradient colors
-                                    begin: Alignment.topLeft,
-                                    end: Alignment.bottomRight,
-                                  ),
-                                  borderRadius: BorderRadius.circular(15.0),
-                                ),
-                                child: Padding(padding:const EdgeInsets.symmetric(vertical: 10.0) ,child: ListTile(
-                                  leading: const Icon(
-                                    Icons.event,
-                                    color: Colors.white,
-                                    size: 35,
-                                  ),
-                                  title: Text(
-                                    DateFormat('yyyy-MM-dd HH:mm')
-                                        .format(FOUND[index].datetime) +
-                                        '\n' +
-                                        FOUND[index].name +
-                                        " - " +
-                                        FOUND[index].tag,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                  subtitle: Text(
-                                    FOUND[index].location,
-                                    style: TextStyle(color: Colors.white60),
-                                  ),
-                                  onTap: () {
-                                    Navigator.pushNamed(
-                                      context,
-                                      '/detail',
-                                      arguments: FOUND[index],
-                                    );
-                                  },
-                                ),)
-                            ),
-                          ),
-                        )
-                      : Text(
-                          'No results found',
-                          style: TextStyle(
-                              fontSize: 24, color: Colors.deepPurple[700]),
-                        ),
+                  child: EventList(
+                    events: FOUND,
+                    onEventTap: (event) {
+                      Navigator.pushNamed(
+                        context,
+                        '/detail',
+                        arguments: event,
+                      );
+                    },
+                  ),
                 ),
               ],
             ),

@@ -1,6 +1,8 @@
 
-import 'package:con_nected/CustomMasonryGridView.dart';
-import 'package:con_nected/GridItem.dart';
+import 'package:con_nected/GridItems/JournalGridItem.dart';
+import 'package:con_nected/GridItems/StoryGridItem.dart';
+import 'package:con_nected/GridView/JournalGridView.dart';
+import 'package:con_nected/GridView/StoryGridView.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
@@ -11,10 +13,10 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
   TabController? _tabController;
-  List<GridItem> myItems = GridItem.profileList;
-  List<GridItem> likedStories = GridItem.likedStories;
-  List<GridItem> journalItems = GridItem.journalList;
-  List<GridItem> likedJournals = GridItem.likedJournals;
+  List<JournalGridItem> likedJournals = JournalGridItem.likedJournals;
+
+  List<JournalGridItem> myItems = JournalGridItem.journalList;
+  List<StoryGridItem> likedStories = StoryGridItem.likedStories;
 
   @override
   void initState() {
@@ -68,14 +70,14 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                         child: TabBarView(
                           controller: _tabController,
                           children: [
-                            CustomMasonryGridView(items: myItems),
-                            CustomMasonryGridView(items: likedStories,
+                            JournalGridView(items: myItems),
+                            StoryGridView(items: likedStories,
                                 onLikeToggle: (String id) {
                                   setState(() {
                                     // Find the item by id
-                                    final item = GridItem.storyList.firstWhere((item) => item.id == id);
+                                    final item = StoryGridItem.storyList.firstWhere((item) => item.id == id);
                                     // Toggle the liked property
-                                    item.liked = !(item.liked ?? false);
+                                    item.liked = !item.liked;
                                     if (item.liked == false) {
                                       likedStories.remove(item);
                                     }else{
@@ -83,13 +85,13 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                                     }
                                   });
                                 }),
-                            CustomMasonryGridView(items: likedJournals,
+                            JournalGridView(items: likedJournals,
                                 onLikeToggle: (String id) {
                                   setState(() {
                                     // Find the item by id
-                                    final item = GridItem.journalList.firstWhere((item) => item.id == id);
+                                    final item = JournalGridItem.journalList.firstWhere((item) => item.id == id);
                                     // Toggle the liked property
-                                    item.liked = !(item.liked ?? false);
+                                    item.liked = !item.liked;
                                     if (item.liked == false) {
                                       likedJournals.remove(item);
                                     }else{
@@ -97,8 +99,8 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
                                     }
                                   });
                                 }),
-                            CustomMasonryGridView(items: myItems),
-                            CustomMasonryGridView(items: myItems),
+                            JournalGridView(items: myItems),
+                            JournalGridView(items: myItems),
                           ],
                         ),
                       ),
