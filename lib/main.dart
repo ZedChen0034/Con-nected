@@ -9,6 +9,7 @@
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
 import 'package:con_nected/Component/EventList.dart';
+import 'package:con_nected/Notifications.dart';
 import 'package:con_nected/createevent.dart';
 import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
@@ -216,7 +217,10 @@ class _HomePageState extends State<HomePage> {
               title: const Text("Event"),
               backgroundColor: Colors.deepPurple[700],
               leading: IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+
+                },
                 icon: const Icon(Icons.notifications_outlined,
                     color: Colors.white),
               ),
