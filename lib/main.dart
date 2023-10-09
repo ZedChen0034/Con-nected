@@ -8,10 +8,21 @@
 // https://api.flutter.dev/flutter/material/Colors-class.html
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
+import 'package:con_nected/Component/EventList.dart';
+import 'package:con_nected/Notifications.dart';
+import 'package:con_nected/createevent.dart';
+import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
 import 'calendar.dart';
 import 'detail.dart';
-import 'note.dart';
+import 'profile.dart';
+import 'story.dart';
+import 'package:con_nected/Component/eventDemo.dart';
+import 'package:con_nected/doneevent.dart';
+import 'Component/from_event_to_main.dart';
+import 'help.dart';
+import 'chat.dart';
+import 'DocumentDetail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,11 +33,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       // Remove the debug banner
       debugShowCheckedModeBanner: false,
       title: 'Event-0',
-      home: HomePage(),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => const HomePage(),
+        '/calendar': (context) => const Calendar(),
+        '/createEvent': (context) => Createevent(),
+        '/doneEvent': (context) => Doneevent(),
+        '/detail': (context) => Detail(),
+        '/help': (context) => Help(),
+        '/chat': (context) => Chat(),
+        '/documentDetail': (context) => DocumentDetail(),
+      },
     );
   }
 }
@@ -111,10 +132,11 @@ class _NavigationExampleState extends State<NavigationExample> {
           child: const Text('Page 4'),
         ),
         Container(
-          color: Colors.pink,
+          color: Colors.yellow,
           alignment: Alignment.center,
-          child: const Text('Page 5'),
+          child: const Text('Page 4'),
         ),
+        // Profile(),
       ][currentPageIndex],
     );
   }
@@ -128,9 +150,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<EventDemo> ALL = EventDemo.SCRIPT;
 
-  List<Note> ALL = Note.SCRIPT;
-  List<dynamic> FOUND = [];
+  // eventDEMO
+  List<EventDemo> FOUND = [];
+  int _currentIndex = 0;
 
   @override
   initState() {
@@ -139,100 +163,159 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _runFilter(String enteredKeyword) {
-    List<dynamic> results = [];
-    if (enteredKeyword.isEmpty) {results = ALL;}
-    else {results = ALL.where((user) => user.id.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.name.toLowerCase().contains(enteredKeyword.toLowerCase())).toList()+ALL.where((user) => user.address.toLowerCase().contains(enteredKeyword.toLowerCase())).toList();}
-    setState(() {FOUND = results;});
+    Set<EventDemo> results = {};
+    if (enteredKeyword.isEmpty) {
+      results = Set.from(ALL);
+    } else {
+      results.addAll(ALL.where((user) =>
+          user.tag.toLowerCase().contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) =>
+          user.name.toLowerCase().contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) => user.description
+          .toLowerCase()
+          .contains(enteredKeyword.toLowerCase())));
+      results.addAll(ALL.where((user) =>
+          user.location.toLowerCase().contains(enteredKeyword.toLowerCase())));
+    }
+
+    setState(() {
+      FOUND = results.toList();
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    FromEventToMain? fromEventToMain;
 
+    if (ModalRoute.of(context)?.settings.arguments != null) {
+      fromEventToMain =
+          ModalRoute.of(context)!.settings.arguments as FromEventToMain;
+    }
+
+    if (fromEventToMain != null) {
+      if (fromEventToMain.createOrEdit == "create") {
+        int indexToUpdate = FOUND
+            .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
+        if (indexToUpdate == -1) {
+          setState(() {
+            FOUND.add(fromEventToMain!.eventDemo);
+          });
+        }
+
+      } else if (fromEventToMain.createOrEdit == "edit") {
+        int indexToUpdate = FOUND
+            .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
+        if (indexToUpdate != -1) {
+          setState(() {
+            FOUND[indexToUpdate] = fromEventToMain!.eventDemo;
+          });
+        }
+      } else if (fromEventToMain.createOrEdit == "delete") {
+        FOUND.remove(fromEventToMain.eventDemo);
+      }
+    }
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text('Event'),
-        backgroundColor: Colors.lightGreen[900],
-        leading:
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.notifications_outlined),
-          ),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => Calendar()));
-            },
-            icon: Icon(Icons.calendar_month),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.add),
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.done_outlined),
-          ),
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 20,
-            ),
-            TextField(
-              onChanged: (value) => _runFilter(value),
-              decoration: const InputDecoration(
-                  labelText: 'Search', suffixIcon: Icon(Icons.search)),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: FOUND.isNotEmpty
-                  ? ListView.builder(
-                itemCount: FOUND.length,
-                itemBuilder: (context, index) => Card(
-                  key: ValueKey(FOUND[index].id),
-                  color: Colors.lightGreen[200],
-                  elevation: 4,
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: ListTile(
-                    leading: Icon(
-                      FOUND[index].picture,
-                      color: Colors.red,
-                      size: 35,
+      appBar: _currentIndex == 0
+          ? AppBar(
+              centerTitle: true,
+              title: const Text("Event"),
+              backgroundColor: Colors.deepPurple[700],
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+
+                },
+                icon: const Icon(Icons.notifications_outlined,
+                    color: Colors.white),
+              ),
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/calendar');
+                  },
+                  icon: const Icon(Icons.calendar_month, color: Colors.white),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/createEvent');
+                  },
+                  icon:
+                      const Icon(Icons.add_circle_outline, color: Colors.white),
+                ),
+                IconButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/doneEvent');
+                  },
+                  icon: const Icon(Icons.done_all, color: Colors.white),
+                ),
+              ],
+            )
+          : null,
+      body: IndexedStack(
+        index: _currentIndex,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Column(
+              children: [
+                const SizedBox(
+                  height: 20,
+                ),
+                TextField(
+                  onChanged: (value) => _runFilter(value),
+                  decoration: InputDecoration(
+                    labelText: 'Search',
+                    suffixIcon:
+                        const Icon(Icons.search, color: Colors.deepPurple),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide.none,
                     ),
-                    title: Text(FOUND[index].id+'\n'+FOUND[index].time+" - "+FOUND[index].name,),
-                    subtitle: Text(FOUND[index].address),
-                    onTap: () {
-                      Navigator.push(
+                    filled: true,
+                    fillColor: Colors.grey[200],
+                  ),
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Expanded(
+                  child: EventList(
+                    events: FOUND,
+                    onEventTap: (event) {
+                      Navigator.pushNamed(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) => Detail(),
-                          settings: RouteSettings(arguments: FOUND[index]),
-                        ),
+                        '/detail',
+                        arguments: event,
                       );
                     },
                   ),
                 ),
-              )
-                  : const Text(
-                'No results found',
-                style: TextStyle(fontSize: 24),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Center(
+            child: Story(),
+          ),
+          Center(
+            child: Help(),
+          ),
+          Center(
+            child: Journal(),
+          ),
+          Center(
+            child: Profile(),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         fixedColor: Colors.blue,
+        currentIndex: _currentIndex,
+        onTap: (int index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
