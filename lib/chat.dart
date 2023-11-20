@@ -70,10 +70,10 @@ class _ChatState extends State<Chat> {
                   if (_controller.text.isNotEmpty) {
                     setState(() {
                       messages.add(ChatMessage(content: _controller.text, isUser: true));
-                      _generateAIResponse(); // 生成AI回复
+                      _generateAIResponse(); // generate AI response
                     });
                     _controller.clear();
-                    _scrollToBottom(); // 滚动到底部
+                    _scrollToBottom(); 
                   }
                 },
               ),
@@ -85,7 +85,6 @@ class _ChatState extends State<Chat> {
   }
 
   Widget _buildMessage(ChatMessage message) {
-    // 根据消息的类型来对齐消息
     final align = message.isUser ? CrossAxisAlignment.end : CrossAxisAlignment.start;
     final color = message.isUser ? Colors.blue[700] : Colors.grey[200];
     final txtColor = message.isUser ? Colors.white : Colors.black;
@@ -112,7 +111,7 @@ class _ChatState extends State<Chat> {
   }
 
   void _generateAIResponse() {
-    // 模拟AI的回复
+    // simualte AI reponse
     final aiResponse = "AI's reply to: ${_controller.text}";
     messages.add(ChatMessage(content: aiResponse, isUser: false));
   }
@@ -130,7 +129,7 @@ class _ChatState extends State<Chat> {
 
 class ChatMessage {
   final String content;
-  final bool isUser; // 用户发送还是AI发送
+  final bool isUser; // sent by user or AI
 
   ChatMessage({required this.content, required this.isUser});
 }
