@@ -9,20 +9,20 @@
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
 import 'package:con_nected/Component/EventList.dart';
-import 'package:con_nected/Notifications.dart';
-import 'package:con_nected/createevent.dart';
+import 'package:con_nected/Event/Notifications.dart';
+import 'package:con_nected/Event/createevent.dart';
 import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
-import 'calendar.dart';
-import 'detail.dart';
+import 'Event/calendar.dart';
+import 'Event/detail.dart';
 import 'profile.dart';
 import 'story.dart';
 import 'package:con_nected/Component/eventDemo.dart';
-import 'package:con_nected/doneevent.dart';
+import 'package:con_nected/Event/doneevent.dart';
 import 'Component/from_event_to_main.dart';
 import 'help.dart';
-import 'chat.dart';
-import 'DocumentDetail.dart';
+import 'Help/chat.dart';
+import 'Help/DocumentDetail.dart';
 
 void main() {
   runApp(const MyApp());

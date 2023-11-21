@@ -10,7 +10,7 @@
 import 'package:con_nected/Component/from_event_to_main.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'Component/eventDemo.dart';
+import '../Component/eventDemo.dart';
 import 'package:intl/intl.dart';
 
 class Detail extends StatefulWidget {
@@ -62,7 +62,7 @@ class _DetailState extends State<Detail> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Information'),
-        backgroundColor: Colors.green, // 深绿色背景
+        backgroundColor: Colors.green,
         actions: event.editable
             ? [
                 PopupMenuButton<String>(
