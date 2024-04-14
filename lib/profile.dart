@@ -3,7 +3,7 @@ import 'package:con_nected/GridItems/JournalGridItem.dart';
 import 'package:con_nected/GridItems/StoryGridItem.dart';
 import 'package:con_nected/GridView/JournalGridView.dart';
 import 'package:con_nected/GridView/StoryGridView.dart';
-import 'package:con_nected/JournalDetail.dart';
+import 'package:con_nected/Journal/JournalDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 

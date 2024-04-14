@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 // import 'Search_page.dart';
 // import 'new_task_screen.dart';
-import 'task.dart';
 // import 'TaskDetailPage.dart';
 
 class Doneevent extends StatefulWidget {
@@ -10,6 +9,7 @@ class Doneevent extends StatefulWidget {
 }
 
 class _DoneeventState extends State<Doneevent> {
+  // Mocked data
   List<Task> completedTasks = [
     Task(title: "Complete and publish a journal", description: "About my recent feelings and daily life without drinking alcohol", completedDate: DateTime.now().subtract(Duration(days: 1))),
     Task(title: "Watched a live broadcast", description: "I watched a live broadcast by a graduate and felt inspired.", completedDate: DateTime.now().subtract(Duration(days: 2))),
@@ -116,4 +116,12 @@ class _DoneeventState extends State<Doneevent> {
       // ),
     );
   }
+}
+
+class Task {
+  late final String title;
+  late final String description;
+  late final DateTime completedDate;
+
+  Task({required this.title, required this.description, required this.completedDate});
 }

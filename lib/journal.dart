@@ -1,9 +1,9 @@
 
 import 'package:con_nected/GridItems/JournalGridItem.dart';
 import 'package:con_nected/GridView/JournalGridView.dart';
-import 'package:con_nected/JournalDetail.dart';
+import 'package:con_nected/Journal/JournalDetail.dart';
 import 'package:flutter/material.dart';
-import 'CreateJournal.dart';
+import 'Journal/CreateJournal.dart';
 
 class Journal extends StatefulWidget {
   @override
@@ -57,12 +57,12 @@ class _JournalState extends State<Journal> {
             ? TextField(
           controller: _searchController,
           autofocus: true,
-          style: const TextStyle(color: Colors.white), // 设置文本颜色为白色
+          style: const TextStyle(color: Colors.white),
           decoration: const InputDecoration(
             hintText: 'Search...',
-            hintStyle: TextStyle(color: Colors.white), // 设置提示文本的颜色为白色
-            border: InputBorder.none, // 去掉下划线
-            focusedBorder: InputBorder.none, // 去掉焦点时的下划线
+            hintStyle: TextStyle(color: Colors.white),
+            border: InputBorder.none, // remove underline
+            focusedBorder: InputBorder.none, // remove focus underline
           ),
         )
             : const Text("Journal"),

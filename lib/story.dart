@@ -62,7 +62,7 @@ class _StoryState extends State<Story> {
                   hintStyle: TextStyle(color: Colors.grey),
                   prefixIcon: Icon(Icons.search, color: Colors.grey),
                   border: InputBorder.none,
-                  focusedBorder: InputBorder.none, // 去掉焦点时的下划线
+                  focusedBorder: InputBorder.none,
                 ),
               )
             : Text("Story Telling", style: TextStyle(color: Colors.grey[800])),

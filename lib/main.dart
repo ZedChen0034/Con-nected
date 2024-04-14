@@ -9,20 +9,21 @@
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
 import 'package:con_nected/Component/EventList.dart';
-import 'package:con_nected/Notifications.dart';
-import 'package:con_nected/createevent.dart';
+import 'package:con_nected/Event/Notifications.dart';
+import 'package:con_nected/Event/createevent.dart';
 import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
-import 'calendar.dart';
-import 'detail.dart';
+import 'Event/calendar.dart';
+import 'Event/detail.dart';
 import 'profile.dart';
 import 'story.dart';
+import 'peer.dart';
 import 'package:con_nected/Component/eventDemo.dart';
-import 'package:con_nected/doneevent.dart';
+import 'package:con_nected/Event/doneevent.dart';
 import 'Component/from_event_to_main.dart';
 import 'help.dart';
-import 'chat.dart';
-import 'DocumentDetail.dart';
+import 'Help/chat.dart';
+import 'Help/DocumentDetail.dart';
 
 void main() {
   runApp(const MyApp());
@@ -47,97 +48,9 @@ class MyApp extends StatelessWidget {
         '/help': (context) => Help(),
         '/chat': (context) => Chat(),
         '/documentDetail': (context) => DocumentDetail(),
+        '/peer': (context) => Peer(),
+
       },
-    );
-  }
-}
-
-class NavigationBarApp extends StatelessWidget {
-  const NavigationBarApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: NavigationExample());
-  }
-}
-
-class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
-
-  @override
-  State<NavigationExample> createState() => _NavigationExampleState();
-}
-
-class _NavigationExampleState extends State<NavigationExample> {
-  int currentPageIndex = 0;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        indicatorColor: Colors.amber[800],
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Event',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.school),
-            icon: Icon(Icons.school_outlined),
-            label: 'Story',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.question_mark),
-            icon: Icon(Icons.question_mark_outlined),
-            label: 'Help',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.directions_car),
-            icon: Icon(Icons.directions_car_outlined),
-            label: 'Journal',
-          ),
-          NavigationDestination(
-            selectedIcon: Icon(Icons.face),
-            icon: Icon(Icons.face_outlined),
-            label: 'Profile',
-          ),
-        ],
-      ),
-      body: <Widget>[
-        Container(
-          color: Colors.red,
-          alignment: Alignment.center,
-          child: const Text('Page 1'),
-        ),
-        Container(
-          color: Colors.green,
-          alignment: Alignment.center,
-          child: const Text('Page 2'),
-        ),
-        Container(
-          color: Colors.blue,
-          alignment: Alignment.center,
-          child: const Text('Page 3'),
-        ),
-        Container(
-          color: Colors.yellow,
-          alignment: Alignment.center,
-          child: const Text('Page 4'),
-        ),
-        Container(
-          color: Colors.yellow,
-          alignment: Alignment.center,
-          child: const Text('Page 4'),
-        ),
-        // Profile(),
-      ][currentPageIndex],
     );
   }
 }
@@ -303,6 +216,9 @@ class _HomePageState extends State<HomePage> {
             child: Journal(),
           ),
           Center(
+            child: Peer(),
+          ),
+          Center(
             child: Profile(),
           ),
         ],
@@ -332,6 +248,10 @@ class _HomePageState extends State<HomePage> {
           BottomNavigationBarItem(
             icon: Icon(Icons.directions_car),
             label: 'Journal',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.chat),
+            label: 'Peer',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.face),
