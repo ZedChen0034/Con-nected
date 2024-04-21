@@ -50,7 +50,6 @@ class MyApp extends StatelessWidget {
         '/chat': (context) => Chat(),
         '/documentDetail': (context) => DocumentDetail(),
         '/peer': (context) => Peer(),
-
       },
     );
   }
@@ -133,10 +132,6 @@ class _HomePageState extends State<HomePage> {
               centerTitle: true,
               title: const Text("Event"),
               backgroundColor: Colors.deepPurple[700],
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Notifications()));
               leading: GestureDetector(
                 onLongPress: () {
                   // ClipPath(
