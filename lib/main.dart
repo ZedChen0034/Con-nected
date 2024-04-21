@@ -23,6 +23,7 @@ import 'Component/from_event_to_main.dart';
 import 'help.dart';
 import 'chat.dart';
 import 'DocumentDetail.dart';
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -201,7 +202,6 @@ class _HomePageState extends State<HomePage> {
             FOUND.add(fromEventToMain!.eventDemo);
           });
         }
-
       } else if (fromEventToMain.createOrEdit == "edit") {
         int indexToUpdate = FOUND
             .indexWhere((event) => event.id == fromEventToMain?.eventDemo.id);
@@ -220,13 +220,47 @@ class _HomePageState extends State<HomePage> {
               centerTitle: true,
               title: const Text("Event"),
               backgroundColor: Colors.deepPurple[700],
-              leading: IconButton(
-                onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
-
+              leading: GestureDetector(
+                onLongPress: () {
+                  // ClipPath(
+                  //   clipper: MessageClipper(borderRadius: 16),
+                  //   child: Container(
+                  //     height: 200,
+                  //     decoration: const BoxDecoration(
+                  //       borderRadius: BorderRadius.all(Radius.circular(16)),
+                  //       color: Colors.purpleAccent,
+                  //     ),
+                  //     child: const Center(child: Text("Message")),
+                  //   ),
+                  // );
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text("Notification"),
+                        content: const Text("This is a notification."),
+                        actions: [
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: const Text("Close"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
-                icon: const Icon(Icons.notifications_outlined,
-                    color: Colors.white),
+                child: IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => Notifications()));
+                  },
+                  icon: const Icon(Icons.notifications_outlined,
+                      color: Colors.white),
+                ),
               ),
               actions: [
                 IconButton(
