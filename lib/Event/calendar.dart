@@ -3,7 +3,7 @@ import 'package:con_nected/Component/EventList.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'Component/eventDemo.dart';
+import '../Component/eventDemo.dart';
 
 /// Reference to https://pub.dev/packages/table_calendar
 

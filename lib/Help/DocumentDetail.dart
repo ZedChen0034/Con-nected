@@ -1,4 +1,4 @@
-import 'package:con_nected/DriverLicenseInfo.dart';
+import 'package:con_nected/Help/DriverLicenseInfo.dart';
 import 'package:flutter/material.dart';
 
 class DocumentDetail extends StatelessWidget {
