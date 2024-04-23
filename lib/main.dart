@@ -64,7 +64,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<EventDemo> ALL = EventDemo.SCRIPT;
-
+  bool visible = false;
   // eventDEMO
   List<EventDemo> FOUND = [];
   int _currentIndex = 0;
@@ -134,17 +134,6 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.deepPurple[700],
               leading: GestureDetector(
                 onLongPress: () {
-                  // ClipPath(
-                  //   clipper: MessageClipper(borderRadius: 16),
-                  //   child: Container(
-                  //     height: 200,
-                  //     decoration: const BoxDecoration(
-                  //       borderRadius: BorderRadius.all(Radius.circular(16)),
-                  //       color: Colors.purpleAccent,
-                  //     ),
-                  //     child: const Center(child: Text("Message")),
-                  //   ),
-                  // );
                   showDialog(
                     context: context,
                     builder: (BuildContext context) {
@@ -162,6 +151,9 @@ class _HomePageState extends State<HomePage> {
                       );
                     },
                   );
+                  setState(() {
+                    visible = !visible;
+                  });
                 },
                 child: IconButton(
                   onPressed: () {
@@ -197,62 +189,98 @@ class _HomePageState extends State<HomePage> {
               ],
             )
           : null,
-      body: IndexedStack(
-        index: _currentIndex,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(15.0),
-            child: Column(
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                TextField(
-                  onChanged: (value) => _runFilter(value),
-                  decoration: InputDecoration(
-                    labelText: 'Search',
-                    suffixIcon:
-                        const Icon(Icons.search, color: Colors.deepPurple),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: BorderSide.none,
+      body: Stack(
+        alignment: Alignment.center,
+        fit: StackFit.expand,
+        children: <Widget>[
+          IndexedStack(
+            index: _currentIndex,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(15.0),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
                     ),
-                    filled: true,
-                    fillColor: Colors.grey[200],
+                    TextField(
+                      onChanged: (value) => _runFilter(value),
+                      decoration: InputDecoration(
+                        labelText: 'Search',
+                        suffixIcon:
+                            const Icon(Icons.search, color: Colors.deepPurple),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(25.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: EventList(
+                        events: FOUND,
+                        onEventTap: (event) {
+                          Navigator.pushNamed(
+                            context,
+                            '/detail',
+                            arguments: event,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Center(
+                child: Story(),
+              ),
+              Center(
+                child: Help(),
+              ),
+              Center(
+                child: Journal(),
+              ),
+              Center(
+                child: Peer(),
+              ),
+              Center(
+                child: Profile(),
+              ),
+            ],
+          ),
+          Positioned(
+            left: 18.0,
+            right: 18.0,
+            top: 25.0,
+            child: Visibility(
+              visible: visible,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    visible = !visible;
+                  });
+                },
+                child: ClipPath(
+                  clipper: MessageClipper(borderRadius: 16),
+                  child: Container(
+                    height: 100,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      color: Colors.deepPurple,
+                    ),
+                    child: const Center(
+                        child: Text(
+                      "This is a Message",
+                      style: TextStyle(color: Colors.white70, fontSize: 20),
+                    )),
                   ),
                 ),
-                const SizedBox(
-                  height: 20,
-                ),
-                Expanded(
-                  child: EventList(
-                    events: FOUND,
-                    onEventTap: (event) {
-                      Navigator.pushNamed(
-                        context,
-                        '/detail',
-                        arguments: event,
-                      );
-                    },
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-          Center(
-            child: Story(),
-          ),
-          Center(
-            child: Help(),
-          ),
-          Center(
-            child: Journal(),
-          ),
-          Center(
-            child: Peer(),
-          ),
-          Center(
-            child: Profile(),
           ),
         ],
       ),
