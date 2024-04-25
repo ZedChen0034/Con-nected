@@ -933,7 +933,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           setState(() {
             showSuccessMessage = false;
           });
-          errorMessage = "Unsupported file type. Please upload PDF / PNG / JPG / JPEG";
+          errorMessage = "Unsupported file type. Please upload PNG / JPG / JEPG / PDF";
           selectedFilePath = "Fail to upload - Unsupported file type.";
           print('Unsupported file type selected');
         }
