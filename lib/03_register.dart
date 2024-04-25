@@ -1110,16 +1110,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               },
             ),
             Padding(
-              padding: const EdgeInsets.all(8.0), // Add some padding around the text
-              child: Text(
-                message,
+              padding: const EdgeInsets.all(8.0),
+              child: DefaultTextStyle(
                 style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 24, // You can still adjust this as needed
+                  color: Colors.white,
+                  fontSize: 24,
                 ),
-                textAlign: TextAlign.center,
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,  // 设置文本对齐方式为居中
+                ),
               ),
             ),
+
           ],
         ),
       ),
