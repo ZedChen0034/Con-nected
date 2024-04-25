@@ -392,7 +392,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 
-
   // Function 2 - Single Answer
   Widget Single(int pageIndex, String question, List<String> options) {
     questions[pageIndex] = question;
@@ -1089,6 +1088,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     }
   }
 
+  // Function 8 - Ending scenes (two versions of registration ending)
   Widget Ending(String imagePath, String message) {
     return Center(
       child: SingleChildScrollView(  // Add SingleChildScrollView here
