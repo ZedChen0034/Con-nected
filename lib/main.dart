@@ -8,6 +8,8 @@
 // https://api.flutter.dev/flutter/material/Colors-class.html
 // https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
 
+import 'dart:collection';
+
 import 'package:con_nected/Component/EventList.dart';
 import 'package:con_nected/Event/Notifications.dart';
 import 'package:con_nected/Event/createevent.dart';
@@ -24,7 +26,8 @@ import 'Component/from_event_to_main.dart';
 import 'help.dart';
 import 'Help/chat.dart';
 import 'Help/DocumentDetail.dart';
-import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'dialog.dart';
+import 'dart:math' as math;
 
 void main() {
   runApp(const MyApp());
@@ -65,6 +68,13 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<EventDemo> ALL = EventDemo.SCRIPT;
   bool visible = false;
+  int point = 0;
+  double slope = 0.5;
+  double height = 100;
+  double top = 0;
+  double noteTop = 40;
+  double angle = math.pi;
+  String noteText = "Text";
   // eventDEMO
   List<EventDemo> FOUND = [];
   int _currentIndex = 0;
@@ -152,7 +162,15 @@ class _HomePageState extends State<HomePage> {
                     },
                   );
                   setState(() {
-                    visible = !visible;
+                    visible = true;
+                    point = 4;
+                    slope = 0.8;
+                    height = 100;
+                    top = 0;
+                    noteTop = 40;
+                    angle = math.pi;
+                    noteText =
+                        "Never miss out on what's important with timely event notifications.";
                   });
                 },
                 child: IconButton(
@@ -167,24 +185,69 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
               actions: [
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/calendar');
+                GestureDetector(
+                  onLongPress: () {
+                    setState(() {
+                      visible = true;
+                      point = 1;
+                      slope = 0.4;
+                      height = 100;
+                      top = 0;
+                      noteTop = 40;
+                      angle = math.pi;
+                      noteText =
+                          "Utilize our event calendar to keep track of your plans and schedules.";
+                    });
                   },
-                  icon: const Icon(Icons.calendar_month, color: Colors.white),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/calendar');
+                    },
+                    icon: const Icon(Icons.calendar_month, color: Colors.white),
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/createEvent');
+                GestureDetector(
+                  onLongPress: () {
+                    setState(() {
+                      visible = true;
+                      point = 1;
+                      slope = 0;
+                      height = 100;
+                      top = 0;
+                      noteTop = 40;
+                      angle = math.pi;
+                      noteText =
+                          "Have an idea? Easily create new events and bring people together.";
+                    });
                   },
-                  icon:
-                      const Icon(Icons.add_circle_outline, color: Colors.white),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/createEvent');
+                    },
+                    icon: const Icon(Icons.add_circle_outline,
+                        color: Colors.white),
+                  ),
                 ),
-                IconButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/doneEvent');
+                GestureDetector(
+                  onLongPress: () {
+                    setState(() {
+                      visible = true;
+                      point = 0;
+                      slope = 0.2;
+                      height = 100;
+                      top = 0;
+                      noteTop = 40;
+                      angle = math.pi;
+                      noteText =
+                          "Browse through completed activities to relive the fun moments.";
+                    });
                   },
-                  icon: const Icon(Icons.done_all, color: Colors.white),
+                  child: IconButton(
+                    onPressed: () {
+                      Navigator.pushNamed(context, '/doneEvent');
+                    },
+                    icon: const Icon(Icons.done_all, color: Colors.white),
+                  ),
                 ),
               ],
             )
@@ -207,8 +270,23 @@ class _HomePageState extends State<HomePage> {
                       onChanged: (value) => _runFilter(value),
                       decoration: InputDecoration(
                         labelText: 'Search',
-                        suffixIcon:
-                            const Icon(Icons.search, color: Colors.deepPurple),
+                        suffixIcon: GestureDetector(
+                          onLongPress: () {
+                            setState(() {
+                              visible = true;
+                              point = 0;
+                              slope = 0.2;
+                              height = 100;
+                              top = 90;
+                              noteTop = 40;
+                              angle = math.pi;
+                              noteText =
+                                  "Quickly search for events that match your interests or schedules.";
+                            });
+                          },
+                          child: const Icon(Icons.search,
+                              color: Colors.deepPurple),
+                        ),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           borderSide: BorderSide.none,
@@ -221,15 +299,30 @@ class _HomePageState extends State<HomePage> {
                       height: 20,
                     ),
                     Expanded(
-                      child: EventList(
-                        events: FOUND,
-                        onEventTap: (event) {
-                          Navigator.pushNamed(
-                            context,
-                            '/detail',
-                            arguments: event,
-                          );
+                      child: GestureDetector(
+                        onLongPress: () {
+                          setState(() {
+                            visible = true;
+                            point = 2;
+                            slope = 0.6;
+                            height = 100;
+                            top = 20;
+                            noteTop = 20;
+                            angle = 0;
+                            noteText =
+                                "Check out our list of upcoming events to find your next adventure.";
+                          });
                         },
+                        child: EventList(
+                          events: FOUND,
+                          onEventTap: (event) {
+                            Navigator.pushNamed(
+                              context,
+                              '/detail',
+                              arguments: event,
+                            );
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -255,7 +348,33 @@ class _HomePageState extends State<HomePage> {
           Positioned(
             left: 18.0,
             right: 18.0,
-            top: 25.0,
+            top: top,
+            child: Visibility(
+              visible: visible,
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    visible = false;
+                  });
+                },
+                child: Transform.rotate(
+                  angle: angle,
+                  child: ClipPath(
+                    clipper:
+                        DialogClipper(radius: 30, point: point, slope: slope),
+                    child: Container(
+                      height: height,
+                      color: Colors.deepPurpleAccent,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 25.0,
+            right: 25.0,
+            top: top + noteTop,
             child: Visibility(
               visible: visible,
               child: GestureDetector(
@@ -264,21 +383,11 @@ class _HomePageState extends State<HomePage> {
                     visible = !visible;
                   });
                 },
-                child: ClipPath(
-                  clipper: MessageClipper(borderRadius: 16),
-                  child: Container(
-                    height: 100,
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(10)),
-                      color: Colors.deepPurple,
-                    ),
-                    child: const Center(
-                        child: Text(
-                      "This is a Message",
-                      style: TextStyle(color: Colors.white70, fontSize: 20),
-                    )),
-                  ),
-                ),
+                child: Center(
+                    child: Text(
+                  noteText,
+                  style: const TextStyle(color: Colors.white70, fontSize: 20),
+                )),
               ),
             ),
           ),
