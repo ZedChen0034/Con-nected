@@ -144,23 +144,23 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.deepPurple[700],
               leading: GestureDetector(
                 onLongPress: () {
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: const Text("Notification"),
-                        content: const Text("This is a notification."),
-                        actions: [
-                          TextButton(
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: const Text("Close"),
-                          ),
-                        ],
-                      );
-                    },
-                  );
+                  // showDialog(
+                  //   context: context,
+                  //   builder: (BuildContext context) {
+                  //     return AlertDialog(
+                  //       title: const Text("Notification"),
+                  //       content: const Text("This is a notification."),
+                  //       actions: [
+                  //         TextButton(
+                  //           onPressed: () {
+                  //             Navigator.of(context).pop();
+                  //           },
+                  //           child: const Text("Close"),
+                  //         ),
+                  //       ],
+                  //     );
+                  //   },
+                  // );
                   setState(() {
                     visible = true;
                     point = 4;
@@ -364,7 +364,7 @@ class _HomePageState extends State<HomePage> {
                         DialogClipper(radius: 30, point: point, slope: slope),
                     child: Container(
                       height: height,
-                      color: Colors.deepPurpleAccent,
+                      color: Colors.greenAccent,
                     ),
                   ),
                 ),
@@ -386,7 +386,7 @@ class _HomePageState extends State<HomePage> {
                 child: Center(
                     child: Text(
                   noteText,
-                  style: const TextStyle(color: Colors.white70, fontSize: 20),
+                  style: const TextStyle(color: Colors.black45, fontSize: 20),
                 )),
               ),
             ),

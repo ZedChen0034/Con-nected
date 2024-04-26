@@ -24,18 +24,18 @@ class MyWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        // child: Transform.rotate(
-        //   angle: math.pi,
-        child: ClipPath(
-          clipper: DialogClipper(radius: 30, point: 0, slope: 0.2),
-          child: Container(
-            width: 300,
-            height: 150,
-            color: Colors.lightBlueAccent,
-            child: const Center(child: Text('Hello')),
+        child: Transform.rotate(
+          angle: math.pi,
+          child: ClipPath(
+            clipper: DialogClipper(radius: 30, point: 3, slope: 0.8),
+            child: Container(
+              width: 300,
+              height: 150,
+              color: Colors.lightBlueAccent,
+              child: const Center(child: Text('Hello')),
+            ),
           ),
         ),
-        // ),
       ),
     );
   }
