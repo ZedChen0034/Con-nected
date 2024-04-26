@@ -1,33 +1,40 @@
-// https://www.kindacode.com/article/how-to-create-a-filter-search-listview-in-flutter/#google_vignette
-// https://api.flutter.dev/flutter/material/Icons-class.html
-// https://stackoverflow.com/questions/53254963/flutter-show-different-icons-based-on-value
-// https://www.fluttericon.com/
-// https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
-// https://stackoverflow.com/questions/57941227/how-to-add-icon-to-appbar-in-flutter
-// https://stackoverflow.com/questions/56890400/set-color-on-active-item-in-a-bottomnavigationbartype-fixed
-// https://api.flutter.dev/flutter/material/Colors-class.html
-// https://www.courts.act.gov.au/supreme/about-the-courts/judiciary/Chronological-list-of-Former-and-Current-Judges,-Associate-Judge-and-Masters
-
-import 'dart:collection';
-
-import 'package:con_nected/Component/EventList.dart';
-import 'package:con_nected/Event/Notifications.dart';
-import 'package:con_nected/Event/createevent.dart';
-import 'package:con_nected/journal.dart';
 import 'package:flutter/material.dart';
+import '01_welcome.dart';
+import '02_login.dart';
+import '03_register.dart';
+import '04_home.dart';
+import 'package:con_nected/Event/createevent.dart';
 import 'Event/calendar.dart';
 import 'Event/detail.dart';
+import 'peer.dart';
+import 'package:con_nected/Event/doneevent.dart';
+import 'help.dart';
+import 'Help/chat.dart';
+import 'Help/DocumentDetail.dart';
+
+<<<<<<<< HEAD:lib/04_home.dart
+import 'dart:collection';
+
+========
+// Unused
+>>>>>>>> origin/main:lib/main.dart
+import 'package:con_nected/Component/EventList.dart';
+import 'package:con_nected/Event/Notifications.dart';
+import 'package:con_nected/journal.dart';
+import 'package:flutter/material.dart';
 import 'profile.dart';
 import 'story.dart';
-import 'peer.dart';
 import 'package:con_nected/Component/eventDemo.dart';
-import 'package:con_nected/Event/doneevent.dart';
 import 'Component/from_event_to_main.dart';
+<<<<<<<< HEAD:lib/04_home.dart
 import 'help.dart';
 import 'Help/chat.dart';
 import 'Help/DocumentDetail.dart';
 import 'dialog.dart';
 import 'dart:math' as math;
+========
+import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+>>>>>>>> origin/main:lib/main.dart
 
 void main() {
   runApp(const MyApp());
@@ -39,12 +46,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // Remove the debug banner
       debugShowCheckedModeBanner: false,
-      title: 'Event-0',
+      title: 'Con-nected',
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomePage(),
+        '/': (context) => MainScreen(),
+        '/login': (context) => LoginScreen(),
+        '/register': (context) => RegisterScreen(),
+        '/home': (context) => HomePage(),
         '/calendar': (context) => const Calendar(),
         '/createEvent': (context) => Createevent(),
         '/doneEvent': (context) => Doneevent(),
@@ -57,6 +66,7 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+<<<<<<<< HEAD:lib/04_home.dart
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -432,3 +442,5 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+========
+>>>>>>>> origin/main:lib/main.dart

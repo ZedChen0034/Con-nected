@@ -79,7 +79,7 @@ class _CreateeventState extends State<Createevent> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            Navigator.pushNamed(context, '/');
+            Navigator.pop(context);
           },
         ),
         backgroundColor: Colors.lightBlue,
