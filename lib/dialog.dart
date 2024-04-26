@@ -27,7 +27,7 @@ class MyWidget extends StatelessWidget {
         child: Transform.rotate(
           angle: math.pi,
           child: ClipPath(
-            clipper: DialogClipper(radius: 30, point: 3, slope: 0.8),
+            clipper: DialogClipper(radius: 30, point: 1, slope: 0.8),
             child: Container(
               width: 300,
               height: 150,
