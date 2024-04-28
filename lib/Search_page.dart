@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'note.dart';
-import 'detail.dart';
+import 'event/detail.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -64,7 +64,8 @@ class _SearchPageState extends State<SearchPage> {
                       context,
                       MaterialPageRoute(
                         builder: (context) => Detail(),
-                        settings: RouteSettings(arguments: searchResults[index]),
+                        settings:
+                            RouteSettings(arguments: searchResults[index]),
                       ),
                     );
                   },
@@ -73,13 +74,15 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           Text('Search History:'),
-          ...searchHistory.map((term) => ListTile(
-            title: Text(term),
-            onTap: () {
-              _searchController.text = term;
-              _performSearch();
-            },
-          )).toList(),
+          ...searchHistory
+              .map((term) => ListTile(
+                    title: Text(term),
+                    onTap: () {
+                      _searchController.text = term;
+                      _performSearch();
+                    },
+                  ))
+              .toList(),
         ],
       ),
     );
@@ -104,18 +107,21 @@ class _SearchPageState extends State<SearchPage> {
     searchResults.clear();
 
     if (dropdownValue == 'Title') {
-      searchResults = Note.SCRIPT.where((note) => note.name.contains(query)).toList();
+      searchResults =
+          Note.SCRIPT.where((note) => note.name.contains(query)).toList();
     } else if (dropdownValue == 'Time') {
-      searchResults = Note.SCRIPT.where((note) => note.time.contains(query)).toList();
+      searchResults =
+          Note.SCRIPT.where((note) => note.time.contains(query)).toList();
     } else if (dropdownValue == 'Host') {
-      searchResults = Note.SCRIPT.where((note) => note.host.contains(query)).toList();
+      searchResults =
+          Note.SCRIPT.where((note) => note.host.contains(query)).toList();
     } else if (dropdownValue == 'Address') {
-      searchResults = Note.SCRIPT.where((note) => note.address.contains(query)).toList();
+      searchResults =
+          Note.SCRIPT.where((note) => note.address.contains(query)).toList();
     }
 
     setState(() {});
   }
-
 
   void _showTimePicker() {
     showTimePicker(
