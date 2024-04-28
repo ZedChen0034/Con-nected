@@ -1,6 +1,16 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+// Using guide:
+// Use Stack Widget to allow widget floating on surface
+// Use Positioned Widgets to allocate the location of dialog and message
+// **Do not display message in child of dialog, the direction of letters will
+// **change as the dialog rotate.
+// Make sure Stack is including the whole page, refer to detail.dart to see how
+// it works in a padding page.
+// Make sure Positioned widgets are at the end of widget lists, so the dialog and
+// Message are at the fount.
+
 void main() {
   runApp(const MyApp());
 }
