@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'Search Bar.dart';
 import 'Search_page.dart';
 import 'new_task_screen.dart';
-import 'task.dart';
 import 'TaskDetailPage.dart';
+import 'task.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -12,8 +11,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   List<Task> completedTasks = [
-    Task(title: "Complete and publish a journal", description: "About my recent feelings and daily life without drinking alcohol", completedDate: DateTime.now().subtract(Duration(days: 1))),
-    Task(title: "Watched a live broadcast", description: "I watched a live broadcast by a graduate and felt inspired.", completedDate: DateTime.now().subtract(Duration(days: 2))),
+    Task(
+        title: "Complete and publish a journal",
+        description:
+            "About my recent feelings and daily life without drinking alcohol",
+        completedDate: DateTime.now().subtract(Duration(days: 1))),
+    Task(
+        title: "Watched a live broadcast",
+        description:
+            "I watched a live broadcast by a graduate and felt inspired.",
+        completedDate: DateTime.now().subtract(Duration(days: 2))),
   ];
 
   @override
@@ -26,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           GestureDetector(
             onTap: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => SearchPage()));
             },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -41,7 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: [
                   Icon(Icons.search, color: Colors.black, size: 20.0),
                   SizedBox(width: 4.0),
-                  Text('Search...', style: TextStyle(color: Colors.black, fontSize: 14.0)),
+                  Text('Search...',
+                      style: TextStyle(color: Colors.black, fontSize: 14.0)),
                 ],
               ),
             ),
@@ -61,7 +70,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         completedTasks.removeAt(index);
                       });
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Task "${task.title}" has been deleted')),
+                        SnackBar(
+                            content:
+                                Text('Task "${task.title}" has been deleted')),
                       );
                     },
                     background: Container(
@@ -73,15 +84,21 @@ class _HomeScreenState extends State<HomeScreen> {
                             SizedBox(width: 20),
                             Icon(Icons.delete, color: Colors.white),
                             SizedBox(width: 20),
-                            Text("Delete", style: TextStyle(color: Colors.white)),
+                            Text("Delete",
+                                style: TextStyle(color: Colors.white)),
                           ],
                         ),
                       ),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 8),
-                      title: Text(task.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                      subtitle: Text(task.description, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
+                      contentPadding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      title: Text(task.title,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      subtitle: Text(task.description,
+                          style:
+                              TextStyle(fontSize: 14, color: Colors.grey[600])),
                       onTap: () {
                         Navigator.push(
                           context,
