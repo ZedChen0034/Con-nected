@@ -49,8 +49,7 @@ class _NotificationsState extends State<Notifications> {
               ScaffoldMessenger.of(context).showSnackBar(
                 const SnackBar(
                   content: Text('Notification dismissed'),
-                  duration: Duration(
-                      milliseconds: 500),
+                  duration: Duration(milliseconds: 500),
                 ),
               );
             },

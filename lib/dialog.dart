@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
-
 // Using guide:
 // Use Stack Widget to allow widget floating on surface
 // Use Positioned Widgets to allocate the location of dialog and message
@@ -10,6 +9,8 @@ import 'dart:math' as math;
 // it works in a padding page.
 // Make sure Positioned widgets are at the end of widget lists, so the dialog and
 // Message are at the fount.
+
+bool visible = false;
 
 void main() {
   runApp(const MyApp());
@@ -22,13 +23,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: MyWidget(),
+      home: Dialog(),
     );
   }
 }
 
-class MyWidget extends StatelessWidget {
-  const MyWidget({super.key});
+class Dialog extends StatelessWidget {
+  const Dialog({super.key});
 
   @override
   Widget build(BuildContext context) {

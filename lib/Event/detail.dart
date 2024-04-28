@@ -12,13 +12,31 @@ import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../Component/eventDemo.dart';
 import 'package:intl/intl.dart';
+import '../dialog.dart' as dialog;
+import 'dart:math' as math;
 
 class Detail extends StatefulWidget {
+  const Detail({super.key});
+
   @override
   _DetailState createState() => _DetailState();
 }
 
 class _DetailState extends State<Detail> {
+  //dialog variable
+  int point = 0;
+  double slope = 0.5;
+  double height = 100;
+  double top = 0;
+  double noteTop = 40;
+  double angle = math.pi;
+  String noteText = "Text";
+
+  @override
+  initState() {
+    dialog.visible = false;
+  }
+
   void _showDeleteConfirmation(BuildContext context, EventDemo event) {
     showDialog(
       context: context,
@@ -95,65 +113,81 @@ class _DetailState extends State<Detail> {
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
-            child: Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
-                ),
-                elevation: 8,
-                child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          "Event Name",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 2),
-                        ),
-                        Text(
-                          event.name,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Text(
-                          "Tag",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 2),
-                        ),
-                        Text(
-                          event.tag,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Text(
-                          "DateTime",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 2),
-                        ),
-                        Text(
-                          DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Text(
-                          "Location",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 2),
-                        ),
-                        Text(
-                          event.location,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        ElevatedButton(
+          child: Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0),
+            ),
+            elevation: 8,
+            child: Padding(
+              padding: const EdgeInsets.all(14.0),
+              child: Stack(
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Event Name",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 2),
+                      ),
+                      Text(
+                        event.name,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Text(
+                        "Tag",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 2),
+                      ),
+                      Text(
+                        event.tag,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Text(
+                        "DateTime",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 2),
+                      ),
+                      Text(
+                        DateFormat('yyyy-MM-dd HH:mm').format(event.datetime),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Text(
+                        "Location",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 2),
+                      ),
+                      Text(
+                        event.location,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      GestureDetector(
+                        onLongPress: () {
+                          setState(() {
+                            dialog.visible = true;
+                            point = 3;
+                            slope = 0;
+                            height = 130;
+                            top = 130;
+                            noteTop = 15;
+                            angle = 0;
+                            noteText =
+                                "Simply click the orange button to open Google Maps and find the location instantly.";
+                          });
+                        },
+                        child: ElevatedButton(
                           child: const Text(
                             "Google Map - Click to Open",
                             style: TextStyle(fontSize: 15),
@@ -168,52 +202,106 @@ class _DetailState extends State<Detail> {
                             await launchUrl(url);
                           },
                         ),
-                        const Text(
-                          "Contact",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 3),
+                      ),
+                      const Text(
+                        "Contact",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 3),
+                      ),
+                      Text(
+                        event.contact,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Text(
+                        "NotificationType",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 3),
+                      ),
+                      Text(
+                        event.notificationType,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Text(
+                        "Description",
+                        style: TextStyle(
+                            color: Colors.green, fontSize: 20, height: 3),
+                      ),
+                      Text(
+                        event.description,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                            height: 1),
+                      ),
+                      const Align(
+                        alignment: Alignment.bottomRight,
+                        child: Icon(
+                          Icons.directions_run,
+                          color: Colors.green,
+                          size: 39,
                         ),
-                        Text(
-                          event.contact,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Text(
-                          "NotificationType",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 3),
-                        ),
-                        Text(
-                          event.notificationType,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Text(
-                          "Description",
-                          style: TextStyle(
-                              color: Colors.green, fontSize: 20, height: 3),
-                        ),
-                        Text(
-                          event.description,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                              height: 1),
-                        ),
-                        const Align(
-                          alignment: Alignment.bottomRight,
-                          child: Icon(
-                            Icons.directions_run,
-                            color: Colors.green,
-                            size: 39,
+                      ),
+                    ],
+                  ),
+                  Positioned(
+                    left: 0,
+                    right: 0,
+                    top: top,
+                    child: Visibility(
+                      visible: dialog.visible,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            dialog.visible = false;
+                          });
+                        },
+                        child: Transform.rotate(
+                          angle: angle,
+                          child: ClipPath(
+                            clipper: dialog.DialogClipper(
+                                radius: 30, point: point, slope: slope),
+                            child: Container(
+                              height: height,
+                              color: Colors.greenAccent,
+                            ),
                           ),
                         ),
-                      ],
-                    )))),
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    left: 7.0,
+                    right: 7.0,
+                    top: top + noteTop,
+                    child: Visibility(
+                      visible: dialog.visible,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            dialog.visible = false;
+                          });
+                        },
+                        child: Center(
+                          child: Text(
+                            noteText,
+                            style: const TextStyle(
+                                color: Colors.black45, fontSize: 20),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

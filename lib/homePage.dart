@@ -18,7 +18,7 @@ import 'package:con_nected/peer.dart';
 import 'package:con_nected/Component/eventDemo.dart';
 import 'package:con_nected/Component/from_event_to_main.dart';
 import 'package:con_nected/help.dart';
-import 'dialog.dart';
+import 'dialog.dart' as dialog;
 import 'dart:math' as math;
 
 class HomePage extends StatefulWidget {
@@ -31,7 +31,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   List<EventDemo> ALL = EventDemo.SCRIPT;
   //dialog variable
-  bool visible = false;
   int point = 0;
   double slope = 0.5;
   double height = 100;
@@ -46,7 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     FOUND = ALL;
-    visible = false;
+    dialog.visible = false;
     super.initState();
   }
 
@@ -127,7 +126,7 @@ class _HomePageState extends State<HomePage> {
                   //   },
                   // );
                   setState(() {
-                    visible = true;
+                    dialog.visible = true;
                     point = 4;
                     slope = 0.8;
                     height = 100;
@@ -140,6 +139,9 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: IconButton(
                   onPressed: () {
+                    setState(() {
+                      dialog.visible = false;
+                    });
                     Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -153,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                 GestureDetector(
                   onLongPress: () {
                     setState(() {
-                      visible = true;
+                      dialog.visible = true;
                       point = 1;
                       slope = 0.4;
                       height = 100;
@@ -166,6 +168,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: IconButton(
                     onPressed: () {
+                      setState(() {
+                        dialog.visible = false;
+                      });
                       Navigator.pushNamed(context, '/calendar');
                     },
                     icon: const Icon(Icons.calendar_month, color: Colors.white),
@@ -174,7 +179,7 @@ class _HomePageState extends State<HomePage> {
                 GestureDetector(
                   onLongPress: () {
                     setState(() {
-                      visible = true;
+                      dialog.visible = true;
                       point = 1;
                       slope = 0;
                       height = 100;
@@ -187,6 +192,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: IconButton(
                     onPressed: () {
+                      setState(() {
+                        dialog.visible = false;
+                      });
                       Navigator.pushNamed(context, '/createEvent');
                     },
                     icon: const Icon(Icons.add_circle_outline,
@@ -196,7 +204,7 @@ class _HomePageState extends State<HomePage> {
                 GestureDetector(
                   onLongPress: () {
                     setState(() {
-                      visible = true;
+                      dialog.visible = true;
                       point = 0;
                       slope = 0.2;
                       height = 100;
@@ -209,6 +217,9 @@ class _HomePageState extends State<HomePage> {
                   },
                   child: IconButton(
                     onPressed: () {
+                      setState(() {
+                        dialog.visible = false;
+                      });
                       Navigator.pushNamed(context, '/doneEvent');
                     },
                     icon: const Icon(Icons.done_all, color: Colors.white),
@@ -238,7 +249,7 @@ class _HomePageState extends State<HomePage> {
                         suffixIcon: GestureDetector(
                           onLongPress: () {
                             setState(() {
-                              visible = true;
+                              dialog.visible = true;
                               point = 0;
                               slope = 0.2;
                               height = 100;
@@ -267,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                       child: GestureDetector(
                         onLongPress: () {
                           setState(() {
-                            visible = true;
+                            dialog.visible = true;
                             point = 2;
                             slope = 0.6;
                             height = 100;
@@ -315,18 +326,18 @@ class _HomePageState extends State<HomePage> {
             right: 18.0,
             top: top,
             child: Visibility(
-              visible: visible,
+              visible: dialog.visible,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    visible = false;
+                    dialog.visible = false;
                   });
                 },
                 child: Transform.rotate(
                   angle: angle,
                   child: ClipPath(
-                    clipper:
-                        DialogClipper(radius: 30, point: point, slope: slope),
+                    clipper: dialog.DialogClipper(
+                        radius: 30, point: point, slope: slope),
                     child: Container(
                       height: height,
                       color: Colors.greenAccent,
@@ -341,11 +352,11 @@ class _HomePageState extends State<HomePage> {
             right: 25.0,
             top: top + noteTop,
             child: Visibility(
-              visible: visible,
+              visible: dialog.visible,
               child: GestureDetector(
                 onTap: () {
                   setState(() {
-                    visible = !visible;
+                    dialog.visible = false;
                   });
                 },
                 child: Center(
@@ -364,6 +375,7 @@ class _HomePageState extends State<HomePage> {
         currentIndex: _currentIndex,
         onTap: (int index) {
           setState(() {
+            dialog.visible = false;
             _currentIndex = index;
           });
         },
