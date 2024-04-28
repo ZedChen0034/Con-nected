@@ -49,12 +49,12 @@ String? selectedFilePath;
 bool showSuccessMessage = false;
 String errorMessage = '';
 
-class RegisterScreen extends StatefulWidget {
+class Register extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterScreenState extends State<RegisterScreen> {
+class _RegisterScreenState extends State<Register> {
   // Total 25 questions (pages), Index 0~24
   // Store answers by user-click or user-input
   List<dynamic> answers = List.filled(25, '');
@@ -348,13 +348,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 text: TextSpan(
                   style: TextStyle(fontSize: 12, color: Colors.black),
                   children: [
-                    TextSpan(text: "1. The information you provide is voluntary and will be used for managing your registration and participation in the event, including updates and future related notifications.\n\n"),
-                    TextSpan(text: "2. By submitting this form, you agree that A Curious Tractor is not liable for any errors in your submission or any consequences thereof.\n\n"),
-                    TextSpan(text: "3. Your data will be handled according to our Privacy Policy - PDF file link.\n\n"),
-                    TextSpan(text: "4. Ensure the accuracy of your information as you are responsible for any errors.\n\n"),
-                    TextSpan(text: "5. If there are legal implications associated with this form, they are described here.\n\n"),
-                    TextSpan(text: "6. For those who disagree with our disclaimer, please exit the APP.\n\n"),
-                    TextSpan(text: "7. For those who agree with our disclaimer, please tick \"YES, I have read and agree with all the statements\", representing you confirm that you have read and understand this disclaimer and all related documents. Then, click the \"Next\" button to start the registration.\n\n"),
+                    TextSpan(
+                        text:
+                            "1. The information you provide is voluntary and will be used for managing your registration and participation in the event, including updates and future related notifications.\n\n"),
+                    TextSpan(
+                        text:
+                            "2. By submitting this form, you agree that A Curious Tractor is not liable for any errors in your submission or any consequences thereof.\n\n"),
+                    TextSpan(
+                        text:
+                            "3. Your data will be handled according to our Privacy Policy - PDF file link.\n\n"),
+                    TextSpan(
+                        text:
+                            "4. Ensure the accuracy of your information as you are responsible for any errors.\n\n"),
+                    TextSpan(
+                        text:
+                            "5. If there are legal implications associated with this form, they are described here.\n\n"),
+                    TextSpan(
+                        text:
+                            "6. For those who disagree with our disclaimer, please exit the APP.\n\n"),
+                    TextSpan(
+                        text:
+                            "7. For those who agree with our disclaimer, please tick \"YES, I have read and agree with all the statements\", representing you confirm that you have read and understand this disclaimer and all related documents. Then, click the \"Next\" button to start the registration.\n\n"),
                   ],
                 ),
               ),
@@ -367,7 +381,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       value: agree,
                       onChanged: (bool? value) {
                         setState(() {
-                          agree = value ?? false; // Update state when checkbox is toggled
+                          agree = value ??
+                              false; // Update state when checkbox is toggled
                         });
                       },
                     ),
@@ -545,14 +560,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
     List<String> currentAnswers = List<String>.from(answers[pageIndex]);
     bool isOtherSelected =
-    currentAnswers.any((item) => item.startsWith('Other'));
+        currentAnswers.any((item) => item.startsWith('Other'));
 
     TextEditingController _otherTextController = TextEditingController(
         text: isOtherSelected
             ? currentAnswers
-            .firstWhere((item) => item.startsWith('Other'))
-            .split(': ')
-            .last
+                .firstWhere((item) => item.startsWith('Other'))
+                .split(': ')
+                .last
             : '');
 
     ButtonStyle submitButtonStyle() {
@@ -560,7 +575,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: MaterialStateProperty.all(Colors.purple),
         foregroundColor: MaterialStateProperty.all(Colors.white),
         padding:
-        MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 50)),
+            MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 50)),
         textStyle: MaterialStateProperty.all(
           TextStyle(
             fontSize: 20,
@@ -575,7 +590,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
         backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
         foregroundColor: MaterialStateProperty.all(Colors.white),
         padding:
-        MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 50)),
+            MaterialStateProperty.all(EdgeInsets.symmetric(horizontal: 50)),
         textStyle: MaterialStateProperty.all(
           TextStyle(
             fontSize: 20,
@@ -592,17 +607,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ElevatedButton(
             onPressed: pageIndex == 24
                 ? () async {
-              await sendEmail();
-              Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        Ending('images/02-thank.png',
-                            'Thank you for your application for registration. Your application will be processed within 7 working days, please pay attention to your Email box.'),
-                  ));
-            }
-                : () =>
-                _controller.nextPage(
+                    await sendEmail();
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Ending('images/02-thank.png',
+                              'Thank you for your application for registration. Your application will be processed within 7 working days, please pay attention to your Email box.'),
+                        ));
+                  }
+                : () => _controller.nextPage(
                     duration: Duration(milliseconds: 300),
                     curve: Curves.easeInOut),
             child: pageIndex == 24 ? Text('Submit') : Text('Next'),
@@ -610,7 +623,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView( // Added SingleChildScrollView here to enable scrolling
+      body: SingleChildScrollView(
+        // Added SingleChildScrollView here to enable scrolling
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -642,11 +656,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onChanged: (bool? value) {
                             setState(() {
                               if (value == true) {
-                                currentAnswers.add(
-                                    'Other: ' + _otherTextController.text);
+                                currentAnswers
+                                    .add('Other: ' + _otherTextController.text);
                               } else {
-                                currentAnswers.removeWhere((item) =>
-                                    item.startsWith('Other'));
+                                currentAnswers.removeWhere(
+                                    (item) => item.startsWith('Other'));
                                 _otherTextController.clear();
                               }
                               answers[pageIndex] = currentAnswers;
@@ -664,7 +678,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               onChanged: (value) {
                                 final index = currentAnswers.indexWhere(
-                                        (item) => item.startsWith('Other'));
+                                    (item) => item.startsWith('Other'));
                                 if (index != -1) {
                                   currentAnswers[index] = 'Other: $value';
                                   answers[pageIndex] = currentAnswers;
@@ -932,7 +946,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
           setState(() {
             showSuccessMessage = false;
           });
-          errorMessage = "Unsupported file type. Please upload PNG / JPG / JEPG / PDF";
+          errorMessage =
+              "Unsupported file type. Please upload PNG / JPG / JEPG / PDF";
           selectedFilePath = "Fail to upload - Unsupported file type.";
           print('Unsupported file type selected');
         }
@@ -1091,7 +1106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
   // Function 8 - Ending scenes (two versions of registration ending)
   Widget Ending(String imagePath, String message) {
     return Center(
-      child: SingleChildScrollView(  // Add SingleChildScrollView here
+      child: SingleChildScrollView(
+        // Add SingleChildScrollView here
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -1099,13 +1115,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
               builder: (BuildContext context, BoxConstraints constraints) {
                 // Calculate the available width for the image
                 double maxWidth = constraints.maxWidth;
-                double maxHeight = MediaQuery.of(context).size.height * 0.5; // Take up to 50% of screen height
+                double maxHeight = MediaQuery.of(context).size.height *
+                    0.5; // Take up to 50% of screen height
 
                 return Image.asset(
                   imagePath,
                   width: maxWidth,
                   height: maxHeight,
-                  fit: BoxFit.contain, // Ensures the image maintains its aspect ratio
+                  fit: BoxFit
+                      .contain, // Ensures the image maintains its aspect ratio
                 );
               },
             ),
@@ -1122,7 +1140,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

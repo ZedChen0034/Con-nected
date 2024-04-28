@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatelessWidget {
+class Welcome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text("Con-nected"),
         centerTitle: true,
-        automaticallyImplyLeading: false,  // This prevents the back button from appearing
+        automaticallyImplyLeading:
+            false, // This prevents the back button from appearing
       ),
-      body: SingleChildScrollView(  // Add SingleChildScrollView here
+      body: SingleChildScrollView(
+        // Add SingleChildScrollView here
         child: Column(
           children: <Widget>[
-            Image.asset('images/01-welcome.png'),  // Ensure this image is in your assets directory
+            Image.asset(
+                'images/01-welcome.png'), // Ensure this image is in your assets directory
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -29,7 +32,8 @@ class MainScreen extends StatelessWidget {
                       textStyle: TextStyle(
                         fontSize: 20,
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
                   ),
                   SizedBox(height: 40),
@@ -44,7 +48,8 @@ class MainScreen extends StatelessWidget {
                       textStyle: TextStyle(
                         fontSize: 20,
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                     ),
                   ),
                 ],

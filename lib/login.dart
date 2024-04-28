@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatelessWidget {
+class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController usernameController = TextEditingController();
@@ -10,18 +10,24 @@ class LoginScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Login'),
       ),
-      body: LayoutBuilder(  // Using LayoutBuilder to get parent widget constraints
+      body: LayoutBuilder(
+        // Using LayoutBuilder to get parent widget constraints
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: viewportConstraints.maxHeight,  // Setting minimum height to the viewport height
+                minHeight: viewportConstraints
+                    .maxHeight, // Setting minimum height to the viewport height
               ),
               child: IntrinsicHeight(
-                child: Padding( // Padding added here to give space around the Column
-                  padding: EdgeInsets.symmetric(horizontal: 20.0), // Horizontal padding for left and right edges
+                child: Padding(
+                  // Padding added here to give space around the Column
+                  padding: EdgeInsets.symmetric(
+                      horizontal:
+                          20.0), // Horizontal padding for left and right edges
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,  // Centering content vertically
+                    mainAxisAlignment: MainAxisAlignment
+                        .center, // Centering content vertically
                     children: <Widget>[
                       TextField(
                         controller: usernameController,
@@ -52,10 +58,13 @@ class LoginScreen extends StatelessWidget {
                           textStyle: TextStyle(
                             fontSize: 20,
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
                         ),
                       ),
-                      SizedBox(height: 20),  // Keeps space so content remains centered even when the keyboard is displayed
+                      SizedBox(
+                          height:
+                              20), // Keeps space so content remains centered even when the keyboard is displayed
                     ],
                   ),
                 ),

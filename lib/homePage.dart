@@ -30,6 +30,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List<EventDemo> ALL = EventDemo.SCRIPT;
+  //dialog variable
   bool visible = false;
   int point = 0;
   double slope = 0.5;
@@ -45,6 +46,7 @@ class _HomePageState extends State<HomePage> {
   @override
   initState() {
     FOUND = ALL;
+    visible = false;
     super.initState();
   }
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '01_welcome.dart';
-import '02_login.dart';
-import '03_register.dart';
-import '04_home.dart';
+import 'welcome.dart';
+import 'login.dart';
+import 'register.dart';
+import 'homePage.dart';
 import 'package:con_nected/Event/createevent.dart';
 import 'Event/calendar.dart';
 import 'Event/detail.dart';
@@ -26,9 +26,9 @@ class MyApp extends StatelessWidget {
       title: 'Con-nected',
       initialRoute: '/',
       routes: {
-        '/': (context) => MainScreen(),
-        '/login': (context) => LoginScreen(),
-        '/register': (context) => RegisterScreen(),
+        '/': (context) => Welcome(),
+        '/login': (context) => Login(),
+        '/register': (context) => Register(),
         '/home': (context) => HomePage(),
         '/calendar': (context) => const Calendar(),
         '/createEvent': (context) => Createevent(),
