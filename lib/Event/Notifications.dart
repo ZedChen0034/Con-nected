@@ -28,13 +28,36 @@ class _NotificationsState extends State<Notifications> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.help_outline, color: Colors.white),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Welcome to the Notification Page'),
+                    content: Text("Here, you'll always be in the loop with the latest updates and messages. Stay informed, stay connected!"),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
           return Dismissible(
             key: Key(notifications[index].timestamp.toString()),
-            // Unique key for Dismissible
             direction: DismissDirection.endToStart,
             background: Container(
               alignment: Alignment.centerRight,
@@ -47,7 +70,7 @@ class _NotificationsState extends State<Notifications> {
                 notifications.removeAt(index);
               });
               ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
+                SnackBar(
                   content: Text('Notification dismissed'),
                   duration: Duration(milliseconds: 500),
                 ),
@@ -61,10 +84,8 @@ class _NotificationsState extends State<Notifications> {
                     : Colors.blue,
               ),
               title: Text(notifications[index].content),
-              subtitle: Text(DateFormat('yyyy-MM-dd HH:mm')
-                  .format(notifications[index].timestamp)),
-              trailing: Icon(Icons.arrow_forward_ios,
-                  size: 14.0, color: Colors.grey[400]),
+              subtitle: Text(DateFormat('yyyy-MM-dd HH:mm').format(notifications[index].timestamp)),
+              trailing: Icon(Icons.arrow_forward_ios, size: 14.0, color: Colors.grey[400]),
             ),
           );
         },
