@@ -103,130 +103,124 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _currentIndex == 0
           ? AppBar(
-              centerTitle: true,
-              title: const Text("Event"),
-              backgroundColor: Colors.deepPurple[700],
-              leading: GestureDetector(
-                onLongPress: () {
-                  // showDialog(
-                  //   context: context,
-                  //   builder: (BuildContext context) {
-                  //     return AlertDialog(
-                  //       title: const Text("Notification"),
-                  //       content: const Text("This is a notification."),
-                  //       actions: [
-                  //         TextButton(
-                  //           onPressed: () {
-                  //             Navigator.of(context).pop();
-                  //           },
-                  //           child: const Text("Close"),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // );
-                  setState(() {
-                    dialog.visible = true;
-                    point = 4;
-                    slope = 0.8;
-                    height = 100;
-                    top = 0;
-                    noteTop = 40;
-                    angle = math.pi;
-                    noteText =
-                        "Never miss out on what's important with timely event notifications.";
-                  });
+        centerTitle: true,
+        title: const Text("Event"),
+        backgroundColor: Colors.deepPurple[700],
+        leading: GestureDetector(
+          onLongPress: () {
+            setState(() {
+              dialog.visible = true;
+              point = 4;
+              slope = 0.8;
+              height = 100;
+              top = 0;
+              noteTop = 40;
+              angle = math.pi;
+              noteText = "Never miss out on what's important with timely event notifications.";
+            });
+          },
+          child: IconButton(
+            onPressed: () {
+              setState(() {
+                dialog.visible = false;
+              });
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Notifications()));
+            },
+            icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+          ),
+        ),
+        actions: [
+          GestureDetector(
+            onLongPress: () {
+              setState(() {
+                dialog.visible = true;
+                point = 1;
+                slope = 0.4;
+                height = 100;
+                top = 0;
+                noteTop = 40;
+                angle = math.pi;
+                noteText = "Utilize our event calendar to keep track of your plans and schedules.";
+              });
+            },
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  dialog.visible = false;
+                });
+                Navigator.pushNamed(context, '/calendar');
+              },
+              icon: const Icon(Icons.calendar_month, color: Colors.white),
+            ),
+          ),
+          GestureDetector(
+            onLongPress: () {
+              setState(() {
+                dialog.visible = true;
+                point = 1;
+                slope = 0;
+                height = 100;
+                top = 0;
+                noteTop = 40;
+                angle = math.pi;
+                noteText = "Have an idea? Easily create new events and bring people together.";
+              });
+            },
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  dialog.visible = false;
+                });
+                Navigator.pushNamed(context, '/createEvent');
+              },
+              icon: const Icon(Icons.add_circle_outline, color: Colors.white),
+            ),
+          ),
+          GestureDetector(
+            onLongPress: () {
+              setState(() {
+                dialog.visible = true;
+                point = 0;
+                slope = 0.2;
+                height = 100;
+                top = 0;
+                noteTop = 40;
+                angle = math.pi;
+                noteText = "Browse through completed activities to relive the fun moments.";
+              });
+            },
+            child: IconButton(
+              onPressed: () {
+                setState(() {
+                  dialog.visible = false;
+                });
+                Navigator.pushNamed(context, '/doneEvent');
+              },
+              icon: const Icon(Icons.done_all, color: Colors.white),
+            ),
+          ),
+          IconButton(
+            icon: const Icon(Icons.help_outline, color: Colors.white),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: const Text("Welcome to the event page"),
+                    content: const Text("You can explore detailed information about each event right on our event page."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text("Close"),
+                      ),
+                    ],
+                  );
                 },
-                child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      dialog.visible = false;
-                    });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => Notifications()));
-                  },
-                  icon: const Icon(Icons.notifications_outlined,
-                      color: Colors.white),
-                ),
-              ),
-              actions: [
-                GestureDetector(
-                  onLongPress: () {
-                    setState(() {
-                      dialog.visible = true;
-                      point = 1;
-                      slope = 0.4;
-                      height = 100;
-                      top = 0;
-                      noteTop = 40;
-                      angle = math.pi;
-                      noteText =
-                          "Utilize our event calendar to keep track of your plans and schedules.";
-                    });
-                  },
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        dialog.visible = false;
-                      });
-                      Navigator.pushNamed(context, '/calendar');
-                    },
-                    icon: const Icon(Icons.calendar_month, color: Colors.white),
-                  ),
-                ),
-                GestureDetector(
-                  onLongPress: () {
-                    setState(() {
-                      dialog.visible = true;
-                      point = 1;
-                      slope = 0;
-                      height = 100;
-                      top = 0;
-                      noteTop = 40;
-                      angle = math.pi;
-                      noteText =
-                          "Have an idea? Easily create new events and bring people together.";
-                    });
-                  },
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        dialog.visible = false;
-                      });
-                      Navigator.pushNamed(context, '/createEvent');
-                    },
-                    icon: const Icon(Icons.add_circle_outline,
-                        color: Colors.white),
-                  ),
-                ),
-                GestureDetector(
-                  onLongPress: () {
-                    setState(() {
-                      dialog.visible = true;
-                      point = 0;
-                      slope = 0.2;
-                      height = 100;
-                      top = 0;
-                      noteTop = 40;
-                      angle = math.pi;
-                      noteText =
-                          "Browse through completed activities to relive the fun moments.";
-                    });
-                  },
-                  child: IconButton(
-                    onPressed: () {
-                      setState(() {
-                        dialog.visible = false;
-                      });
-                      Navigator.pushNamed(context, '/doneEvent');
-                    },
-                    icon: const Icon(Icons.done_all, color: Colors.white),
-                  ),
-                ),
-              ],
-            )
+              );
+            },
+          ),
+        ],
+      )
           : null,
       body: Stack(
         alignment: Alignment.center,
