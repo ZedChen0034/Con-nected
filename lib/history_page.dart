@@ -14,12 +14,12 @@ class _HomeScreenState extends State<HomeScreen> {
     Task(
         title: "Complete and publish a journal",
         description:
-            "About my recent feelings and daily life without drinking alcohol",
+        "About my recent feelings and daily life without drinking alcohol",
         completedDate: DateTime.now().subtract(Duration(days: 1))),
     Task(
         title: "Watched a live broadcast",
         description:
-            "I watched a live broadcast by a graduate and felt inspired.",
+        "I watched a live broadcast by a graduate and felt inspired.",
         completedDate: DateTime.now().subtract(Duration(days: 2))),
   ];
 
@@ -28,6 +28,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to History Page"),
+                    content: Text("You can check your historical events here. You will also find the search function on the top center useful."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
@@ -72,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                             content:
-                                Text('Task "${task.title}" has been deleted')),
+                            Text('Task "${task.title}" has been deleted')),
                       );
                     },
                     background: Container(
@@ -92,13 +116,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     child: ListTile(
                       contentPadding:
-                          EdgeInsets.symmetric(horizontal: 20, vertical: 8),
+                      EdgeInsets.symmetric(horizontal: 20, vertical: 8),
                       title: Text(task.title,
                           style: TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       subtitle: Text(task.description,
                           style:
-                              TextStyle(fontSize: 14, color: Colors.grey[600])),
+                          TextStyle(fontSize: 14, color: Colors.grey[600])),
                       onTap: () {
                         Navigator.push(
                           context,

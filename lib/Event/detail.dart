@@ -62,8 +62,6 @@ class _DetailState extends State<Detail> {
                     createOrEdit: "delete",
                   ),
                 );
-                // Navigator.of(context).pop(true);
-                // Navigator.of(context).pop('deleted');
               },
             ),
           ],
@@ -74,41 +72,61 @@ class _DetailState extends State<Detail> {
 
   @override
   Widget build(BuildContext context) {
-    final EventDemo event =
-        ModalRoute.of(context)!.settings.arguments as EventDemo;
+    final EventDemo event = ModalRoute.of(context)!.settings.arguments as EventDemo;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Detail Information'),
         backgroundColor: Colors.green,
-        actions: event.editable
-            ? [
-                PopupMenuButton<String>(
-                  onSelected: (value) {
-                    if (value == 'edit') {
-                      Navigator.pushNamed(
-                        context,
-                        '/createEvent',
-                        arguments: event,
-                      );
-                    } else if (value == 'delete') {
-                      _showDeleteConfirmation(context, event);
-                    }
-                  },
-                  itemBuilder: (BuildContext context) =>
-                      <PopupMenuEntry<String>>[
-                    const PopupMenuItem<String>(
-                      value: 'edit',
-                      child: Text('Edit'),
-                    ),
-                    const PopupMenuItem<String>(
-                      value: 'delete',
-                      child: Text('Delete'),
-                    ),
-                  ],
-                ),
-              ]
-            : null,
+        actions: [
+          event.editable
+              ? PopupMenuButton<String>(
+            onSelected: (value) {
+              if (value == 'edit') {
+                Navigator.pushNamed(
+                  context,
+                  '/createEvent',
+                  arguments: event,
+                );
+              } else if (value == 'delete') {
+                _showDeleteConfirmation(context, event);
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'edit',
+                child: Text('Edit'),
+              ),
+              const PopupMenuItem<String>(
+                value: 'delete',
+                child: Text('Delete'),
+              ),
+            ],
+          )
+              : Container(),
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to Detail Information Page"),
+                    content: Text("You can check the detailed information on the event here."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

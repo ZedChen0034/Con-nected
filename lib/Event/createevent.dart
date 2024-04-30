@@ -24,17 +24,20 @@ class _CreateeventState extends State<Createevent> {
 
   @override
   void initState() {
+    super.initState();
     dialog.visible = false;
+    event = EventDemo.empty(); // Default to an empty event on start
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     final EventDemo? passedEvent =
-        ModalRoute.of(context)?.settings.arguments as EventDemo?;
-
-    event = passedEvent ?? EventDemo.empty();
-    create = event.isEmpty;
+    ModalRoute.of(context)?.settings.arguments as EventDemo?;
+    if (passedEvent != null) {
+      event = passedEvent;
+      create = false;
+    }
   }
 
   void _showSuccessDialog(BuildContext context, EventDemo newEvent) {
@@ -55,8 +58,8 @@ class _CreateeventState extends State<Createevent> {
         return AlertDialog(
           title: const Text("Success"),
           content: create
-              ? const Text("Event Created！")
-              : const Text("Event Updated！"),
+              ? const Text("Event Created!")
+              : const Text("Event Updated!"),
         );
       },
     );
@@ -92,7 +95,7 @@ class _CreateeventState extends State<Createevent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(event.isEmpty ? "Create event" : "Edit event"),
+        title: Text(create ? "Create Event" : "Edit Event"),
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -100,7 +103,30 @@ class _CreateeventState extends State<Createevent> {
           },
         ),
         backgroundColor: Colors.lightBlue,
-        elevation: 0,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to your event creation center!"),
+                    content: Text("Here's where you can add new appointments effortlessly."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

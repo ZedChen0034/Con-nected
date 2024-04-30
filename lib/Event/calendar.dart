@@ -25,9 +25,7 @@ class _CalendarState extends State<Calendar> {
     Set<EventDemo> results = {};
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     results.addAll(events.where(
-        (user) => dateFormat.format(date) == dateFormat.format(user.datetime)));
-    var c = results.toList();
-    if (c.isNotEmpty) {}
+            (user) => dateFormat.format(date) == dateFormat.format(user.datetime)));
     return results.toList();
   }
 
@@ -42,9 +40,33 @@ class _CalendarState extends State<Calendar> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Event"),
+        title: const Text("Event Calendar"),
         centerTitle: true,
         backgroundColor: Colors.deepPurple[700],
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.help_outline, color: Colors.white),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Welcome to your calendar hub!'),
+                    content: Text("Customize and conquer time your way."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Column(children: [
         TableCalendar(
@@ -54,13 +76,11 @@ class _CalendarState extends State<Calendar> {
           calendarFormat: _calendarFormat,
           eventLoader: _getEventsForDay,
           headerStyle: const HeaderStyle(titleCentered: true),
-          //Change format of calendar
           onFormatChanged: (format) {
             setState(() {
               _calendarFormat = format;
             });
           },
-          //select a date on calendar
           selectedDayPredicate: (day) {
             return isSameDay(_selectedDay, day);
           },
@@ -88,21 +108,18 @@ class _CalendarState extends State<Calendar> {
                         ),
                         color: Colors.transparent,
                         elevation: 8,
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 10, horizontal: 10),
+                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                         child: Container(
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
                                 colors: [Colors.purple, Colors.blue],
-                                // gradient colors
                                 begin: Alignment.topLeft,
                                 end: Alignment.bottomRight,
                               ),
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 10.0),
+                              padding: const EdgeInsets.symmetric(vertical: 10.0),
                               child: ListTile(
                                 leading: const Icon(
                                   Icons.event,
@@ -110,8 +127,7 @@ class _CalendarState extends State<Calendar> {
                                   size: 35,
                                 ),
                                 title: Text(
-                                  DateFormat('yyyy-MM-dd HH:mm')
-                                          .format(value[index].datetime) +
+                                  DateFormat('yyyy-MM-dd HH:mm').format(value[index].datetime) +
                                       '\n' +
                                       value[index].name +
                                       " - " +
