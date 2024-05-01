@@ -16,6 +16,28 @@ class DocumentDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text("Document Details"),
         backgroundColor: Colors.purple,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline, color: Colors.white),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to Document Details"),
+                    content: Text("Welcome to check the list of your document details. Click the bar below and the corresponding file will pop up."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'Search_page.dart';
-// import 'new_task_screen.dart';
-// import 'TaskDetailPage.dart';
 
 class Doneevent extends StatefulWidget {
   @override
@@ -20,12 +17,36 @@ class _DoneeventState extends State<Doneevent> {
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to History Page"),
+                    content: Text("You can check your historical events here."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('Close'),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Column(
         children: [
           GestureDetector(
             onTap: () {
-              // Navigator.push(context, MaterialPageRoute(builder: (context) => SearchPage()));
+              // Navigation logic could be added here
             },
             child: Container(
               margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -50,7 +71,6 @@ class _DoneeventState extends State<Doneevent> {
               itemCount: completedTasks.length,
               itemBuilder: (context, index) {
                 final task = completedTasks[index];
-
                 return Card(
                   margin: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
                   child: Dismissible(
@@ -82,12 +102,7 @@ class _DoneeventState extends State<Doneevent> {
                       title: Text(task.title, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                       subtitle: Text(task.description, style: TextStyle(fontSize: 14, color: Colors.grey[600])),
                       onTap: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) => TaskDetailsScreen(task: task),
-                        //   ),
-                        // );
+                        // Tap logic could be added here
                       },
                     ),
                   ),
@@ -97,31 +112,14 @@ class _DoneeventState extends State<Doneevent> {
           ),
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     Navigator.push(
-      //       context,
-      //       MaterialPageRoute(
-      //         builder: (context) => NewTaskScreen(
-      //           addTaskCallback: (newTask) {
-      //             setState(() {
-      //               completedTasks.add(newTask);
-      //             });
-      //           },
-      //         ),
-      //       ),
-      //     );
-      //   },
-      //   child: Icon(Icons.add),
-      // ),
     );
   }
 }
 
 class Task {
-  late final String title;
-  late final String description;
-  late final DateTime completedDate;
+  final String title;
+  final String description;
+  final DateTime completedDate;
 
   Task({required this.title, required this.description, required this.completedDate});
 }

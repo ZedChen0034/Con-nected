@@ -25,6 +25,7 @@ class _JournalDetailState extends State<JournalDetail> {
 
   @override
   initState() {
+    super.initState();
     dialog.visible = false;
   }
 
@@ -35,59 +36,29 @@ class _JournalDetailState extends State<JournalDetail> {
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.grey[200],
-        title: Row(
-          children: [
-            Expanded(
-              child: Text(
-                widget.journal.author,
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                widget.journal.theme,
-                style: TextStyle(
-                  color: Colors.black45,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-            SizedBox(width: 10.0), // Add a small space between theme and icon
-            GestureDetector(
-              onLongPress: () {
-                setState(() {
-                  dialog.visible = true;
-                  point = 0;
-                  slope = 0.3;
-                  height = 100;
-                  top = 0;
-                  noteTop = 40;
-                  angle = math.pi;
-                  noteText =
-                      "If you like this story, click the “Like” button to your Favorite.";
-                });
-              },
-              child: IconButton(
-                icon: Icon(
-                  widget.journal.liked ? Icons.favorite : Icons.favorite_border,
-                  color: Colors.red,
-                ),
-                onPressed: () {
-                  setState(() {
-                    widget.journal.liked = !widget.journal.liked;
-                    widget.onLikedChanged(widget.journal); // Notify the change
-                    widget.onLikedChanged(widget.journal); // Notify the change
-                  });
+        title: Text(widget.journal.author, style: TextStyle(color: Colors.black)),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline, color: Colors.black),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to Journal Detail Page"),
+                    content: Text("You can read the detailed contents of stories here. If you like this story, click the 'Like' button to add it to your Favorite."),
+                    actions: <Widget>[
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close"),
+                      ),
+                    ],
+                  );
                 },
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          ),
+        ],
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Stack(

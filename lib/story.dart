@@ -39,7 +39,7 @@ class _StoryState extends State<Story> {
     super.dispose();
   }
 
-  _onSearchChanged() {
+  void _onSearchChanged() {
     setState(() {
       String searchText = _searchController.text.toLowerCase();
       if (searchText.isEmpty) {
@@ -47,9 +47,9 @@ class _StoryState extends State<Story> {
       } else {
         _filteredItems = myItems
             .where((item) =>
-                item.tag.toLowerCase().contains(searchText) ||
-                item.title.toLowerCase().contains(searchText) ||
-                (item.content.toLowerCase().contains(searchText)))
+        item.tag.toLowerCase().contains(searchText) ||
+            item.title.toLowerCase().contains(searchText) ||
+            item.content.toLowerCase().contains(searchText))
             .toList();
       }
     });
@@ -65,47 +65,51 @@ class _StoryState extends State<Story> {
         centerTitle: true,
         title: _isSearching
             ? TextField(
-                controller: _searchController,
-                autofocus: true,
-                style: TextStyle(color: Colors.grey[700]),
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: Colors.grey),
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
-                  border: InputBorder.none,
-                  focusedBorder: InputBorder.none,
-                ),
-              )
+          controller: _searchController,
+          autofocus: true,
+          style: TextStyle(color: Colors.grey[700]),
+          decoration: const InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.grey),
+            prefixIcon: Icon(Icons.search, color: Colors.grey),
+            border: InputBorder.none,
+            focusedBorder: InputBorder.none,
+          ),
+        )
             : Text("Story Telling", style: TextStyle(color: Colors.grey[800])),
-        leading: GestureDetector(
-          onLongPress: () {
+        leading: IconButton(
+          onPressed: () {
             setState(() {
-              dialog.visible = true;
-              point = 4;
-              slope = 0.8;
-              height = 100;
-              top = 0;
-              noteTop = 40;
-              angle = math.pi;
-              noteText = "Remember to ask Felix for message.";
+              _isSearching = !_isSearching;
+              if (!_isSearching) {
+                _searchController.clear();
+              }
             });
           },
-          child: IconButton(
-            onPressed: () {
-              setState(() {
-                if (_isSearching) {
-                  _isSearching = false;
-                  _searchController.clear();
-                } else {
-                  _isSearching = true;
-                }
-              });
-            },
-            icon: _isSearching
-                ? Icon(Icons.close, color: Colors.grey[600])
-                : Icon(Icons.search_outlined, color: Colors.grey[600]),
-          ),
+          icon: Icon(_isSearching ? Icons.close : Icons.search_outlined, color: Colors.grey[600]),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline, color: Colors.grey[600]),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to the Story Page"),
+                    content: Text("Explore various narratives and dive deep into the storytelling experience."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Stack(
         alignment: Alignment.center,

@@ -21,6 +21,7 @@ class _HelpState extends State<Help> {
 
   @override
   initState() {
+    super.initState();
     dialog.visible = false;
   }
 
@@ -37,13 +38,32 @@ class _HelpState extends State<Help> {
             gradient: LinearGradient(
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.blue,
-                Colors.purple,
-              ],
+              colors: [Colors.blue, Colors.purple],
             ),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Help Center"),
+                    content: Text("Explore various resources and support options to assist you in navigating the app and enhancing your experience."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -102,9 +122,9 @@ class _HelpState extends State<Help> {
                 },
                 child: Center(
                     child: Text(
-                  noteText,
-                  style: const TextStyle(color: Colors.black45, fontSize: 20),
-                )),
+                      noteText,
+                      style: const TextStyle(color: Colors.black45, fontSize: 20),
+                    )),
               ),
             ),
           ),
@@ -154,13 +174,9 @@ class _HelpState extends State<Help> {
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              // More vibrant gradient
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
-              colors: [
-                Colors.purple[100]!,
-                Colors.blue[100]!,
-              ],
+              colors: [Colors.purple[100]!, Colors.blue[100]!],
             ),
           ),
           padding: const EdgeInsets.all(12.0),
@@ -175,7 +191,7 @@ class _HelpState extends State<Help> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              if (description != null && description.isNotEmpty)
+              if (description != null)
                 Text(
                   description,
                   style: TextStyle(

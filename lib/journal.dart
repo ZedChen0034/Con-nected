@@ -47,20 +47,17 @@ class _JournalState extends State<Journal> {
   _onSearchChanged() {
     setState(() {
       String searchText = _searchController.text.toLowerCase();
-      setState(() {
-        if (searchText.isEmpty) {
-          _filteredItems = myItems;
-        } else {
-          var searchResults = myItems
-              .where((item) =>
-                  item.theme.toLowerCase().contains(searchText) ||
-                  item.title.toLowerCase().contains(searchText) ||
-                  (item.reflection.toLowerCase().contains(searchText)))
-              .toList();
-          _filteredItems =
-              searchResults.where((item) => item.isPublic).toList();
-        }
-      });
+      if (searchText.isEmpty) {
+        _filteredItems = myItems;
+      } else {
+        _filteredItems = myItems
+            .where((item) =>
+        item.theme.toLowerCase().contains(searchText) ||
+            item.title.toLowerCase().contains(searchText) ||
+            item.reflection.toLowerCase().contains(searchText))
+            .toList();
+        _filteredItems = _filteredItems.where((item) => item.isPublic).toList();
+      }
     });
   }
 
@@ -71,46 +68,50 @@ class _JournalState extends State<Journal> {
         centerTitle: true,
         title: _isSearching
             ? TextField(
-                controller: _searchController,
-                autofocus: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: const InputDecoration(
-                  hintText: 'Search...',
-                  hintStyle: TextStyle(color: Colors.white),
-                  border: InputBorder.none, // remove underline
-                  focusedBorder: InputBorder.none, // remove focus underline
-                ),
-              )
+          controller: _searchController,
+          autofocus: true,
+          style: const TextStyle(color: Colors.white),
+          decoration: const InputDecoration(
+            hintText: 'Search...',
+            hintStyle: TextStyle(color: Colors.white),
+            border: InputBorder.none, // remove underline
+            focusedBorder: InputBorder.none, // remove focus underline
+          ),
+        )
             : const Text("Journal"),
-        leading: GestureDetector(
-          onLongPress: () {
-            setState(() {
-              dialog.visible = true;
-              point = 4;
-              slope = 1;
-              height = 130;
-              top = 0;
-              noteTop = 40;
-              angle = math.pi;
-              noteText =
-                  "Interested in some specific topics? You can search whatever you like here to find out related journals.";
-            });
-          },
-          child: IconButton(
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help_outline),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text("Welcome to Journal Page"),
+                    content: Text("Explore published journals by other users on our Journal page."),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: Text("Close"),
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
+          IconButton(
+            icon: _isSearching ? Icon(Icons.close) : Icon(Icons.search_outlined),
             onPressed: () {
               setState(() {
-                if (_isSearching) {
+                _isSearching = !_isSearching;
+                if (!_isSearching) {
                   _searchController.clear();
                 }
-                _isSearching = !_isSearching;
-                dialog.visible = false;
               });
             },
-            icon: _isSearching
-                ? const Icon(Icons.close)
-                : const Icon(Icons.search_outlined),
           ),
-        ),
+        ],
       ),
       body: Stack(
         alignment: Alignment.center,
@@ -135,7 +136,7 @@ class _JournalState extends State<Journal> {
               setState(() {
                 dialog.visible = false;
               });
-              // Assuming you've added an `onItemTap` callback to your JournalGridView widget.
+              // Navigate to JournalDetail
               Navigator.push(
                 context,
                 MaterialPageRoute(
@@ -143,11 +144,8 @@ class _JournalState extends State<Journal> {
                     journal: item,
                     onLikedChanged: (updatedJournal) {
                       setState(() {
-                        // Find the index of the journal you want to update
-                        int index = myItems.indexWhere((j) =>
-                            j.id ==
-                            updatedJournal
-                                .id); // Assuming you have an id for each journal.
+                        // Update the journal
+                        int index = myItems.indexWhere((j) => j.id == updatedJournal.id);
                         if (index != -1) {
                           myItems[index] = updatedJournal;
                         }
@@ -158,60 +156,12 @@ class _JournalState extends State<Journal> {
               );
             },
           ),
-          Positioned(
-            left: 18.0,
-            right: 18.0,
-            top: top,
-            child: Visibility(
-              visible: dialog.visible,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    dialog.visible = false;
-                  });
-                },
-                child: Transform.rotate(
-                  angle: angle,
-                  child: ClipPath(
-                    clipper: dialog.DialogClipper(
-                        radius: 30, point: point, slope: slope),
-                    child: Container(
-                      height: height,
-                      color: Colors.greenAccent,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 25.0,
-            right: 25.0,
-            top: top + noteTop,
-            child: Visibility(
-              visible: dialog.visible,
-              child: GestureDetector(
-                onTap: () {
-                  setState(() {
-                    dialog.visible = false;
-                  });
-                },
-                child: Center(
-                    child: Text(
-                  noteText,
-                  style: const TextStyle(color: Colors.black45, fontSize: 20),
-                )),
-              ),
-            ),
-          ),
+          // Positioned widgets for dialog
         ],
       ),
       floatingActionButton: FloatingActionButton(
         heroTag: "journal",
         onPressed: () async {
-          setState(() {
-            dialog.visible = false;
-          });
           final newJournal = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => CreateJournal()),
