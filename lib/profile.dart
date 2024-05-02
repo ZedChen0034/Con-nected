@@ -27,6 +27,10 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
     _tabController = TabController(length: 5, vsync: this);
   }
 
+  void logout() {
+    Navigator.pushReplacementNamed(context, '/login');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,11 +39,20 @@ class _ProfileState extends State<Profile> with SingleTickerProviderStateMixin {
       body: Stack(
         children: <Widget>[
           Container(
-            child: const Padding(
+            child:  Padding(
               padding: EdgeInsets.all(16.0),
-              child: Text(
-                'Profile',
-                style: TextStyle(color: Colors.white, fontSize: 24.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Profile',
+                    style: TextStyle(color: Colors.white, fontSize: 24.0),
+                  ),
+                  IconButton(
+                    icon: Icon(Icons.exit_to_app, color: Colors.white),
+                    onPressed: logout,
+                  ),
+                ],
               ),
             ),
           ),
