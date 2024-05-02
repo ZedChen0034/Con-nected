@@ -1,33 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Login extends StatelessWidget {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+
+  Future<void> authenticateUser(BuildContext context) async {
+    var uri = Uri.parse('https://connected-admin-nu.vercel.app/api/flutter/login');
+    var request = http.MultipartRequest('POST', uri);
+    request.fields['username'] = usernameController.text;
+    request.fields['password'] = passwordController.text;
+    try {
+
+      var response = await request.send();
+      if (response.statusCode == 200) {
+        Navigator.pushReplacementNamed(context, '/home');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Invalid credentials'),
+          backgroundColor: Colors.red,
+        ));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Error connecting to the server'),
+        backgroundColor: Colors.red,
+      ));
+      print(e.toString());
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    TextEditingController usernameController = TextEditingController();
-    TextEditingController passwordController = TextEditingController();
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Login'),
       ),
       body: LayoutBuilder(
-        // Using LayoutBuilder to get parent widget constraints
         builder: (BuildContext context, BoxConstraints viewportConstraints) {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: viewportConstraints
-                    .maxHeight, // Setting minimum height to the viewport height
+                minHeight: viewportConstraints.maxHeight,
               ),
               child: IntrinsicHeight(
                 child: Padding(
-                  // Padding added here to give space around the Column
-                  padding: EdgeInsets.symmetric(
-                      horizontal:
-                          20.0), // Horizontal padding for left and right edges
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment
-                        .center, // Centering content vertically
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       TextField(
                         controller: usernameController,
@@ -39,18 +59,15 @@ class Login extends StatelessWidget {
                       SizedBox(height: 20),
                       TextField(
                         controller: passwordController,
+                        obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Password',
                           border: OutlineInputBorder(),
                         ),
-                        obscureText: true,
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: () {
-                          // Logic for logging in goes here
-                          Navigator.pushReplacementNamed(context, '/home');
-                        },
+                        onPressed: () => authenticateUser(context),
                         child: Text('Login'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -58,13 +75,10 @@ class Login extends StatelessWidget {
                           textStyle: TextStyle(
                             fontSize: 20,
                           ),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 32, vertical: 16),
+                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
                         ),
                       ),
-                      SizedBox(
-                          height:
-                              20), // Keeps space so content remains centered even when the keyboard is displayed
+                      SizedBox(height: 20),
                     ],
                   ),
                 ),
