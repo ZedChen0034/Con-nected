@@ -51,7 +51,8 @@ class _HelpState extends State<Help> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text("Help Center"),
-                    content: Text("Explore various resources and support options to assist you in navigating the app and enhancing your experience."),
+                    content: Text(
+                        "Explore various resources and support options to assist you in navigating the app and enhancing your experience."),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.of(context).pop(),
@@ -122,9 +123,9 @@ class _HelpState extends State<Help> {
                 },
                 child: Center(
                     child: Text(
-                      noteText,
-                      style: const TextStyle(color: Colors.black45, fontSize: 20),
-                    )),
+                  noteText,
+                  style: const TextStyle(color: Colors.black45, fontSize: 20),
+                )),
               ),
             ),
           ),
@@ -163,6 +164,9 @@ class _HelpState extends State<Help> {
       onTap: () {
         if (title == "Document") {
           Navigator.pushNamed(context, '/documentDetail');
+        }
+        if (title == "User Manual") {
+          Navigator.pushNamed(context, '/guideVideo');
         }
       },
       child: Card(

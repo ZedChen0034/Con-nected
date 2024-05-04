@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
+
+import 'Help/GuideVideo.dart';
 // Using guide:
 // Use Stack Widget to allow widget floating on surface
 // Use Positioned Widgets to allocate the location of dialog and message
@@ -21,9 +23,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Dialog(),
+      routes: {
+        '/guideVideo': (context) => GuideVideo(),
+      },
     );
   }
 }
@@ -35,17 +40,28 @@ class Dialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Transform.rotate(
-          angle: math.pi,
-          child: ClipPath(
-            clipper: DialogClipper(radius: 30, point: 1, slope: 0.8),
-            child: Container(
-              width: 300,
-              height: 150,
-              color: Colors.lightBlueAccent,
-              child: const Center(child: Text('Hello')),
+        child: Stack(
+          children: <Widget>[
+            Transform.rotate(
+              angle: math.pi,
+              child: ClipPath(
+                clipper: DialogClipper(radius: 30, point: 1, slope: 0.8),
+                child: Container(
+                  width: 300,
+                  height: 150,
+                  color: Colors.lightBlueAccent,
+                  child: const Center(child: Text('Hello')),
+                ),
+              ),
             ),
-          ),
+            IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/guideVideo');
+              },
+              icon:
+                  const Icon(Icons.notifications_outlined, color: Colors.black),
+            ),
+          ],
         ),
       ),
     );

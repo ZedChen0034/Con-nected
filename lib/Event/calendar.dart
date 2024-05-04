@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../Component/eventDemo.dart';
-import '../dialog.dart';
-import 'dart:math' as math;
 
 /// Reference to https://pub.dev/packages/table_calendar
 
@@ -25,7 +23,7 @@ class _CalendarState extends State<Calendar> {
     Set<EventDemo> results = {};
     DateFormat dateFormat = DateFormat("yyyy-MM-dd");
     results.addAll(events.where(
-            (user) => dateFormat.format(date) == dateFormat.format(user.datetime)));
+        (user) => dateFormat.format(date) == dateFormat.format(user.datetime)));
     return results.toList();
   }
 
@@ -108,7 +106,8 @@ class _CalendarState extends State<Calendar> {
                         ),
                         color: Colors.transparent,
                         elevation: 8,
-                        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 10),
                         child: Container(
                             decoration: BoxDecoration(
                               gradient: const LinearGradient(
@@ -119,7 +118,8 @@ class _CalendarState extends State<Calendar> {
                               borderRadius: BorderRadius.circular(15.0),
                             ),
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 10.0),
                               child: ListTile(
                                 leading: const Icon(
                                   Icons.event,
@@ -127,7 +127,8 @@ class _CalendarState extends State<Calendar> {
                                   size: 35,
                                 ),
                                 title: Text(
-                                  DateFormat('yyyy-MM-dd HH:mm').format(value[index].datetime) +
+                                  DateFormat('yyyy-MM-dd HH:mm')
+                                          .format(value[index].datetime) +
                                       '\n' +
                                       value[index].name +
                                       " - " +

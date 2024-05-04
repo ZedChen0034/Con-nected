@@ -16,10 +16,14 @@ class _LoginState extends State<Login> {
       isLoggingIn = true;
     });
 
-    var uri = Uri.parse('https://connected-admin-nu.vercel.app/api/flutter/login');
+    var uri =
+        Uri.parse('https://connected-admin-nu.vercel.app/api/flutter/login');
     var request = http.MultipartRequest('POST', uri);
-    request.fields['username'] = usernameController.text;
-    request.fields['password'] = passwordController.text;
+    request.fields['username'] = 'zed';
+    request.fields['password'] = '123456';
+    //Uncomment following lines to activate login application
+    // request.fields['username'] = usernameController.text;
+    // request.fields['password'] = passwordController.text;
 
     try {
       var response = await request.send();
@@ -81,22 +85,28 @@ class _LoginState extends State<Login> {
                       ),
                       SizedBox(height: 20),
                       ElevatedButton(
-                        onPressed: isLoggingIn ? null : () => authenticateUser(context),
-                        child: isLoggingIn ? Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            CircularProgressIndicator(color: Colors.white),
-                            SizedBox(width: 24),
-                            Text('Logging in...'),
-                          ],
-                        ) : Text('Login'),
+                        onPressed: isLoggingIn
+                            ? null
+                            : () => authenticateUser(context),
+                        child: isLoggingIn
+                            ? Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  CircularProgressIndicator(
+                                      color: Colors.white),
+                                  SizedBox(width: 24),
+                                  Text('Logging in...'),
+                                ],
+                              )
+                            : Text('Login'),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
                           backgroundColor: Colors.deepPurple,
                           textStyle: TextStyle(
                             fontSize: 20,
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 32, vertical: 16),
                         ),
                       ),
                       SizedBox(height: 20),

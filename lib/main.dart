@@ -1,3 +1,4 @@
+import 'package:con_nected/Help/GuideVideo.dart';
 import 'package:flutter/material.dart';
 import 'welcome.dart';
 import 'login.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         '/chat': (context) => Chat(),
         '/documentDetail': (context) => DocumentDetail(),
         '/peer': (context) => Peer(),
+        '/guideVideo': (context) => GuideVideo(),
       },
     );
   }
